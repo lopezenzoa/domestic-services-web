@@ -1,0 +1,75 @@
+<div class="reg-wrapper">
+  <div class="reg-card">
+    <div class="reg-left">
+      <ng-lottie class="lottie-hero" [options]="options"></ng-lottie>
+    </div>
+
+    
+    <div class="reg-right">
+      <h2>¡Bienvenido! Crea tu cuenta</h2>
+      <p class="sub">Completa tus datos para comenzar.</p>
+
+      <div class="type-switch">
+        <label>
+          <input type="radio" name="tipo" [(ngModel)]="tipoCuenta" value="usuario" />
+          Usuario
+        </label>
+        <label>
+          <input type="radio" name="tipo" [(ngModel)]="tipoCuenta" value="prestador" />
+          Prestador de Servicio
+        </label>
+      </div>
+
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+        
+        <div class="pair">
+          <input class="inp left" name="firstName" [(ngModel)]="firstName"
+                 placeholder="Nombre" required />
+          <input class="inp right" name="lastName" [(ngModel)]="lastName"
+                 placeholder="Apellido" required />
+        </div>
+
+       
+        <div class="pair">
+          <input class="inp left" name="username" [(ngModel)]="username"
+                 placeholder="Nombre de usuario" required />
+          <input class="inp right" type="email" name="email" [(ngModel)]="email"
+                 placeholder="Correo electrónico" required />
+        </div>
+
+      
+        <div class="pair">
+          <input class="inp left" name="phoneNumber" [(ngModel)]="phoneNumber"
+                 placeholder="Teléfono" required />
+          <input class="inp right" name="address" [(ngModel)]="address"
+                 placeholder="Dirección" required />
+        </div>
+
+        
+        <div class="pair">
+          <input class="inp left" type="password" name="password" [(ngModel)]="password"
+                 placeholder="Contraseña" required />
+          <input class="inp right" type="password" name="confirmPassword" [(ngModel)]="confirmPassword"
+                 placeholder="Confirmar contraseña" required />
+        </div>
+
+        
+        <div *ngIf="tipoCuenta === 'prestador'" class="full">
+          <input class="inp block" name="service" [(ngModel)]="service"
+                 placeholder="Servicio que brinda" required />
+        </div>
+        <div *ngIf="tipoCuenta === 'prestador'" class="full">
+          <textarea class="inp block textarea" name="description" [(ngModel)]="description"
+                    placeholder="Descripción breve" rows="4"></textarea>
+        </div>
+  <button class="btn-primary" type="submit">Registrarse</button>
+
+      <p class="login-link">
+        ¿Ya tienes una cuenta?
+      <a routerLink="/auth/login">Inicia sesión aquí</a>
+      </p>
+
+      </form>
+    </div>
+  </div>
+</div>
