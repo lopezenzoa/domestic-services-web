@@ -10,20 +10,18 @@ import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 })
 export class Login {
   options: AnimationOptions = {
-    path: '/assets/animations/login-animation.json'
-  };
-
-  animation: any;
-
-  onAnimate(anim: any) {
-    this.animation = anim;
+    path: 'assets/animations/login-animations.json'
   }
+  animations: any;
 
-  play() {
-    this.animation?.play();
+  onAnimate(anim:any){
+    this.animations = anim;
   }
-
-  pause() {
-    this.animation?.pause();
+  play(){
+    this.animations?.play();
+  }
+  pause(){
+    this.animations?.pause();
   }
 }
+
