@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.css'
 })
 export class App {
- 
+   title = 'Domestic Services';
+
   showNavbar = true;
+  
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
       const currentRoute = this.router.url;
