@@ -1,9 +1,9 @@
 :root{
   --bg: #e8e6f9;
   --card-bg: #ffffff;
-  --muted: #8a8aa5;
+  --muted: #3eaa5f;
   --border: #e3e3ee;
-  --primary: #6c63ff;
+  --primary: #1fdd58
   --primary-ghost: rgba(108, 99, 255, 0.15);
 }
 
@@ -129,19 +129,21 @@
 
 
 .btn-primary{
-  margin-top: 16px;
-  width: 100%;
+  background: #1fdd58;
+  color: white;
   border: none;
-  background: var(--primary);
-  color: #fff;
-  padding: 14px;
-  border-radius: 12px;
-  font-weight: 600;
+  padding: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: transform .05s ease, filter .15s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
-.btn-primary:hover{ filter: brightness(0.98); }
-.btn-primary:active{ transform: translateY(1px); }
+.btn-primary:hover{ 
+  background: #3eaa5f;
+}
+.btn-primary:active{ 
+  transform: translateY(1px); 
+}
 
 .login-link {
   text-align: center;
