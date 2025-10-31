@@ -39,6 +39,7 @@ options: AnimationOptions = {
   description = '';
   address = '';
   recovery = '';
+  licenseNumber = '';
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
@@ -75,6 +76,7 @@ options: AnimationOptions = {
       description: this.description,
       address: this.address,
       recovery: this.recovery,
+      licenseNumber:this.licenseNumber,
     };
 
     this.http.post('http://localhost:8080/api/auth/register', data).subscribe({

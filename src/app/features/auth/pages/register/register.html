@@ -4,7 +4,6 @@
       <ng-lottie class="lottie-hero" [options]="options"></ng-lottie>
     </div>
 
-    
     <div class="reg-right">
       <h2>¡Bienvenido! Crea tu cuenta</h2>
       <p class="sub">Completa tus datos para comenzar.</p>
@@ -21,54 +20,195 @@
       </div>
 
       <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
-        
+
+        <!-- Nombre / Apellido -->
         <div class="pair">
-          <input class="inp left" name="firstName" [(ngModel)]="firstName"
-                 placeholder="Nombre" required />
-          <input class="inp right" name="lastName" [(ngModel)]="lastName"
-                 placeholder="Apellido" required />
+          <div class="field">
+            <input
+              class="inp left"
+              name="firstName"
+              [(ngModel)]="firstName"
+              placeholder="Nombre"
+              required
+              #firstNameCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': firstNameCtrl.invalid && (firstNameCtrl.touched || form.submitted) }"
+            />
+            @if (firstNameCtrl.invalid && (firstNameCtrl.touched || form.submitted)) {
+              <small class="error-msg">El nombre es obligatorio</small>
+            }
+          </div>
+
+          <div class="field">
+            <input
+              class="inp right"
+              name="lastName"
+              [(ngModel)]="lastName"
+              placeholder="Apellido"
+              required
+              #lastNameCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': lastNameCtrl.invalid && (lastNameCtrl.touched || form.submitted) }"
+            />
+            @if (lastNameCtrl.invalid && (lastNameCtrl.touched || form.submitted)) {
+              <small class="error-msg">El apellido es obligatorio</small>
+            }
+          </div>
         </div>
 
-       
+        <!-- Nombre de usuario / Correo -->
         <div class="pair">
-          <input class="inp left" name="username" [(ngModel)]="username"
-                 placeholder="Nombre de usuario" required />
-          <input class="inp right" type="email" name="email" [(ngModel)]="email"
-                 placeholder="Correo electrónico" required />
+          <div class="field">
+            <input
+              class="inp left"
+              name="username"
+              [(ngModel)]="username"
+              placeholder="Nombre de usuario"
+              required
+              #usernameCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': usernameCtrl.invalid && (usernameCtrl.touched || form.submitted) }"
+            />
+            @if (usernameCtrl.invalid && (usernameCtrl.touched || form.submitted)) {
+              <small class="error-msg">El nombre de usuario es obligatorio</small>
+            }
+          </div>
+
+          <div class="field">
+            <input
+              class="inp right"
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Correo electrónico"
+              required
+              #emailCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': emailCtrl.invalid && (emailCtrl.touched || form.submitted) }"
+            />
+            @if (emailCtrl.invalid && (emailCtrl.touched || form.submitted)) {
+              <small class="error-msg">El correo electrónico es obligatorio</small>
+            }
+          </div>
         </div>
 
-      
+        <!-- Teléfono / Dirección -->
         <div class="pair">
-          <input class="inp left" name="phoneNumber" [(ngModel)]="phoneNumber"
-                 placeholder="Teléfono" required />
-          <input class="inp right" name="address" [(ngModel)]="address"
-                 placeholder="Dirección" required />
+          <div class="field">
+            <input
+              class="inp left"
+              name="phoneNumber"
+              [(ngModel)]="phoneNumber"
+              placeholder="Teléfono"
+              required
+              #phoneCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': phoneCtrl.invalid && (phoneCtrl.touched || form.submitted) }"
+            />
+            @if (phoneCtrl.invalid && (phoneCtrl.touched || form.submitted)) {
+              <small class="error-msg">El teléfono es obligatorio</small>
+            }
+          </div>
+
+          <div class="field">
+            <input
+              class="inp right"
+              name="address"
+              [(ngModel)]="address"
+              placeholder="Dirección"
+              required
+              #addressCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': addressCtrl.invalid && (addressCtrl.touched || form.submitted) }"
+            />
+            @if (addressCtrl.invalid && (addressCtrl.touched || form.submitted)) {
+              <small class="error-msg">La dirección es obligatoria</small>
+            }
+          </div>
         </div>
 
-        
+        <!-- Contraseña / Confirmar contraseña -->
         <div class="pair">
-          <input class="inp left" type="password" name="password" [(ngModel)]="password"
-                 placeholder="Contraseña" required />
-          <input class="inp right" type="password" name="confirmPassword" [(ngModel)]="confirmPassword"
-                 placeholder="Confirmar contraseña" required />
+          <div class="field">
+            <input
+              class="inp left"
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Contraseña"
+              required
+              #passwordCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': passwordCtrl.invalid && (passwordCtrl.touched || form.submitted) }"
+            />
+            @if (passwordCtrl.invalid && (passwordCtrl.touched || form.submitted)) {
+              <small class="error-msg">La contraseña es obligatoria</small>
+            }
+          </div>
+
+          <div class="field">
+            <input
+              class="inp right"
+              type="password"
+              name="confirmPassword"
+              [(ngModel)]="confirmPassword"
+              placeholder="Confirmar contraseña"
+              required
+              #confirmCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': confirmCtrl.invalid && (confirmCtrl.touched || form.submitted) }"
+            />
+            @if (confirmCtrl.invalid && (confirmCtrl.touched || form.submitted)) {
+              <small class="error-msg">Debe confirmar la contraseña</small>
+            }
+          </div>
         </div>
 
-        
+        <!-- Servicio / Licencia (solo prestador) -->
+        <div *ngIf="tipoCuenta === 'prestador'" class="pair">
+          <div class="field">
+            <input
+              class="inp left"
+              name="service"
+              [(ngModel)]="service"
+              placeholder="Servicio que brinda"
+              required
+              #serviceCtrl="ngModel"
+              [ngClass]="{ 'invalid-input': serviceCtrl.invalid && (serviceCtrl.touched || form.submitted) }"
+            />
+            @if (serviceCtrl.invalid && (serviceCtrl.touched || form.submitted)) {
+              <small class="error-msg">El servicio es obligatorio</small>
+            }
+          </div>
+
+          <div class="field">
+            <input
+              class="inp right"
+              name="licenseNumber"
+              [(ngModel)]="licenseNumber"
+              placeholder="Número de licencia profesional"
+              required
+              #license="ngModel"
+              [ngClass]="{ 'invalid-input': license.invalid && (license.touched || form.submitted) }"
+            />
+            @if (license.invalid && (license.touched || form.submitted)) {
+              <small class="error-msg">
+                Ingresá tu matrícula o número de registro profesional
+              </small>
+            }
+          </div>
+        </div>
+
+        <!-- Descripción -->
         <div *ngIf="tipoCuenta === 'prestador'" class="full">
-          <input class="inp block" name="service" [(ngModel)]="service"
-                 placeholder="Servicio que brinda" required />
+          <textarea
+            class="inp block textarea"
+            name="description"
+            [(ngModel)]="description"
+            placeholder="Descripción breve"
+            rows="4"
+          ></textarea>
         </div>
-        <div *ngIf="tipoCuenta === 'prestador'" class="full">
-          <textarea class="inp block textarea" name="description" [(ngModel)]="description"
-                    placeholder="Descripción breve" rows="4"></textarea>
-        </div>
-  <button class="btn-primary" type="submit">Registrarse</button>
 
-      <p class="login-link">
-        ¿Ya tienes una cuenta?
-      <a routerLink="/auth/login">Inicia sesión aquí</a>
-      </p>
+        <!-- Botón -->
+        <button class="btn-primary" type="submit">Registrarse</button>
 
+        <p class="login-link">
+          ¿Ya tienes una cuenta?
+          <a routerLink="/auth/login">Inicia sesión aquí</a>
+        </p>
       </form>
     </div>
   </div>
