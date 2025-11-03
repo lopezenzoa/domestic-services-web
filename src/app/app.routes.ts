@@ -2,10 +2,12 @@ import { Routes } from '@angular/router';
 import { Login } from './features/auth/pages/login/login';
 import { Register} from './features/auth/pages/register/register';
 import { EditarLicencia } from './features/auth/pages/editar-licencia/editar-licencia/editar-licencia';
+import { authGuard } from './features/auth/guards/auth-guard';
 
 export const routes: Routes = [
  {
   path: 'auth',
+  canActivate: [authGuard],
   children: [
     { path: 'login', component: Login },
     { path: 'register', component: Register },
@@ -14,6 +16,5 @@ export const routes: Routes = [
   ]
 },
 { path: 'editar-licencia', component: EditarLicencia },
-{ path: '', redirectTo: '/auth/login', pathMatch: 'full' },
-
+{ path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];
