@@ -35,11 +35,11 @@ options: AnimationOptions = {
   phoneNumber = '';
   password = '';
   confirmPassword = '';
-  service = '';
+  facility = '';
   description = '';
   address = '';
   recovery = '';
-  licenseNumber = '';
+  licenseNumber = null; // La API verifica que la licencia sea null o no para decidir si tiene que crear un prestador o un cliente
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
@@ -71,11 +71,8 @@ options: AnimationOptions = {
       email: this.email,
       phoneNumber: this.phoneNumber,
       password: this.password,
-      role: this.tipoCuenta,
-      service: this.service,
-      description: this.description,
+      facility: {name: this.facility}, // La API maneja la facility como un objeto
       address: this.address,
-      recovery: this.recovery,
       licenseNumber:this.licenseNumber,
     };
 
@@ -86,7 +83,7 @@ options: AnimationOptions = {
           panelClass: ['success-snackbar'],
         }),
       error: (err) => {
-        console.error('Error en el registro', err);
+        console.error('Error en el registro: ', err.error.message);
         this.snackBar.open('Error al registrar el usuario', 'Cerrar', {
           duration: 3000,
           panelClass: ['error-snackbar'],
