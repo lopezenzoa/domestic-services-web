@@ -1,0 +1,48 @@
+.license-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #f9f9ff;
+}
+
+.license-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  width: 380px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.inp {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #d9d7f1;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.inp:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
+}
+
+.btn-primary {
+  background: #1fdd58;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #3eaa5f;
+}

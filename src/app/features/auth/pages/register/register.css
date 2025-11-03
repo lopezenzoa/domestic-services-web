@@ -3,7 +3,7 @@
   --card-bg: #ffffff;
   --muted: #3eaa5f;
   --border: #e3e3ee;
-  --primary: #1fdd58
+  --primary: #1fdd58;
   --primary-ghost: rgba(108, 99, 255, 0.15);
 }
 
@@ -28,7 +28,6 @@
   overflow: hidden;
 }
 
-
 .reg-left{
   display: grid;
   place-items: center;
@@ -44,7 +43,6 @@
   display: block;
   object-fit: contain;
 }
-
 
 .reg-right{
   padding: clamp(24px, 5vw, 48px);
@@ -76,13 +74,26 @@
   margin-bottom: 12px;
   color: #333;
 }
+
 .type-switch input{ margin-right: 8px; }
 
-.pair{
+/* --- CAMPOS EN PAREJA (alineados como Nombre/Apellido) --- */
+.pair {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* los mensajes van debajo */
+  gap: 0; 
+  margin-bottom: 12px;
 }
 
+/* --- CONTENEDOR DE CADA INPUT --- */
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* --- INPUTS --- */
 .inp {
   width: 100%;
   border: 2px solid #d9d7f1; 
@@ -101,7 +112,6 @@
   box-shadow: 0 3px 8px rgba(108, 99, 255, 0.12);
 }
 
-
 .inp:focus {
   border-color: #6c63ff;
   box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
@@ -109,27 +119,44 @@
   z-index: 2;
 }
 
-
-.pair .left{
+/* --- UNIFICACIÓN VISUAL DE INPUTS DOBLES --- */
+.pair .left {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.pair .right{
+
+.pair .right {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  margin-left: -10px;              
+  margin-left: -2px; 
 }
 
-
+/* --- CAMPOS INDIVIDUALES --- */
 .full{ margin-top: 12px; }
 .inp.block{ width: 100%; }
 .textarea{ resize: vertical; }
 
 .pair + .pair{ margin-top: 12px; }
 
+/* --- MENSAJES DE ERROR --- */
+.error-msg {
+  color: #e53935;
+  font-size: 0.85rem;
+  margin-top: 6px;
+  margin-left: 4px;
+  line-height: 1.2;
+  display: block;
+}
 
+/* --- INPUT INVALIDO --- */
+.invalid-input {
+  border: 2px solid #e53935 !important; 
+  background-color: #ffecec; 
+}
+
+/* --- BOTÓN --- */
 .btn-primary{
-  background: #1fdd58;
+   background: #1fdd58;
   color: white;
   border: none;
   padding: 12px;
@@ -138,20 +165,23 @@
   font-weight: 600;
   transition: all 0.3s ease;
 }
+
 .btn-primary:hover{ 
   background: #3eaa5f;
 }
+
 .btn-primary:active{ 
   transform: translateY(1px); 
 }
 
+/* --- LINK DE LOGIN --- */
 .login-link {
   text-align: center;
   margin-top: 10px;
   font-size: 14px;
   color: #444;
   position: relative;
-  z-index: 10; /* se asegura de que quede por encima */
+  z-index: 10; 
 }
 
 .login-link a {
@@ -166,21 +196,26 @@
   text-decoration: underline;
 }
 
-
-
+/* --- RESPONSIVE (mobile) --- */
 @media (max-width: 980px){
   .reg-card{
     grid-template-columns: 1fr;
   }
+
   .reg-left{
     order: -1;                 
     padding: 28px 16px 8px;
   }
+
   .reg-right{ padding: 24px 18px 28px; }
 
-  
-  .pair{ flex-direction: column; gap: 12px; }
+  .pair{ 
+    flex-direction: column; 
+    gap: 12px; 
+  }
+
   .pair .right{ margin-left: 0; }
+
   .pair .left,
   .pair .right{
     border-radius: 12px;      

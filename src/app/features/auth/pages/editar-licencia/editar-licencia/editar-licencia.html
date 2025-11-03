@@ -1,0 +1,17 @@
+<div class="license-wrapper">
+  <div class="license-card">
+    <h2>Validar perfil profesional</h2>
+    <p>Ingresa tu numero de licencia profesional</p>
+
+    <form (ngSubmit)="onSubmit()" #form="ngForm" novalidate>
+      <input
+        class="inp"
+        name="licenseNumber"
+        [(ngModel)]="licenseNumber"
+        placeholder="Numero de licencia profesional"
+        required
+      />
+      <button class="btn-primary" type="submit">Guardar Licencia</button>
+    </form>
+  </div>
+</div>

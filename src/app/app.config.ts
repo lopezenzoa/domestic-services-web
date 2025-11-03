@@ -15,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideLottieOptions({
       player: () => player,
+      
     })
   ]
 };
