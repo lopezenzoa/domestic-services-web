@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AnimationOptions, LottieComponent } from 'ngx-lottie'; 
+import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import player from 'lottie-web';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
+import { Auth } from '../../services/auth';
 
 export function playerFactory() {
   return player;
@@ -19,13 +21,14 @@ export function playerFactory() {
     FormsModule,
     CommonModule,
     MatSnackBarModule,
-    LottieComponent, 
+    LottieComponent,
+    RouterLink
   ],
 })
 export class Register {
-options: AnimationOptions = {
-  path: '/assets/animations/register-animation1.json', 
-};
+  options: AnimationOptions = {
+    path: '/assets/animations/register-animation1.json',
+  };
 
   tipoCuenta: 'usuario' | 'prestador' = 'usuario';
   firstName = '';
@@ -40,7 +43,9 @@ options: AnimationOptions = {
   address = '';
   recovery = '';
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
+  authService: Auth = inject(Auth);
+
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
   onRoleChange(role: 'usuario' | 'prestador') {
     this.tipoCuenta = role;
@@ -77,7 +82,7 @@ options: AnimationOptions = {
       recovery: this.recovery,
     };
 
-    this.http.post('http://localhost:8080/api/auth/register', data).subscribe({
+    this.authService.register(data).subscribe({
       next: () =>
         this.snackBar.open('Registro exitoso', 'Cerrar', {
           duration: 3000,

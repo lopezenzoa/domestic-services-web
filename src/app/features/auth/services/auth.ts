@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -15,7 +15,7 @@ export class Auth {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
 
-  login(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, data);
+  login(data: any) {
+    return this.http.post(`${this.apiUrl}/login`, data, { observe: 'response' });
   }
 }
