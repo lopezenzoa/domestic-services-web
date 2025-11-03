@@ -1,16 +1,19 @@
 import { Routes } from '@angular/router';
 import { Login } from './features/auth/pages/login/login';
 import { Register} from './features/auth/pages/register/register';
+import { EditarLicencia } from './features/auth/pages/editar-licencia/editar-licencia/editar-licencia';
 
 export const routes: Routes = [
-  {
-    path: 'auth',
-    children: [
-      { path: 'login', component: Login },
-      { path: 'register', component: Register },
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
-    ]
-  },
-  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
-  
+ {
+  path: 'auth',
+  children: [
+    { path: 'login', component: Login },
+    { path: 'register', component: Register },
+    { path: 'editar-licencia', component: EditarLicencia },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+  ]
+},
+{ path: 'editar-licencia', component: EditarLicencia },
+{ path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+
 ];

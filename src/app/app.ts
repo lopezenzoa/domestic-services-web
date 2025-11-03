@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Navbar } from "./shared/components/navbar/navbar";
+import { Register } from "./features/auth/pages/register/register";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, Navbar],
+  imports: [RouterOutlet, CommonModule, Navbar, Register],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

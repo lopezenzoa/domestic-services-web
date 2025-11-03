@@ -81,7 +81,7 @@
 .pair {
   display: flex;
   align-items: flex-start; /* los mensajes van debajo */
-  gap: 0; /* elimina el espacio entre inputs */
+  gap: 0; 
   margin-bottom: 12px;
 }
 
@@ -128,7 +128,7 @@
 .pair .right {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  margin-left: -2px; /* 👈 evita línea entre los dos inputs */
+  margin-left: -2px; 
 }
 
 /* --- CAMPOS INDIVIDUALES --- */
@@ -156,7 +156,7 @@
 
 /* --- BOTÓN --- */
 .btn-primary{
-  background: #1fdd58;
+   background: #1fdd58;
   color: white;
   border: none;
   padding: 12px;
@@ -181,7 +181,7 @@
   font-size: 14px;
   color: #444;
   position: relative;
-  z-index: 10; /* se asegura de que quede por encima */
+  z-index: 10; 
 }
 
 .login-link a {

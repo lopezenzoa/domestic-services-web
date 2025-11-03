@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
        provideAnimations(),
     provideLottieOptions({
       player: () => player,
+      
     })
   ]
 };
