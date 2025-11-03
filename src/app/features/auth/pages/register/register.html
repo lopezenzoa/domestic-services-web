@@ -19,7 +19,7 @@
         </label>
       </div>
 
-      <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
         <!-- Nombre / Apellido -->
         <div class="pair">
@@ -27,30 +27,28 @@
             <input
               class="inp left"
               name="firstName"
-              [(ngModel)]="firstName"
+              formControlName="firstName"
               placeholder="Nombre"
               required
-              #firstNameCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': firstNameCtrl.invalid && (firstNameCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.valid) }"
             />
-            @if (firstNameCtrl.invalid && (firstNameCtrl.touched || form.submitted)) {
-              <small class="error-msg">El nombre es obligatorio</small>
-            }
+            <small class="error-msg" *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.valid)">
+              El nombre es obligatorio
+            </small>
           </div>
 
           <div class="field">
             <input
               class="inp right"
               name="lastName"
-              [(ngModel)]="lastName"
+              formControlName="lastName"
               placeholder="Apellido"
               required
-              #lastNameCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': lastNameCtrl.invalid && (lastNameCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.valid) }"
             />
-            @if (lastNameCtrl.invalid && (lastNameCtrl.touched || form.submitted)) {
-              <small class="error-msg">El apellido es obligatorio</small>
-            }
+            <small class="error-msg" *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.valid)">
+              El apellido es obligatorio
+            </small>
           </div>
         </div>
 
@@ -60,15 +58,14 @@
             <input
               class="inp left"
               name="username"
-              [(ngModel)]="username"
+              formControlName="username"
               placeholder="Nombre de usuario"
               required
-              #usernameCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': usernameCtrl.invalid && (usernameCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('username')?.invalid && (form.get('username')?.touched || form.valid) }"
             />
-            @if (usernameCtrl.invalid && (usernameCtrl.touched || form.submitted)) {
-              <small class="error-msg">El nombre de usuario es obligatorio</small>
-            }
+            <small class="error-msg" *ngIf="form.get('username')?.invalid && (form.get('username')?.touched || form.valid)">
+              El nombre de usuario es obligatorio
+            </small>
           </div>
 
           <div class="field">
@@ -76,15 +73,14 @@
               class="inp right"
               type="email"
               name="email"
-              [(ngModel)]="email"
+              formControlName="email"
               placeholder="Correo electrónico"
               required
-              #emailCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': emailCtrl.invalid && (emailCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('email')?.invalid && (form.get('email')?.touched || form.valid) }"
             />
-            @if (emailCtrl.invalid && (emailCtrl.touched || form.submitted)) {
-              <small class="error-msg">El correo electrónico es obligatorio</small>
-            }
+            <small class="error-msg" *ngIf="form.get('email')?.invalid && (form.get('email')?.touched || form.valid)">
+              El correo electrónico es obligatorio
+            </small>
           </div>
         </div>
 
@@ -94,30 +90,28 @@
             <input
               class="inp left"
               name="phoneNumber"
-              [(ngModel)]="phoneNumber"
+              formControlName="phoneNumber"
               placeholder="Teléfono"
               required
-              #phoneCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': phoneCtrl.invalid && (phoneCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('phoneNumber')?.invalid && (form.get('phoneNumber')?.touched || form.valid) }"
             />
-            @if (phoneCtrl.invalid && (phoneCtrl.touched || form.submitted)) {
-              <small class="error-msg">El teléfono es obligatorio</small>
-            }
+            <small class="error-msg" *ngIf="form.get('phoneNumber')?.invalid && (form.get('phoneNumber')?.touched || form.valid)">
+              El teléfono es obligatorio
+            </small>
           </div>
 
           <div class="field">
             <input
               class="inp right"
               name="address"
-              [(ngModel)]="address"
+              formControlName="address"
               placeholder="Dirección"
               required
-              #addressCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': addressCtrl.invalid && (addressCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('address')?.invalid && (form.get('address')?.touched || form.valid) }"
             />
-            @if (addressCtrl.invalid && (addressCtrl.touched || form.submitted)) {
-              <small class="error-msg">La dirección es obligatoria</small>
-            }
+            <small class="error-msg" *ngIf="form.get('address')?.invalid && (form.get('address')?.touched || form.valid)">
+              La dirección es obligatoria
+            </small>
           </div>
         </div>
 
@@ -128,15 +122,14 @@
               class="inp left"
               type="password"
               name="password"
-              [(ngModel)]="password"
+              formControlName="password"
               placeholder="Contraseña"
               required
-              #passwordCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': passwordCtrl.invalid && (passwordCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('password')?.invalid && (form.get('password')?.touched || form.valid) }"
             />
-            @if (passwordCtrl.invalid && (passwordCtrl.touched || form.submitted)) {
-              <small class="error-msg">La contraseña es obligatoria</small>
-            }
+            <small class="error-msg" *ngIf="form.get('password')?.invalid && (form.get('password')?.touched || form.valid)">
+              La contraseña es obligatoria
+            </small>
           </div>
 
           <div class="field">
@@ -144,50 +137,45 @@
               class="inp right"
               type="password"
               name="confirmPassword"
-              [(ngModel)]="confirmPassword"
+              formControlName="confirmPassword"
               placeholder="Confirmar contraseña"
               required
-              #confirmCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': confirmCtrl.invalid && (confirmCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.touched || form.valid) }"
             />
-            @if (confirmCtrl.invalid && (confirmCtrl.touched || form.submitted)) {
-              <small class="error-msg">Debe confirmar la contraseña</small>
-            }
+            <small class="error-msg" *ngIf="form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.touched || form.valid)">
+              Debe confirmar la contraseña
+            </small>
           </div>
         </div>
 
         <!-- Servicio / Licencia (solo prestador) -->
         <div *ngIf="tipoCuenta === 'prestador'" class="pair">
-          <div class="field">
+          <div class="field" formGroupName="facility"> <!-- formGroupName es necesario porque facility es un objeto -->
             <input
               class="inp left"
-              name="service"
-              [(ngModel)]="facility"
+              name="facility"
+              formControlName="name"
               placeholder="Servicio que brinda"
               required
-              #serviceCtrl="ngModel"
-              [ngClass]="{ 'invalid-input': serviceCtrl.invalid && (serviceCtrl.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('name')?.invalid && (form.get('name')?.touched || form.valid) }"
             />
-            @if (serviceCtrl.invalid && (serviceCtrl.touched || form.submitted)) {
-              <small class="error-msg">El servicio es obligatorio</small>
-            }
+            <small class="error-msg" *ngIf="form.get('name')?.invalid && (form.get('name')?.touched || form.valid)">
+              El servicio es obligatorio
+            </small>
           </div>
 
           <div class="field">
             <input
               class="inp right"
               name="licenseNumber"
-              [(ngModel)]="licenseNumber"
+              formControlName="licenseNumber"
               placeholder="Número de licencia profesional"
               required
-              #license="ngModel"
-              [ngClass]="{ 'invalid-input': license.invalid && (license.touched || form.submitted) }"
+              [ngClass]="{ 'invalid-input': form.get('licenseNumber')?.invalid && (form.get('licenseNumber')?.touched || form.valid) }"
             />
-            @if (license.invalid && (license.touched || form.submitted)) {
-              <small class="error-msg">
-                Ingresá tu matrícula o número de registro profesional
-              </small>
-            }
+            <small class="error-msg" *ngIf="form.get('licenseNumber')?.invalid && (form.get('licenseNumber')?.touched || form.valid)">
+              Ingresá tu matrícula o número de registro profesional
+            </small>
           </div>
         </div>
 
@@ -196,7 +184,6 @@
           <textarea
             class="inp block textarea"
             name="description"
-            [(ngModel)]="description"
             placeholder="Descripción breve"
             rows="4"
           ></textarea>

@@ -51,8 +51,8 @@ export class Login {
             this.router.navigate(['/providers']);
           }
         },
-        error: (error) => {
-          console.error('Error en el login:', error);
+        error: (err) => {
+          console.error('Error en el login:', err.error);
         }
       });
     }
