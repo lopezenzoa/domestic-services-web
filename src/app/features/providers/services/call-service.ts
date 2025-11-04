@@ -14,6 +14,10 @@ export class CallService {
   http = inject(HttpClient);
   router = inject(Router);
 
+  getMyCalls(): Observable<Call[]> {
+    return this.http.get<Call[]>(this.url + "/me");
+  }
+
   getCalls(providerId: number) : Observable<Call[]>{
     return this.http.get<Call[]>(this.url + "/provider/" + providerId);
   }

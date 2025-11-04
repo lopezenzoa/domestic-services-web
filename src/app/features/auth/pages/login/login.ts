@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import { Auth } from '../../services/auth';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UsersService } from '../../../users/services/users-service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class Login {
   /* Servicio de autenticación para login */
   authService: Auth = inject(Auth);
   router: Router = inject(Router);
+  users: UsersService = inject(UsersService);
 
   /* Manejo del formulario reactivo (Login) */
   fb: FormBuilder = inject(FormBuilder);
@@ -48,7 +50,20 @@ export class Login {
 
           if (token) {
             localStorage.setItem('token', `Bearer ${token}`);
-            this.router.navigate(['/providers']);
+
+            /* Obtener perfil de usuario para redireccionar */
+            this.users.getUserProfile().subscribe({
+              next: (user) => {
+                if (user.role === 'CLIENT') {
+                  this.router.navigate(['/providers']); // Redirigir a la página de lista de proveedores
+                } else if (user.role === 'PROVIDER') {
+                  this.router.navigate(['/providers/calls']); // Redirigir a la página de lista de contrataciones
+                }
+              },
+              error: (err) => {
+                console.error('Error al obtener el perfil de usuario:', err);
+              }
+            });
           }
         },
         error: (err) => {
