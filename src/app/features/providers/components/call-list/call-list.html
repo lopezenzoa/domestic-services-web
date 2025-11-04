@@ -1,0 +1,12 @@
+<div>
+    @for (call of calls(); track $index) {
+        <div>
+            <p>ID: {{ call.id }}</p>
+            <h1>Provider id: {{ call.providerId }}</h1>
+            <p>Cliente id: {{ call.clientId }}</p>
+            <p>Descriptio: {{ call.description }}</p>
+            <p>Date: {{ call.date }}</p>
+            <p>State: {{ call.state }}</p>
+        </div>
+    }
+</div>
