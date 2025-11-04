@@ -1,12 +1,35 @@
-<div>
+<div class="agenda-wrapper">
+  <header class="agenda-header">
+    <h2> Agenda de visitas</h2>
+    <p>Total de visitas: {{ calls()?.length }}</p>
+  </header>
+
+  <div class="agenda-container">
     @for (call of calls(); track $index) {
-        <div>
-            <p>ID: {{ call.id }}</p>
-            <h1>Provider id: {{ call.providerId }}</h1>
-            <p>Cliente id: {{ call.clientId }}</p>
-            <p>Descriptio: {{ call.description }}</p>
-            <p>Date: {{ call.date }}</p>
-            <p>State: {{ call.state }}</p>
+      <div
+        class="card"
+        [ngClass]="{
+          'pending': call.state === 'Pendiente' || call.state === 'En curso',
+          'accepted': call.state === 'Completado',
+          'rejected': call.state === 'Cancelado'
+        }"
+      >
+        <div class="card-icon">
+          <span *ngIf="call.state === 'En curso' || call.state === 'Pendiente'"></span>
+          <span *ngIf="call.state === 'Completado'"></span>
+          <span *ngIf="call.state === 'Cancelado'"></span>
         </div>
+
+        <div class="card-content">
+          <h1>Visita #{{ call.id }}</h1>
+          <p><strong>Prestador:</strong> {{ call.providerId }}</p>
+          <p><strong>Cliente:</strong> {{ call.clientId }}</p>
+          <p><strong>Descripción:</strong> {{ call.description }}</p>
+          <p><strong>Dirección:</strong> {{ call.address }}</p>
+          <p><strong>Fecha:</strong> {{ call.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+          <p><strong>Estado:</strong> {{ call.state }}</p>
+        </div>
+      </div>
     }
+  </div>
 </div>
