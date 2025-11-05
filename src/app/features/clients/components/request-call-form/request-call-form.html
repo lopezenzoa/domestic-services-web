@@ -1,0 +1,25 @@
+<div>
+    <form action="" [formGroup]="form">
+        <label for="date">Fecha:</label>
+        <!-- Campo desplegable con los turnos del proveedor -->
+        <select id="date" formControlName="date">
+            @for (shift of providerShifts(); track $index) {
+                <option>{{ shift.dateTime }}</option>
+            }
+            
+        </select>
+        <label for="clientName">Cliente:</label>
+        <input type="text" id="clientName" formControlName="clientName">
+
+        <label for="providerName">Proveedor:</label>
+        <input type="text" id="providerName" formControlName="providerName">
+
+        <label for="address">Dirección:</label>
+        <input type="text" id="address" formControlName="address">
+
+        <label for="description">Descripción:</label>
+        <textarea id="description" formControlName="description"></textarea>
+
+        <button (click)="submitRequest()">Enviar Solicitud</button>
+    </form>
+</div>
