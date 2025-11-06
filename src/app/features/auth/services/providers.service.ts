@@ -14,4 +14,18 @@ export class ProvidersService {
     return this.http.put(`${this.baseUrl}/${provideId}/license`,{licenseNumber})
 
   }
+
+  /** Deberia tener el tipado correcto (Provider) */
+  getProviderById(providerId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${providerId}`);
+  }
+
+  getProviderProfile() {
+    return this.http.get(this.baseUrl + '/me');
+  }
+
+  /** Debería tener el tipado correcto (Shift) */
+  getProviderShifts(providerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/shifts/${providerId}/available`);
+  }
 }

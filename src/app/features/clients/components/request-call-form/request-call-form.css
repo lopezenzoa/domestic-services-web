@@ -1,0 +1,214 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f7f9fb, #eef1f4);
+  font-family: "Poppins", sans-serif;
+}
+
+/* CONTENEDOR GENERAL */
+.booking-wrapper {
+  border-radius: 5px;
+  max-width: 1200px;
+  width: 70%;
+  padding: 3rem 4rem;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* TÍTULO */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.title span {
+  color: #2563eb;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+/* GRILLA CENTRAL: LAS DOS TARJETAS UNA AL LADO DE LA OTRA */
+.booking-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3rem;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+/* TARJETAS IGUALES */
+.left-section,
+.right-section {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 2.2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.left-section:hover,
+.right-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+}
+
+/* --- AJUSTES DE ESPACIO EN LA IZQUIERDA --- */
+.left-section {
+  gap: 1.2rem; /* menos espacio entre elementos */
+}
+
+.left-section h3 {
+  margin-bottom: 1rem; /* reduce espacio bajo el título */
+}
+
+.date-select label {
+  margin-top: 0.6rem;
+}
+
+.select-field {
+  margin-bottom: 1rem;
+}
+
+textarea {
+  min-height: 75px;
+}
+
+/* --- UNIFORMIDAD CON LA DERECHA --- */
+.right-section {
+  align-self: flex-start;
+}
+
+/* SUBTÍTULOS */
+.left-section h3,
+.right-section h3 {
+  font-size: 1.25rem;
+  color: #111827;
+  font-weight: 600;
+}
+
+/* CAMPOS GENERALES */
+label {
+  display: block;
+  font-size: 0.95rem;
+  color: #374151;
+  margin-bottom: 0.4rem;
+}
+
+.select-field,
+textarea,
+.form-summary input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+}
+
+.select-field:focus,
+textarea:focus,
+.form-summary input:focus {
+  border-color: #2563eb;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+textarea {
+  resize: none;
+}
+
+/* FOTO Y DATOS DEL PROVEEDOR */
+.provider-summary {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+.provider-photo {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 3px solid #e5e7eb;
+  object-fit: cover;
+  background: #f3f4f6;
+}
+
+.provider-summary h4 {
+  font-size: 1.1rem;
+  color: #111827;
+  font-weight: 600;
+  margin: 0;
+}
+
+.provider-summary p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* BOTÓN */
+.continue-btn {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+  background: linear-gradient(90deg, #1e3a8a, #2563eb);
+  transform: translateY(-2px);
+}
+
+.continue-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* DISCLAIMER */
+.disclaimer {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .booking-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-section,
+  .right-section {
+    max-width: 100%;
+    width: 90%;
+  }
+}

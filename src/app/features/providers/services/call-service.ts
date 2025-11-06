@@ -21,4 +21,8 @@ export class CallService {
   getCalls(providerId: number) : Observable<Call[]>{
     return this.http.get<Call[]>(this.url + "/provider/" + providerId);
   }
+
+  requestCall(callData: any) {
+    return this.http.post(this.url + '/request', callData);
+  }
 }
