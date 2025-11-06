@@ -3,12 +3,13 @@ import { ClientsService } from '../../services/clients-service';
 import { ProvidersService } from '../../../auth/services/providers.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CallService } from '../../../providers/services/call-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-request-call-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './request-call-form.html',
-  styleUrl: './request-call-form.css'
+   styleUrls: ['./request-call-form.css']
 })
 export class RequestCallForm {
   clientsService: ClientsService = inject(ClientsService);
@@ -34,11 +35,20 @@ export class RequestCallForm {
     this.form.patchValue({ address: 'Calle Falsa 123' });
 
     // Datos de ejemplo para estilos de turnos
-    this.providerShifts.set([
-      { id: 1, dateTime: '09:00 - 10:00' },
-      { id: 2, dateTime: '10:00 - 11:00' },
-      { id: 3, dateTime: '11:00 - 12:00' }
-    ]);
+    //Simulamos los turnos disponibles (como si vinieran del backend)
+    setTimeout(() => {
+  this.providerShifts.set([
+    { id: 1, dateTime: 'Lunes 09:00 - 10:00' },
+    { id: 2, dateTime: 'Martes 10:00 - 11:00' },
+    { id: 3, dateTime: 'Miércoles 11:00 - 12:00' },
+    { id: 4, dateTime: 'Jueves 14:00 - 15:00' },
+    { id: 5, dateTime: 'Viernes 16:00 - 17:00' }
+  ]);
+
+  console.log(' Turnos cargados:', this.providerShifts());
+}, 1000);
+// simulamos una “carga” como si fuese un fetch
+  
 
     /*
     Inicializar el formulario con datos del cliente y proveedor
@@ -77,4 +87,5 @@ export class RequestCallForm {
       console.log('Formulario inválido');
     }
   }
+
 }
