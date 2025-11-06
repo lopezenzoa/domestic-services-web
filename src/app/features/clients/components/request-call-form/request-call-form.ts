@@ -4,17 +4,21 @@ import { ProvidersService } from '../../../auth/services/providers.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CallService } from '../../../providers/services/call-service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-request-call-form',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './request-call-form.html',
-   styleUrls: ['./request-call-form.css']
+  styleUrls: ['./request-call-form.css']
 })
 export class RequestCallForm {
   clientsService: ClientsService = inject(ClientsService);
   providersService: ProvidersService = inject(ProvidersService);
   callsService: CallService = inject(CallService);
+  route: ActivatedRoute = inject(ActivatedRoute);
+  // Obtener el ID del proveedor desde la ruta
+  providerIdFromRoute: number | null = Number(this.route.snapshot.paramMap.get('providerId'));
 
   fb: FormBuilder = inject(FormBuilder);
   form: FormGroup = this.fb.group({
@@ -26,9 +30,11 @@ export class RequestCallForm {
   });
 
   providerId: WritableSignal<number | null> = signal(null);
+  clientId: WritableSignal<number | null> = signal(null);
   providerShifts: WritableSignal<any[]> = signal([]);
 
   constructor() {
+    /*
     // Datos de ejemplo para estilos de formulario
     this.form.patchValue({ clientName: 'Juan Pérez' });
     this.form.patchValue({ providerName: 'María Gómez' });
@@ -48,33 +54,41 @@ export class RequestCallForm {
   console.log(' Turnos cargados:', this.providerShifts());
 }, 1000);
 // simulamos una “carga” como si fuese un fetch
-  
+    */
 
-    /*
-    Inicializar el formulario con datos del cliente y proveedor
+
+    // Inicializar el formulario con datos del cliente y proveedor
 
     // Buscar el perfil del cliente para autocompletar el nombre
     this.clientsService.getClientProfile().subscribe((client: any) => {
       this.form.patchValue({ clientName: client.firstName + ' ' + client.lastName });
       this.form.patchValue({ address: client.address });
+      this.clientId.set(client.id); // Asignar el ID del cliente a la data de la solicitud
     });
 
     // Buscar el perfil del proveedor para autocompletar el nombre
-    this.providersService.getProviderById(10).subscribe((provider: any) => {
+    this.providersService.getProviderById(this.providerIdFromRoute!).subscribe((provider: any) => {
       this.form.patchValue({ providerName: provider.firstName + ' ' + provider.lastName });
       this.providerId.set(provider.id);
     });
 
     // Cargar los turnos del proveedor (opcional)
-    this.providersService.getProviderShifts(10).subscribe((shifts: any[]) => {
+    this.providersService.getProviderShifts(this.providerIdFromRoute!).subscribe((shifts: any[]) => {
       this.providerShifts.set(shifts);
     });
-    */
   }
 
   submitRequest() {
     if (this.form.valid) {
-      const requestData = this.form.value;
+      // Esta es la data que se enviará al backend
+      const requestData = {
+        date: this.form.get('date')?.value,
+        client: { id: this.clientId() },
+        provider: { id: this.providerId() },
+        description: this.form.get('description')?.value,
+        address: this.form.get('address')?.value
+      };
+
       this.callsService.requestCall(requestData).subscribe({
         next: (response) => {
           console.log('Solicitud enviada con éxito:', response);

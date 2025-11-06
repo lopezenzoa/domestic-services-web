@@ -16,7 +16,7 @@ export const routes: Routes = [
   ]
 },
 { path: 'providers/calls', component: CallList },
-{ path: 'calls/request', component: RequestCallForm },
+{ path: 'calls/request/:providerId', component: RequestCallForm }, // El :providerId es un parámetro de ruta que se manda cuando se navega a este componente
 { path: 'editar-licencia', component: EditarLicencia },
 { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];
