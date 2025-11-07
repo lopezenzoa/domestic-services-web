@@ -16,6 +16,18 @@ export class FacilitiesService {
 }
 
   getAll():Observable<Facilities[]>{
-    return this.http.get<Facilities[]>(this.baseUrl)
+    return this.http.get<Facilities[]>(this.baseUrl + "/");
+  }
+
+  getById(id: number): Observable<Facilities> {
+    return this.http.get<Facilities>(this.baseUrl + "/" + id);
+  }
+
+  updateFacility(dto: Facilities): Observable<Facilities> {
+    return this.http.put<Facilities>(this.baseUrl + "/update", dto);
+  }
+
+  deleteFacility(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(this.baseUrl + "/" + id);
   }
 }
