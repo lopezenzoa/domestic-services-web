@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { ProvidersService } from '../../../services/providers.service';
+import { ProvidersService } from '../../../../providers/services/providers.service';
 
 @Component({
   selector: 'app-editar-licencia',
