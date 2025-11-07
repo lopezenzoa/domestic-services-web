@@ -1,0 +1,14 @@
+<section>
+    @for (facility of facilitiesList(); track $index) {
+    <div class="facility-card">
+        <p>{{ facility.name }}</p>
+        <span>{{ facility.description }}</span>
+        <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
+    </div>
+    }
+</section>
+<section>
+    <button type="submit" class="btn-primary" routerLink="/facilities/create">
+        Agregar Servicio
+    </button>
+</section>
