@@ -1,0 +1,55 @@
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin: 1.5rem auto;
+  max-width: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+/* efecto hover suave */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* nombre del proveedor */
+.card h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+/* texto general dentro de la tarjeta */
+.card p {
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin: 0.35rem 0;
+}
+
+/* botón de acción */
+.action-button {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* efecto hover */
+.action-button:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+}
