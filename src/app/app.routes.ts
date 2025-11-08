@@ -5,6 +5,7 @@ import { EditarLicencia } from './features/auth/pages/editar-licencia/editar-lic
 import { CallList } from './features/providers/components/call-list/call-list';
 import { RequestCallForm } from './features/clients/components/request-call-form/request-call-form';
 import { CreateFacilities } from './features/facilities/pages/create-facilities/create-facilities';
+import { ProviderShifts } from './features/providers/pages/provider-shifts/provider-shifts';
 
 export const routes: Routes = [
  {
@@ -19,6 +20,7 @@ export const routes: Routes = [
 { path: 'providers/calls', component: CallList },
 { path: 'calls/request/:providerId', component: RequestCallForm }, // El :providerId es un parámetro de ruta que se manda cuando se navega a este componente
  { path: 'facilities/create', component: CreateFacilities },
+   { path: 'providers/shifts', component: ProviderShifts },
  { path: 'editar-licencia', component: EditarLicencia },
 { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];

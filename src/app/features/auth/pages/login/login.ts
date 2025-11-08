@@ -49,7 +49,7 @@ export class Login {
           const token = response.headers.get('Authorization');
 
           if (token) {
-            localStorage.setItem('token', `Bearer ${token}`);
+             localStorage.setItem('token', token.startsWith('Bearer ') ? token : `Bearer ${token}`);
 
             /* Obtener perfil de usuario para redireccionar */
             this.users.getUserProfile().subscribe({
