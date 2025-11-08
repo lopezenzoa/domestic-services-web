@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Provider } from '../models/Provider';
+import { Shift } from '../models/Shift';
 
 
 @Injectable({
@@ -15,13 +17,17 @@ export class ProvidersService {
 
   }
 
+  getAllProviders(): Observable<Provider[]> {
+    return this.http.get<Provider[]>(this.baseUrl + "/");
+  }
+
   /** Deberia tener el tipado correcto (Provider) */
-  getProviderById(providerId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${providerId}`);
+  getProviderById(providerId: number): Observable<Provider> {
+    return this.http.get<Provider>(`${this.baseUrl}/${providerId}`);
   }
 
   getProviderProfile() {
-    return this.http.get(this.baseUrl + '/me');
+    return this.http.get<Provider>(this.baseUrl + '/me');
   }
 
   getMyProvider(): Observable<any> { //obtener los datos del prestador que está actualmente logueado
@@ -29,7 +35,7 @@ export class ProvidersService {
   } 
 
   /** Debería tener el tipado correcto (Shift) */
-  getProviderShifts(providerId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/shifts/${providerId}/available`);
+  getProviderShifts(providerId: number): Observable<Shift[]> {
+    return this.http.get<Shift[]>(`${this.baseUrl}/shifts/${providerId}/available`);
   }
 }

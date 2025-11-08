@@ -49,7 +49,9 @@ export class Login {
           const token = response.headers.get('Authorization');
 
           if (token) {
-             localStorage.setItem('token', token.startsWith('Bearer ') ? token : `Bearer ${token}`);
+
+            localStorage.setItem('token', `${token}`);
+
 
             /* Obtener perfil de usuario para redireccionar */
             this.users.getUserProfile().subscribe({
@@ -58,6 +60,8 @@ export class Login {
                   this.router.navigate(['/providers']); // Redirigir a la página de lista de proveedores
                 } else if (user.role === 'PROVIDER') {
                   this.router.navigate(['/providers/calls']); // Redirigir a la página de lista de contrataciones
+                } else {
+                  this.router.navigate(['/facilities']); // Redirigir a la página de servicios generales
                 }
               },
               error: (err) => {

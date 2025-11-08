@@ -1,0 +1,7 @@
+<div class="providers-list-container">
+  @for (provider of providersList(); track provider.id) {
+    <app-provider-card [provider]="provider"></app-provider-card>
+  } @empty {
+    <p>No se encontraron proveedores.</p>
+  }
+</div>

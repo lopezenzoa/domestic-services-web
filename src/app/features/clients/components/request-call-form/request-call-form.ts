@@ -1,6 +1,6 @@
 import { Component, inject, Provider, signal, WritableSignal } from '@angular/core';
 import { ClientsService } from '../../services/clients-service';
-import { ProvidersService } from '../../../auth/services/providers.service';
+import { ProvidersService } from '../../../providers/services/providers.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CallService } from '../../../providers/services/call-service';
 import { CommonModule } from '@angular/common';
