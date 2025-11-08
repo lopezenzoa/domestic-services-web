@@ -7,6 +7,7 @@ import { RequestCallForm } from './features/clients/components/request-call-form
 import { CreateFacilities } from './features/facilities/pages/create-facilities/create-facilities';
 import { FacilitiesList } from './features/facilities/pages/facilities-list/facilities-list';
 import { ProvidersList } from './features/clients/components/providers-list/providers-list';
+import { AddShiftForm } from './features/providers/pages/add-shift-form/add-shift-form';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
   },
   { path: 'providers', component: ProvidersList},
   { path: 'providers/calls', component: CallList },
+  { path: 'providers/add-shift', component: AddShiftForm },
   { path: 'calls/request/:providerId', component: RequestCallForm }, // El :providerId es un parámetro de ruta que se manda cuando se navega a este componente
   { path: 'facilities', component: FacilitiesList },
   { path: 'facilities/edit/:facilityId', component: CreateFacilities },
