@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ProvidersService } from '../../../auth/services/providers.service';
+import { ProvidersService } from '../../services/providers.service';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
