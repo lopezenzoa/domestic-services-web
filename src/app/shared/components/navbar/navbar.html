@@ -1,43 +1,12 @@
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-logo" routerLink="/">
-            <img src="" alt="logo">
-            <span>ServiFacil</span>
-        </div>
-        <div class="menu-toggle" (click)="toggleMenu()">
-            <span [class.open]="menuOpen"></span>
-             <span [class.open]="menuOpen"></span>
-              <span [class.open]="menuOpen"></span>
-        </div>
+<header class="navbar">
+  <div class="navbar-left">
+    <img src="/src/assets/logo.png" alt="ServiFácil logo" class="logo" />
+    <span class="tagline">Tu hogar, tu bienestar</span>
+  </div>
 
-        <ul class="navbar-links" [class.active]="menuOpen">
-            <ng-container *ngIf="!isLoggedIn">
-                <li><a routerLink="explorar">Explorar servicios</a></li>
-                <li class="actions">
-                    <a routerLink="/auth/login" class="btn-login">Iniciar Sesion</a>
-                    <a routerLink="/auth/register" class="btn-register">Registrarse</a>
-                </li>
-            </ng-container>
-
-            <ng-container *ngIf="isLoggedIn && userRole === 'CLIENTE'">
-                <li><a routerLink="/servicios">Buscar servicios</a></li>
-                <li><a routerLink="/contrataciones">Mis contrataciones</a></li>
-                <li><a routerLink="/perfil">Perfil</a></li>
-                <li><a (click)="logout()">Cerrar sesión</a></li>
-            </ng-container>
-            
-            <ng-container *ngIf="isLoggedIn && userRole === 'PRESTADOR'">
-                <li><a routerLink="/mis-servicios">Mis servicios</a></li>
-                <li><a routerLink="/agenda">Agenda</a></li>
-                <li><a routerLink="/perfil">Perfil</a></li>
-                <li><a (click)="logout()">Cerrar sesión</a></li>
-            </ng-container>
-
-            <ng-container *ngIf="isLoggedIn && userRole === 'ADMIN'">
-                <li><a routerLink="/admin">Panel de control</a></li>
-                <li><a routerLink="/usuarios">Usuarios</a></li>
-                <li><a (click)="logout()">Cerrar sesión</a></li>
-            </ng-container>
-        </ul>
-    </div>
-</nav>
+  <nav class="navbar-links">
+    <a href="#" class="active">Inicio</a>
+    <a href="#">Buscar Servicios</a>
+    <a href="#">Ayuda</a>
+  </nav>
+</header>
