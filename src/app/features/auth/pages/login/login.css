@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f2f4f8; /* Fondo gris suave */
+  background-color: #f2f4f8; 
   font-family: "Poppins", sans-serif;
   padding: 2rem;
 }
@@ -12,8 +12,8 @@
 /* ======= TARJETA PRINCIPAL ======= */
 .login-card {
   display: flex;
-  width: 940px; /* equilibrio ideal */
-  height: 520px;
+  width: 1000px; 
+  height: 650px;
   background: white;
   border-radius: 16px;
   overflow: hidden;
@@ -26,28 +26,29 @@
   background-color: #083d56;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
   padding: 2rem;
   position: relative;
 }
-
 /* Íconos decorativos */
 .login-left::after {
   content: "";
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 220px;
-  height: 130px;
-  background-image: url("/assets/iconos.png");
+  width: 550px;          
+  height: 250px;
+  background-image: url("../../../../../assets/iconos.png");
   background-repeat: no-repeat;
   background-size: contain;
-  opacity: 0.4;
+  background-position: center;
+  opacity: 0.5;
   pointer-events: none;
+  image-rendering: pixelated;
 }
+
 
 /* Contenido izquierdo */
 .left-content {
@@ -55,22 +56,47 @@
   z-index: 2;
   color: white;
   max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.logo {
+  width: 300px;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+  transition: transform 0.3s ease;
 }
 
-.logo {
-  width: 140px;
-  margin-bottom: 1rem;
+/* bloque de texto */
+.text-content {
+  margin-top: -1rem; 
+  z-index: 2;
+}
+
+.text-content h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: white;
+}
+
+.text-content p {
+  font-size: 0.9rem;
+  color: #cce0e8;
+  margin: 0;
 }
 
 .left-content h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 0.4rem;
+  margin-top: -30px; 
+  margin-bottom: 0.2rem;
 }
 
 .left-content p {
   font-size: 0.9rem;
   color: #cce0e8;
+  margin-top: -10px; 
 }
 
 /* ======= LADO DERECHO ======= */

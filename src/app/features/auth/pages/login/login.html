@@ -1,18 +1,23 @@
 <div class="login-wrapper">
   <div class="login-card">
     <!-- LADO IZQUIERDO -->
-    <div class="login-left">
-      <div class="left-content">
-        <img src="assets/logo.png" alt="ServiFácil logo" class="logo" />
-        <h2>ServiFácil: Tu Hogar, Solucionado</h2>
-        <p>Conectando a los mejores profesionales con tu hogar</p>
-      </div>
-    </div>
+   <div class="login-left">
+  <!-- Contenedor del logo -->
+  <div class="logo-container">
+    <img src="../../../../../assets/logo (1).png" alt="ServiFácil logo" class="logo" />
+  </div>
+
+  <!-- Contenedor del texto (separado del logo) -->
+  <div class="text-content">
+    <h2>ServiFácil: Tu Hogar, Solucionado</h2>
+    <p>Conectando a los mejores profesionales con tu hogar</p>
+  </div>
+</div>
 
     <!-- LADO DERECHO -->
     <div class="login-right">
       <h2>¡Bienvenido/a a ServiFácil!</h2>
-      <p>¿Aún no tienes cuenta? <a href="#">Regístrate aquí</a></p>
+      <p>¿Aún no tienes cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
 
       <form>
         <label for="email">Username</label>
@@ -23,18 +28,7 @@
 
         <button class="login-btn">Iniciar Sesión</button>
 
-        <div class="terms">
-          <input type="checkbox" id="terms" />
-          <label for="terms">Acepto los Términos y Condiciones y la Política de Privacidad.</label>
-        </div>
-
-        <button type="button" class="google-btn">
-          <img
-            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-            width="18"
-          />
-          Iniciar Sesión con Google
-        </button>
+    
       </form>
     </div>
   </div>

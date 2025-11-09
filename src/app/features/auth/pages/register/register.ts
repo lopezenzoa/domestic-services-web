@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import player from 'lottie-web';
@@ -21,9 +21,9 @@ export function playerFactory() {
     FormsModule,
     CommonModule,
     MatSnackBarModule,
-    LottieComponent,
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
 })
 export class Register {
