@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AnimationOptions, LottieComponent } from 'ngx-lottie';
+import { AnimationOptions } from 'ngx-lottie';
 import { Auth } from '../../services/auth';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../../users/services/users-service';
@@ -8,7 +8,7 @@ import { UsersService } from '../../../users/services/users-service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [LottieComponent, RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
