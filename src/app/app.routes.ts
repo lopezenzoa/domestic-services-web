@@ -22,13 +22,13 @@ export const routes: Routes = [
   },
   { path: 'providers', component: ProvidersList },
   { path: 'providers/calls', component: CallList },
-  { path: 'providers/add-shift', component: AddShiftForm },
   { path: 'calls/request/:providerId', component: RequestCallForm }, // El :providerId es un parámetro de ruta que se manda cuando se navega a este componente
   { path: 'facilities', component: FacilitiesList },
   { path: 'facilities/edit/:facilityId', component: CreateFacilities },
   { path: 'facilities/create', component: CreateFacilities },
   { path: 'providers/shifts', component: ProviderShifts },
   { path: 'providers/shifts/add', component: AddShiftForm },
+  { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm },
   { path: 'editar-licencia', component: EditarLicencia },
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];
