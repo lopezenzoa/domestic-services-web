@@ -1,16 +1,21 @@
 <section>
-    @for (facility of facilitiesList(); track $index) {
+  @for (facility of facilitiesList(); track $index) {
     <div class="facility-card">
-        <p>{{ facility.name }}</p>
-        <span>{{ facility.description }}</span>
-        @if (userRole === 'ADMIN') {
-        <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
-        }
+      <p>{{ facility.name }}</p>
+      <span>{{ facility.description }}</span>
+
+      @if (userRole === 'ADMIN') {
+        <div class="actions">
+          <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
+          <button class="delete-btn" (click)="deleteFacility(facility.id)">Eliminar</button>
+        </div>
+      }
     </div>
-    }
+  }
 </section>
+
 <section>
-    <button type="submit" class="btn-primary" routerLink="/facilities/create">
-        Agregar Servicio
-    </button>
+  <button type="submit" class="btn-primary" routerLink="/facilities/create">
+    Agregar Servicio
+  </button>
 </section>
