@@ -38,4 +38,9 @@ export class ProvidersService {
   getProviderShifts(providerId: number): Observable<Shift[]> {
     return this.http.get<Shift[]>(`${this.baseUrl}/shifts/${providerId}/available`);
   }
+
+  // Agregar un nuevo turno para el prestador
+  addShift(shiftData: any, providerId: number): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/shifts/${providerId}/create`, shiftData);
+  }
 }
