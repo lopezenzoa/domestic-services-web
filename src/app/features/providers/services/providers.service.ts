@@ -43,4 +43,14 @@ export class ProvidersService {
   addShift(shiftData: any, providerId: number): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/shifts/${providerId}/create`, shiftData);
   }
+
+  // Borrar un turno existente del prestador
+  deleteShift(shiftId: number, providerId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/shifts/${providerId}/delete/${shiftId}`);
+  }
+
+    // Agregar un nuevo turno para el prestador
+  editShift(shiftData: any, providerId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/shifts/${providerId}/update`, shiftData);
+  }
 }

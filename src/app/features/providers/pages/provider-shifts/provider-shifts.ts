@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ProvidersService } from '../../services/providers.service';
 import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from "@angular/router";
@@ -15,6 +15,8 @@ export class ProviderShifts {
   availability = signal<any[]>([])
   loading = signal(true)
   error=signal('');
+
+  providerId: WritableSignal<number | null> = signal(null);
 
   ngOnInit(){
     /*
@@ -55,6 +57,7 @@ export class ProviderShifts {
     
         this.availability.set(provider.shifts || []);
         this.loading.set(false);
+        this.providerId.set(provider.id);
       },
       error: () => {
         this.error.set('No se pudieron cargar los horarios.');
@@ -63,7 +66,17 @@ export class ProviderShifts {
     });
   }
 
-   /*
-   /
-  }*/
+  eliminarTurno(shiftId: number) {
+    // Simulamos la eliminación del turno en el backend
+    this.providersService.deleteShift(shiftId, this.providerId()!).subscribe({
+      next: () => {
+        // Actualizamos la lista de turnos disponibles
+        const updatedShifts = this.availability().filter(shift => shift.id !== shiftId);
+        this.availability.set(updatedShifts);
+      },
+      error: () => {
+        this.error.set('No se pudo eliminar el turno.');
+      }
+    });
+  }
 }

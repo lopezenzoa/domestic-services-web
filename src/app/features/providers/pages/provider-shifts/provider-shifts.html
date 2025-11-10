@@ -12,6 +12,20 @@
         <span [class.available]="shift.available" [class.unavailable]="!shift.available">
           {{ shift.available ? 'Disponible' : 'No disponible' }}
         </span>
+
+         <button
+          class="edit-button"
+          routerLink="/providers/shifts/edit/{{ shift.id }}"
+        >
+          Modificar
+        </button>
+
+        <button
+          class="delete-button"
+          (click)="eliminarTurno(shift.id)"
+        >
+          Eliminar
+        </button>
       </li>
     </ul>
 
@@ -19,6 +33,6 @@
       No tenés turnos disponibles actualmente.
     </p>
 
-    <button routerLink="/providers/shifts/add">Agregar turno</button>
+    <button class="add-button" routerLink="/providers/shifts/add">Agregar turno</button>
   </div>
 </div>
