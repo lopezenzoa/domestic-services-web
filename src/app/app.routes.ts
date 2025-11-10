@@ -26,6 +26,7 @@ export const routes: Routes = [
   { path: 'facilities', component: FacilitiesList },
   { path: 'facilities/edit/:facilityId', component: CreateFacilities },
   { path: 'facilities/create', component: CreateFacilities },
+   { path: 'providers/shifts', component: ProvidersList },
   { path: 'editar-licencia', component: EditarLicencia },
   { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
 ];

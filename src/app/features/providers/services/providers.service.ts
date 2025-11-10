@@ -30,6 +30,10 @@ export class ProvidersService {
     return this.http.get<Provider>(this.baseUrl + '/me');
   }
 
+  getMyProvider(): Observable<any> { //obtener los datos del prestador que está actualmente logueado
+  return this.http.get<any>(`${this.baseUrl}/me`);
+  } 
+
   /** Debería tener el tipado correcto (Shift) */
   getProviderShifts(providerId: number): Observable<Shift[]> {
     return this.http.get<Shift[]>(`${this.baseUrl}/shifts/${providerId}/available`);
