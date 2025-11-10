@@ -9,6 +9,7 @@ import { FacilitiesList } from './features/facilities/pages/facilities-list/faci
 import { ProvidersList } from './features/clients/components/providers-list/providers-list';
 import { AddShiftForm } from './features/providers/pages/add-shift-form/add-shift-form';
 import { ProviderShifts } from './features/providers/pages/provider-shifts/provider-shifts';
+import { NotFoundComponent } from './features/errors/not-found-component/not-found-component';
 
 export const routes: Routes = [
   {
@@ -30,5 +31,6 @@ export const routes: Routes = [
   { path: 'providers/shifts/add', component: AddShiftForm },
   { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm },
   { path: 'editar-licencia', component: EditarLicencia },
-  { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent },
 ];

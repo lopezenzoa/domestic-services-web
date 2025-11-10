@@ -6,6 +6,7 @@ import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
+  standalone:true,
   imports: [RouterOutlet, CommonModule, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -18,7 +19,7 @@ export class App {
   constructor(private router: Router) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
+      .subscribe((event: NavigationEnd) => {
         const currentRoute = event.urlAfterRedirects;
         // Oculta el navbar solo en login y register
         this.showNavbar = !(

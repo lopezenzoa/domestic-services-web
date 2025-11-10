@@ -27,7 +27,8 @@ export class FacilitiesService {
     return this.http.put<Facilities>(this.baseUrl + "/update", dto);
   }
 
-  deleteFacility(id: number): Observable<boolean> {
-    return this.http.delete<boolean>(this.baseUrl + "/" + id);
+  deleteFacility(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
   }
+
 }

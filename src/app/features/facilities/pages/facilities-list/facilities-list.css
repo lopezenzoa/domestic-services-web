@@ -3,6 +3,26 @@ section {
   margin: 2rem auto;
   font-family: 'Inter', sans-serif;
 }
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
 
 /* Cada tarjeta individual */
 .facility-card {

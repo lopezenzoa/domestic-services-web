@@ -8,7 +8,7 @@ import { UsersService } from '../../../users/services/users-service';
   selector: 'app-facilities-list',
   imports: [RouterLink],
   templateUrl: './facilities-list.html',
-  styleUrl: './facilities-list.css'
+  styleUrls: ['./facilities-list.css']
 })
 export class FacilitiesList {
   service: FacilitiesService = inject(FacilitiesService);
@@ -26,4 +26,22 @@ export class FacilitiesList {
       this.facilitiesList.set(res);
     });
   }
+
+  deleteFacility(id: number): void {
+    const confirmed = confirm('¿Seguro que deseas eliminar este servicio?');
+    if (confirmed) {
+      this.service.deleteFacility(id).subscribe({
+        next: () => {
+          alert(' Servicio eliminado correctamente');
+          // Filtra la lista local para que desaparezca sin recargar todo
+          this.facilitiesList.update(list => list.filter(f => f.id !== id));
+        },
+        error: (err) => {
+          console.error('Error al eliminar servicio:', err);
+          alert(' Error al intentar eliminar el servicio.');
+        }
+      });
+    }
+  }
+
 }
