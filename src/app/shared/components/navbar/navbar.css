@@ -15,7 +15,9 @@
 }
 
 .logo {
-  height: 36px;
+  width:75px;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+  transition: transform 0.3s ease;
 }
 
 .tagline {

@@ -8,6 +8,7 @@ import { CreateFacilities } from './features/facilities/pages/create-facilities/
 import { FacilitiesList } from './features/facilities/pages/facilities-list/facilities-list';
 import { ProvidersList } from './features/clients/components/providers-list/providers-list';
 import { AddShiftForm } from './features/providers/pages/add-shift-form/add-shift-form';
+import { NotFoundComponent } from './features/errors/not-found-component/not-found-component';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,6 @@ export const routes: Routes = [
   { path: 'facilities/edit/:facilityId', component: CreateFacilities },
   { path: 'facilities/create', component: CreateFacilities },
   { path: 'editar-licencia', component: EditarLicencia },
-  { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent },
 ];
