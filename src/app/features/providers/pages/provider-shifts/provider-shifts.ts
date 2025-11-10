@@ -1,10 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ProvidersService } from '../../services/providers.service';
 import { NgFor, NgIf } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-provider-shifts',
-  imports: [NgIf,NgFor],
+  imports: [NgIf, NgFor, RouterLink],
   templateUrl: './provider-shifts.html',
   styleUrl: './provider-shifts.css'
 })
@@ -15,7 +16,10 @@ export class ProviderShifts {
   loading = signal(true)
   error=signal('');
 
+  providerId: WritableSignal<number | null> = signal(null);
+
   ngOnInit(){
+    /*
     //Simulamos un "delay" de carga para que parezca una request real
     setTimeout(() => {
       try {
@@ -44,21 +48,35 @@ export class ProviderShifts {
         this.error.set('Error al cargar los turnos de prueba.');
         this.loading.set(false);
       }
-    }, 700); 
-  }
+    }, 700);
+    */
 
-   /*
-   //Esto es para cuadno ya tengamos datos cargados desde el back  
+    // Esto es para cuando ya tengamos datos cargados desde el back  
    this.providersService.getMyProvider().subscribe({
      next: (provider) => {
     
         this.availability.set(provider.shifts || []);
         this.loading.set(false);
+        this.providerId.set(provider.id);
       },
       error: () => {
         this.error.set('No se pudieron cargar los horarios.');
         this.loading.set(false);
       }
     });
-  }*/
+  }
+
+  eliminarTurno(shiftId: number) {
+    // Simulamos la eliminación del turno en el backend
+    this.providersService.deleteShift(shiftId, this.providerId()!).subscribe({
+      next: () => {
+        // Actualizamos la lista de turnos disponibles
+        const updatedShifts = this.availability().filter(shift => shift.id !== shiftId);
+        this.availability.set(updatedShifts);
+      },
+      error: () => {
+        this.error.set('No se pudo eliminar el turno.');
+      }
+    });
+  }
 }

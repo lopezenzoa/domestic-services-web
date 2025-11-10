@@ -3,7 +3,9 @@
     <div class="facility-card">
         <p>{{ facility.name }}</p>
         <span>{{ facility.description }}</span>
+        @if (userRole === 'ADMIN') {
         <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
+        }
     </div>
     }
 </section>

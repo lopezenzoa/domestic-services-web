@@ -19,14 +19,14 @@
       <h2>¡Bienvenido/a a ServiFácil!</h2>
       <p>¿Aún no tienes cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
 
-      <form>
-        <label for="email">Username</label>
-        <input type="email" id="email" placeholder="Introduce tu correo electrónico" />
+      <form [formGroup]="form" (ngSubmit)="login()">
+        <label for="username">Usuario</label>
+        <input type="text" id="username" placeholder="Introduce tu nombre de usuario" formControlName="username" />
 
         <label for="password">Contraseña</label>
-        <input type="password" id="password" placeholder="Ingresa tu contraseña" />
+        <input type="password" id="password" placeholder="Ingresa tu contraseña" formControlName="password" />
 
-        <button class="login-btn">Iniciar Sesión</button>
+        <button class="login-btn" [disabled]="!form.valid">Iniciar Sesión</button>
 
     
       </form>

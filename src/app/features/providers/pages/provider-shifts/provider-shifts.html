@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="card">
+    <h1 class="title">Mis Turnos Disponibles</h1>
+    <p class="subtitle">Visualiza los horarios en los que podés ser contratado</p>
+
+    <div *ngIf="loading()" class="loading">Cargando turnos...</div>
+    <div *ngIf="error()" class="error">{{ error() }}</div>
+
+    <ul *ngIf="!loading() && !error() && availability().length > 0">
+      <li *ngFor="let shift of availability()" class="shift-item">
+        <span class="datetime">{{ shift.dateTime }}</span>
+        <span [class.available]="shift.available" [class.unavailable]="!shift.available">
+          {{ shift.available ? 'Disponible' : 'No disponible' }}
+        </span>
+
+         <button
+          class="edit-button"
+          routerLink="/providers/shifts/edit/{{ shift.id }}"
+        >
+          Modificar
+        </button>
+
+        <button
+          class="delete-button"
+          (click)="eliminarTurno(shift.id)"
+        >
+          Eliminar
+        </button>
+      </li>
+    </ul>
+
+    <p *ngIf="!loading() && availability().length === 0" class="no-shifts">
+      No tenés turnos disponibles actualmente.
+    </p>
+
+    <button class="add-button" routerLink="/providers/shifts/add">Agregar turno</button>
+  </div>
+</div>

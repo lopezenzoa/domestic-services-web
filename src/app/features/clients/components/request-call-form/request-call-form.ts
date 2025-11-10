@@ -19,6 +19,7 @@ export class RequestCallForm {
   route: ActivatedRoute = inject(ActivatedRoute);
   // Obtener el ID del proveedor desde la ruta
   providerIdFromRoute: number | null = Number(this.route.snapshot.paramMap.get('providerId'));
+  facility: WritableSignal<string> = signal('');
 
   fb: FormBuilder = inject(FormBuilder);
   form: FormGroup = this.fb.group({
@@ -70,6 +71,7 @@ export class RequestCallForm {
     this.providersService.getProviderById(this.providerIdFromRoute!).subscribe((provider: any) => {
       this.form.patchValue({ providerName: provider.firstName + ' ' + provider.lastName });
       this.providerId.set(provider.id);
+      this.facility.set(provider.facility.name);
     });
 
     // Cargar los turnos del proveedor (opcional)
