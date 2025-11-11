@@ -21,7 +21,7 @@ display: flex;
 .reg-card {
    display: flex;
   width: 1000px; 
-  height: 650px;
+  height: 700px;
   background: white;
   border-radius: 16px;
   overflow: hidden;
@@ -98,6 +98,8 @@ display: flex;
   display: flex;
   flex-direction: column;
   padding: 2rem;
+  padding-right: 3rem;
+  
 }
 
 .reg-right h2 {
