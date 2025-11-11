@@ -75,40 +75,5 @@ export class CallList implements OnInit {
     this.router.navigate(['/providers/shifts/edit', callId]);
   }
 
-  completeCall(callId: number, providerId: number) {
-  Swal.fire({
-    title: '¿Deseás marcar esta visita como completada?',
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonText: 'Sí, completarla',
-    cancelButtonText: 'Cancelar',
-    confirmButtonColor: '#06d6a0',
-    cancelButtonColor: '#e63946',
-    background: '#fff',
-    color: '#333',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.service.markAsFinished(callId, providerId).subscribe({
-        next: () => {
-          Swal.fire({
-            title: '¡Visita completada!',
-            text: 'La visita fue marcada como completada con éxito.',
-            icon: 'success',
-            confirmButtonColor: '#06d6a0',
-          }).then(() => {
-            this.getMyCalls(); // recarga lista actualizada sin refrescar la página
-          });
-        },
-        error: () => {
-          Swal.fire({
-            title: 'Error',
-            text: 'Hubo un problema al completar la visita.',
-            icon: 'error',
-            confirmButtonColor: '#e63946',
-          });
-        },
-      });
-    }
-  });
-}
+  
 }
