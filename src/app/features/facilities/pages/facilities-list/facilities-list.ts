@@ -1,7 +1,7 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FacilitiesService } from '../../services/facilities-service';
 import { Facilities } from '../../models/facilities.model';
-import { RouterLink } from "@angular/router";
+import { RouterLink,Router } from "@angular/router";
 import { UsersService } from '../../../users/services/users-service';
 
 @Component({
@@ -11,10 +11,11 @@ import { UsersService } from '../../../users/services/users-service';
   styleUrls: ['./facilities-list.css']
 })
 export class FacilitiesList {
+   private router = inject(Router);
   service: FacilitiesService = inject(FacilitiesService);
   facilitiesList: WritableSignal<Facilities[]> = signal([]);
   usersService: UsersService = inject(UsersService);
-  userRole: string | null = null;
+  userRole: 'ADMIN' | 'CLIENT' | 'PROVIDER' | null = null;
 
   constructor() {
     // Obtener perfil del usuario al cargar el componente
@@ -25,6 +26,13 @@ export class FacilitiesList {
     this.service.getAll().subscribe((res: Facilities[]) => {
       this.facilitiesList.set(res);
     });
+  }
+    // Navegar a la lista de prestadores del servicio
+  verPrestadores(facilityId: number) {
+    // si querés permitir también a PROVIDER, agregalo en la condición
+    if (this.userRole === 'CLIENT') {
+      this.router.navigate(['/providers', facilityId]);
+    }
   }
 
   deleteFacility(id: number): void {

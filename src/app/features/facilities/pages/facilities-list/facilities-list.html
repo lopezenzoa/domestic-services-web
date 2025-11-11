@@ -1,11 +1,11 @@
 <section>
   @for (facility of facilitiesList(); track $index) {
-    <div class="facility-card">
+    <div class="facility-card" (click)="verPrestadores(facility.id)">
       <p>{{ facility.name }}</p>
       <span>{{ facility.description }}</span>
 
       @if (userRole === 'ADMIN') {
-        <div class="actions">
+        <div class="actions" (click)="$event.stopPropagation()">
           <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
           <button class="delete-btn" (click)="deleteFacility(facility.id)">Eliminar</button>
         </div>
@@ -14,8 +14,11 @@
   }
 </section>
 
-<section>
-  <button type="submit" class="btn-primary" routerLink="/facilities/create">
-    Agregar Servicio
-  </button>
-</section>
+@if (userRole === 'ADMIN') {
+  <section>
+    <button type="button" class="btn-primary" routerLink="/facilities/create">
+      Agregar Servicio
+    </button>
+  </section>
+}
+

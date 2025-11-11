@@ -23,6 +23,7 @@ export const routes: Routes = [
   },
   { path: 'providers', component: ProvidersList },
   { path: 'providers/calls', component: CallList },
+  { path: 'providers/:facilityId', component: ProvidersList },
   { path: 'calls/request/:providerId', component: RequestCallForm }, // El :providerId es un parámetro de ruta que se manda cuando se navega a este componente
   { path: 'facilities', component: FacilitiesList },
   { path: 'facilities/edit/:facilityId', component: CreateFacilities },
