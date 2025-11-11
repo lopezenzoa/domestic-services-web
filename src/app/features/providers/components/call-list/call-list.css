@@ -6,23 +6,29 @@
   padding: 2rem 0;
 }
 
+.agenda-wrapper {
+  background-color: #ffffff; 
+  border-radius: 16px;
+  padding: 2.5rem 3rem;
+  max-width: 1000px;
+  margin: 2rem auto; 
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb; 
+  animation: fadeInUp 0.8s ease;
+  position: relative;
+}
 /* Header*/
 .agenda-header {
   text-align: center;
   margin-bottom: 2rem;
-  background: linear-gradient(90deg, #d88bff, #ff914d, #00adb5, #d88bff);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation:
-    fadeInDown 0.8s ease forwards,
-    colorShift 6s ease-in-out infinite 0.8s; 
+  color: #2c3e50;
+ 
  
 }
 
 .agenda-header h2 {
   font-size: 1.8rem;
-  color: #2c3e50;
+  color: #1C77B5;
   margin-bottom: 0.3rem;
 }
 
@@ -147,6 +153,21 @@
   font-weight: 500;
   transition: background-color 0.2s ease;
   margin: 2%;
+}
+.card {
+  position: relative; /* permite posicionar cosas adentro */
+  background-color: #ecf9f0;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+/* contenedor de los botones */
+.card-buttons {
+  position: absolute;
+  bottom: 1rem;   /* cambialo a top: 1rem; si querés arriba */
+  right: 1rem;    /* los lleva a la derecha */
+  display: flex;
+  gap: 0.5rem;    /* separación entre botones */
 }
 
 /* boton aceptar */ 
