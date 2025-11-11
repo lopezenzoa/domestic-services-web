@@ -24,6 +24,7 @@
           <h1>Visita #{{ call.id }}</h1>
           <p><strong>Prestador:</strong> {{ call.provider?.firstName }} {{ call.provider?.lastName }}</p>
           <p><strong>Cliente:</strong> {{ call.client?.firstName }} {{ call.client?.lastName }}</p>
+          <p><strong>Servicio:</strong> {{ call.provider?.facility?.name }}</p>
           <p><strong>Descripción:</strong> {{ call.description }}</p>
           <p><strong>Dirección:</strong> {{ call.address }}</p>
           <p><strong>Fecha:</strong> {{ call.date | date: 'dd/MM/yyyy HH:mm' }}</p>

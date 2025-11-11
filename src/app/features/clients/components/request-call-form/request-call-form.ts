@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CallService } from '../../../providers/services/call-service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-request-call-form',
@@ -13,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./request-call-form.css']
 })
 export class RequestCallForm {
+  router: Router = inject(Router);
   clientsService: ClientsService = inject(ClientsService);
   providersService: ProvidersService = inject(ProvidersService);
   callsService: CallService = inject(CallService);
@@ -81,27 +84,57 @@ export class RequestCallForm {
   }
 
   submitRequest() {
-    if (this.form.valid) {
-      // Esta es la data que se enviará al backend
-      const requestData = {
-        date: this.form.get('date')?.value,
-        client: { id: this.clientId() },
-        provider: { id: this.providerId() },
-        description: this.form.get('description')?.value,
-        address: this.form.get('address')?.value
-      };
+     if (this.form.valid) {
+    const requestData = {
+      date: this.form.get('date')?.value,
+      client: { id: this.clientId() },
+      provider: { id: this.providerId() },
+      description: this.form.get('description')?.value,
+      address: this.form.get('address')?.value
+    };
 
-      this.callsService.requestCall(requestData).subscribe({
-        next: (response) => {
-          console.log('Solicitud enviada con éxito:', response);
-        },
-        error: (error) => {
-          console.error('Error al enviar la solicitud:', error);
-        }
-      });
-    } else {
-      console.log('Formulario inválido');
-    }
+    this.callsService.requestCall(requestData).subscribe({
+  next: (response) => {
+    console.log('Solicitud enviada con éxito:', response);
+
+    Swal.fire({
+      title: '¡Solicitud enviada!',
+      text: 'Tu visita fue solicitada con éxito.',
+      icon: 'success',
+      confirmButtonColor: '#00bfa5',
+      confirmButtonText: 'Ir a buscar servicios',
+      background: '#ffffff',
+      color: '#333',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/facilities']); // 🔹 Cambiá la ruta según tu proyecto
+      }
+    });
+
+    this.form.reset();
+  },
+  error: (error) => {
+    console.error('Error al enviar la solicitud:', error);
+    Swal.fire({
+      title: 'Error',
+      text: 'Ocurrió un problema al enviar la solicitud. Intenta nuevamente.',
+      icon: 'error',
+      confirmButtonColor: '#ef4444',
+      confirmButtonText: 'Cerrar',
+      background: '#ffffff',
+      color: '#333',
+    });
   }
-
-}
+});
+  } else {
+    Swal.fire({
+      title: 'Formulario incompleto',
+      text: 'Por favor completá todos los campos obligatorios.',
+      icon: 'warning',
+      confirmButtonColor: '#facc15',
+      confirmButtonText: 'Entendido',
+      background: '#ffffff',
+      color: '#333',
+    });
+  }
+  }}
