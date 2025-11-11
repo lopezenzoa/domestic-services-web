@@ -21,16 +21,23 @@ export const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ]
   },
-  { path: 'providers', component: ProvidersList },
-  { path: 'providers/calls', component: CallList },
-  { path: 'providers/:facilityId', component: ProvidersList },
-  { path: 'calls/request/:providerId', component: RequestCallForm }, // El :providerId es un parámetro de ruta que se manda cuando se navega a este componente
-  { path: 'facilities', component: FacilitiesList },
-  { path: 'facilities/edit/:facilityId', component: CreateFacilities },
-  { path: 'facilities/create', component: CreateFacilities },
+  //RUTAS ESPECÍFICAS DEL PRESTADOR (PRIMERO)
   { path: 'providers/shifts', component: ProviderShifts },
   { path: 'providers/shifts/add', component: AddShiftForm },
   { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm },
+  { path: 'providers/calls', component: CallList },
+
+  // CLIENTE (BÚSQUEDA DE PRESTADORES)
+  { path: 'providers/:facilityId', component: ProvidersList },
+  { path: 'providers', component: ProvidersList },
+
+  //  TURNOS Y SERVICIOS
+  { path: 'calls/request/:providerId', component: RequestCallForm },
+  { path: 'facilities', component: FacilitiesList },
+  { path: 'facilities/edit/:facilityId', component: CreateFacilities },
+  { path: 'facilities/create', component: CreateFacilities },
+
+  // OTROS
   { path: 'editar-licencia', component: EditarLicencia },
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
