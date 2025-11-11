@@ -1,85 +1,67 @@
 <div class="booking-wrapper">
   <h2 class="title">
-    Agendar tu Servicio con <span>{{ form.value.providerName }}</span>, {{ facility() }}
+    Agendar tu Servicio con <span>{{ form.value.providerName }}</span
+    >, {{ facility() }}
   </h2>
   <p class="subtitle">Completá los detalles para confirmar tu visita</p>
 
   <div class="booking-grid">
     <form [formGroup]="form" (ngSubmit)="submitRequest()" class="booking-grid">
-    <!-- Izquierda -->
-    <div class="left-section">
-      <h3>Seleccionar Fecha y Hora</h3>
-      <div class="date-select">
-        <label>Fecha y hora del Servicio</label>
-        <select formControlName="date" class="select-field">
-          <option value="" disabled selected>
-            {{ providerShifts().length === 0 ? 'Cargando turnos...' : 'Seleccionar turno' }}
-          </option>
-          <option *ngFor="let shift of providerShifts()" [value]="shift.dateTime">
-            {{ shift.dateTime }}
-          </option>
-        </select>
+      <!-- Izquierda -->
+      <div class="left-section">
+        <h3>Seleccionar Fecha y Hora</h3>
+        <div class="date-select">
+          <label>Fecha y hora del Servicio</label>
+          <select formControlName="date" class="select-field">
+            <option value="" disabled selected>
+              {{ providerShifts().length === 0 ? 'Cargando turnos...' : 'Seleccionar turno' }}
+            </option>
+            <option *ngFor="let shift of providerShifts()" [value]="shift.dateTime">
+              {{ shift.dateTime | date : 'dd/MM/yyyy - HH:mm' }}
+            </option>
+          </select>
 
-        <label>Descripción del Servicio</label>
-        <textarea
-          formControlName="description"
-          placeholder="Ej: instalación eléctrica o reparación de toma corriente"
-        ></textarea>
-
-      </div>
-    </div>
-
-    <!-- Derecha -->
-    <div class="right-section">
-      <h3>Resumen de tu Solicitud</h3>
-
-      <div class="provider-summary">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
-          alt="Proveedor"
-          class="provider-photo"
-        />
-        <div>
-          <h4>{{ form.value.providerName }}</h4>
-          <p>Electricista</p>
+          <label>Descripción del Servicio</label>
+          <textarea
+            formControlName="description"
+            placeholder="Ej: instalación eléctrica o reparación de toma corriente"
+          ></textarea>
         </div>
       </div>
 
-      <div class="form-summary">
-        <label>Nombre y Apellido</label>
-        <input
-          type="text"
-          formControlName="clientName"
-          placeholder="Ej: Juan Pérez"
-        />
+      <!-- Derecha -->
+      <div class="right-section">
+        <h3>Resumen de tu Solicitud</h3>
 
-        <label>Proveedor</label>
-        <input
-          type="text"
-          formControlName="providerName"
-          placeholder="Ej: María Gómez"
-        />
+        <div class="provider-summary">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
+            alt="Proveedor"
+            class="provider-photo"
+          />
+          <div>
+            <h4>{{ form.value.providerName }}</h4>
+            <p>Electricista</p>
+          </div>
+        </div>
 
-        <label>Dirección</label>
-        <input
-          type="text"
-          formControlName="address"
-          placeholder="Ej: Calle Falsa 123"
-        />
+        <div class="form-summary">
+          <label>Nombre y Apellido</label>
+          <input type="text" formControlName="clientName" placeholder="Ej: Juan Pérez" />
 
-        <button
-          type="submit"
-          class="continue-btn"
-          [disabled]="form.invalid"
-        >
-          Confirmar Reserva y Continuar
-        </button>
+          <label>Proveedor</label>
+          <input type="text" formControlName="providerName" placeholder="Ej: María Gómez" />
 
-        <p class="disclaimer">
-          Tu turno todavía no está procesado. Garantizaremos tu solicitud.
-        </p>
+          <label>Dirección</label>
+          <input type="text" formControlName="address" placeholder="Ej: Calle Falsa 123" />
+
+          <button type="submit" class="continue-btn" [disabled]="form.invalid">
+            Confirmar Reserva y Continuar
+          </button>
+
+          <p class="disclaimer">Tu turno todavía no está procesado. Garantizaremos tu solicitud.</p>
+        </div>
       </div>
-    </div>
     </form>
   </div>
 </div>
