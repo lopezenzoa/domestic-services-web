@@ -14,8 +14,8 @@ export class CallService {
   http = inject(HttpClient);
   router = inject(Router);
 
-  getMyCalls(): Observable<Call[]> {
-    return this.http.get<Call[]>(this.url + "/me");
+  getMyCalls(): Observable<any[]> {
+    return this.http.get<any[]>(this.url + "/me");
   }
 
   getCalls(providerId: number) : Observable<Call[]>{
@@ -25,4 +25,13 @@ export class CallService {
   requestCall(callData: any) {
     return this.http.post(this.url + '/request', callData);
   }
+
+  denyCall(callId : number, providerId: number){
+    return this.http.put( this.url + `/provider/${providerId}/decline/${callId}`, {});
+  }
+
+  acceptCall(callId : number, providerId: number) {
+    return this.http.put( this.url + `/provider/${providerId}/accept/${callId}`, {});
+  }
+
 }

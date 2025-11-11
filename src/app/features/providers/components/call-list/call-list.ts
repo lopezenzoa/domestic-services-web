@@ -12,7 +12,7 @@ import {  NgClass, DatePipe, NgIf } from '@angular/common';
   styleUrl: './call-list.css',
 })
 export class CallList implements OnInit {
-  calls = signal<Call[] | undefined>(undefined);
+  calls = signal<any[] | undefined>(undefined);
   service = inject(CallService);
   router = inject(Router);
 
@@ -23,6 +23,25 @@ export class CallList implements OnInit {
   getMyCalls() {
     return this.service.getMyCalls().subscribe((calls) => {
       this.calls.set(calls);
+    });
+  }
+
+
+  acceptCall(idCall : number, providerId : number){
+    this.service.acceptCall(idCall, providerId).subscribe({
+      next: () => {alert("La contratacion fue aceptada con exito.")
+        window.location.reload();
+      },
+      error: () => alert("Hubo un error, no se pudo aceptar la contratacion.")
+    });
+  }
+
+  denyCall(idCall: number, providedId: number){
+    this.service.denyCall(idCall, providedId).subscribe({
+      next: () => {alert("La contratacion fue rechazada con exito.");
+        window.location.reload();
+      },
+      error: () => alert("Hubo un error, no se pudo rechazar la contratacion.")
     });
   }
 }
