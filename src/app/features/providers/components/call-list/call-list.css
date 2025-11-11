@@ -91,6 +91,54 @@
 .card-content strong {
   color: #222;
 }
+/* Contenedor de los botones de las tarjetas */
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Estilo base para todos los botones */
+.card-buttons button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.button-accept {
+  background-color: #2a9d8f;
+}
+
+.button-accept:hover {
+  background-color: #21867a;
+}
+
+/* === BOTONES DE MODIFICAR Y COMPLETADA === */
+.button-edit {
+  background-color: #457b9d;
+}
+
+.button-edit:hover {
+  background-color: #366789;
+}
+
+.button-finish {
+  background-color: #06d6a0;
+}
+
+.button-finish:hover {
+  background-color: #05b48a;
+}
+
+/* === CONTENEDOR DE BOTONES PARA VISITAS ACEPTADAS === */
+.accepted-buttons {
+  border-top: 1px solid #d3d3d3;
+  padding-top: 1rem;
+}
 
 /* Estados */
 .pending {

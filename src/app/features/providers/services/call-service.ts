@@ -33,5 +33,8 @@ export class CallService {
   acceptCall(callId : number, providerId: number) {
     return this.http.put( this.url + `/provider/${providerId}/accept/${callId}`, {});
   }
+  markAsFinished(callId: number, providerId: number) {
+  return this.http.put(`http://localhost:8080/api/providers/${providerId}/calls/${callId}/finish`, {});
+}
 
 }

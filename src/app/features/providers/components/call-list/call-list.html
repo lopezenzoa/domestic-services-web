@@ -1,40 +1,60 @@
 <div class="agenda-wrapper">
   <header class="agenda-header">
-    <h2> Agenda de visitas</h2>
+    <h2>Agenda de visitas</h2>
     <p>Total de visitas: {{ calls()?.length }}</p>
   </header>
 
   <div class="agenda-container">
-    @for (call of calls(); track $index) {
-      <div
-        class="card"
-        [ngClass]="{
-          'pending': call.state === 'REQUESTING',
-          'accepted': call.state === 'PENDING' || call.state === 'FINISHED',
-          'rejected': call.state === 'DECLINED'
-        }"
-      >
-        <div class="card-icon">
-          <span *ngIf="call.state === 'REQUESTING'"></span>
-          <span *ngIf="call.state === 'FINISHED'"></span>
-          <span *ngIf="call.state === 'DECLINED'"></span>
-        </div>
+       @for (call of calls(); track $index) {
+    <div
+      class="card"
+      [ngClass]="{
+        pending: call.state === 'REQUESTING',
+        accepted: call.state === 'PENDING' || call.state === 'FINISHED',
+        rejected: call.state === 'DECLINED'
+      }"
+    >
+      <div class="card-icon">
+        <span *ngIf="call.state === 'REQUESTING'"></span>
+        <span *ngIf="call.state === 'FINISHED'"></span>
+        <span *ngIf="call.state === 'DECLINED'"></span>
+      </div>
 
-        <div class="card-content">
-          <h1>Visita #{{ call.id }}</h1>
-          <p><strong>Prestador:</strong> {{ call.provider?.firstName }} {{ call.provider?.lastName }}</p>
-          <p><strong>Cliente:</strong> {{ call.client?.firstName }} {{ call.client?.lastName }}</p>
-          <p><strong>Servicio:</strong> {{ call.provider?.facility?.name }}</p>
-          <p><strong>Descripción:</strong> {{ call.description }}</p>
-          <p><strong>Dirección:</strong> {{ call.address }}</p>
-          <p><strong>Fecha:</strong> {{ call.date | date: 'dd/MM/yyyy HH:mm' }}</p>
-          <p><strong>Estado:</strong> {{ call.state }}</p>
-        </div>
+      <div class="card-content">
+        <h1>Visita #{{ call.id }}</h1>
+        <p>
+          <strong>Prestador:</strong> {{ call.provider?.firstName }} {{ call.provider?.lastName }}
+        </p>
+        <p><strong>Cliente:</strong> {{ call.client?.firstName }} {{ call.client?.lastName }}</p>
+        <p><strong>Servicio:</strong> {{ call.provider?.facility?.name }}</p>
+        <p><strong>Descripción:</strong> {{ call.description }}</p>
+        <p><strong>Dirección:</strong> {{ call.address }}</p>
+        <p><strong>Fecha:</strong> {{ call.date | date : 'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Estado:</strong> {{ call.state }}</p>
+      </div>
 
-        
-        <div class="card-buttons">
+  <!-- Botones solo si el estado es REQUESTING -->
+        <div class="card-buttons" *ngIf="call.state === 'REQUESTING'">
           <button class="button-deny" (click)="denyCall(call.id!, call.provider.id)">Rechazar</button>
-        <button class="button-accept" (click)="acceptCall(call.id!, call.provider.id)">Aceptar</button>
+          <button class="button-accept" (click)="acceptCall(call.id!, call.provider.id)">Aceptar</button>
+        </div>
+
+        <!-- Botones solo si la visita ya fue aceptada -->
+        <div class="card-buttons accepted-buttons" *ngIf="call.state === 'PENDING'">
+          <button class="button-edit" (click)="editCall(call.id!)">Modificar</button>
+          <button class="button-finish" (click)="completeCall(call.id!, call.provider.id)">
+              Completada
+          </button>
+        </div>
+
+
+        <!-- Mensajes de resultado -->
+        <div class="status-box rejected" *ngIf="call.state === 'DECLINED'">
+          <span>Visita rechazada</span>
+        </div>
+
+        <div class="status-box finished" *ngIf="call.state === 'FINISHED'">
+          <span>Visita completada</span>
         </div>
       </div>
     }
