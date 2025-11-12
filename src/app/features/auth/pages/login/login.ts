@@ -59,6 +59,8 @@ export class Login {
                   this.router.navigate(['/facilities']);
                 } else if (user.role === 'PROVIDER') {
                  this.router.navigate(['/providers/calls']);// Redirigir a la página de lista de contrataciones } else { this.router.navigate(['/facilities']); // Redirigir a la página de servicios generales
+                } else {
+                  this.router.navigate(['/facilities']);
                 }
               },
               error: (err) => console.error('Error al obtener el perfil:', err)
