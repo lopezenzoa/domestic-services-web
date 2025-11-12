@@ -1,4 +1,5 @@
 .navbar {
+  height: 70px;
   background-color: #0b3954; /* Azul oscuro principal */
   display: flex;
   justify-content: space-between;
@@ -15,9 +16,10 @@
 }
 
 .logo {
-  width:75px;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
-  transition: transform 0.3s ease;
+  height: 60px; /* límite del alto del contenedor */
+  width: auto;
+  transform: scale(1.3); /* aumenta el tamaño visual sin alterar el layout */
+  transform-origin: left center; /* para que crezca hacia afuera */
 }
 
 .tagline {
