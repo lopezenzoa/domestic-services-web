@@ -1,6 +1,6 @@
 <section>
   @for (facility of facilitiesList(); track $index) {
-    <div class="facility-card" (click)="verPrestadores(facility.id)">
+    <div class="facility-card" (click)="verPrestadores(facility.name)">
       <p>{{ facility.name }}</p>
       <span>{{ facility.description }}</span>
 

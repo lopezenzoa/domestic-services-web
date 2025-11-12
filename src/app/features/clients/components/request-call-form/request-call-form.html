@@ -16,8 +16,15 @@
             <option value="" disabled selected>
               {{ providerShifts().length === 0 ? 'Cargando turnos...' : 'Seleccionar turno' }}
             </option>
-            <option *ngFor="let shift of providerShifts()" [value]="shift.dateTime">
-              {{ shift.dateTime | date : 'dd/MM/yyyy - HH:mm' }}
+
+            <option
+              *ngFor="let shift of providerShifts()"
+              [value]="shift.dateTime"
+              [disabled]="!shift.available"
+              [ngClass]="{ 'disabled-option': !shift.available }"
+            >
+              {{ shift.dateTime | date : 'dd/MM/yyyy HH:mm' }}
+              {{ !shift.available ? '(ocupado)' : '' }}
             </option>
           </select>
 

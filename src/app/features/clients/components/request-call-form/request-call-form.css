@@ -198,6 +198,12 @@ textarea {
   margin-top: 1rem;
   text-align: center;
 }
+.disabled-option {
+  color: #999;
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
 
 /* RESPONSIVE */
 @media (max-width: 960px) {

@@ -1,17 +1,17 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { FacilitiesService } from '../../services/facilities-service';
 import { Facilities } from '../../models/facilities.model';
-import { RouterLink,Router } from "@angular/router";
+import { RouterLink, Router } from '@angular/router';
 import { UsersService } from '../../../users/services/users-service';
 
 @Component({
   selector: 'app-facilities-list',
   imports: [RouterLink],
   templateUrl: './facilities-list.html',
-  styleUrls: ['./facilities-list.css']
+  styleUrls: ['./facilities-list.css'],
 })
 export class FacilitiesList {
-   private router = inject(Router);
+  private router = inject(Router);
   service: FacilitiesService = inject(FacilitiesService);
   facilitiesList: WritableSignal<Facilities[]> = signal([]);
   usersService: UsersService = inject(UsersService);
@@ -27,11 +27,13 @@ export class FacilitiesList {
       this.facilitiesList.set(res);
     });
   }
-    // Navegar a la lista de prestadores del servicio
-  verPrestadores(facilityId: number) {
+  // Navegar a la lista de prestadores del servicio
+  verPrestadores(facilityName: string) {
     // si querés permitir también a PROVIDER, agregalo en la condición
     if (this.userRole === 'CLIENT') {
-      this.router.navigate(['/providers', facilityId]);
+      this.router.navigate(['/providers'], {
+        queryParams: { facility: facilityName.toLowerCase() },
+      });
     }
   }
 
@@ -42,14 +44,13 @@ export class FacilitiesList {
         next: () => {
           alert(' Servicio eliminado correctamente');
           // Filtra la lista local para que desaparezca sin recargar todo
-          this.facilitiesList.update(list => list.filter(f => f.id !== id));
+          this.facilitiesList.update((list) => list.filter((f) => f.id !== id));
         },
         error: (err) => {
           console.error('Error al eliminar servicio:', err);
           alert(' Error al intentar eliminar el servicio.');
-        }
+        },
       });
     }
   }
-
 }

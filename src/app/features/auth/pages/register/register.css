@@ -229,6 +229,33 @@ display: flex;
   font-size: 0.8rem;
   margin-top: 5px;
 }
+select.inp {
+  appearance: none;
+  background-color: #f9fafb;
+  border: 1.8px solid #d0d7de;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: #111;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+select.inp:hover {
+  background: #fff;
+  border-color: #b4c0cc;
+}
+
+select.inp:focus {
+  border-color: #1c77b5;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(28, 119, 181, 0.15);
+}
+
+select.inp.invalid-input {
+  border-color: #e53935;
+}
+
 
 /* === BOTÓN PRINCIPAL (refuerzo contraste) === */
 .btn-primary {
