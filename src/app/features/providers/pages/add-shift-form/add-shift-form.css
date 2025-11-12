@@ -76,6 +76,44 @@ mat-form-field {
   border-color: #00bfa5;
   box-shadow: 0 0 6px #00bfa5;
 }
+/* === SWEETALERT2 MODAL PERSONALIZADO === */
+.swal2-popup.rounded-modal {
+  border-radius: 18px !important;
+  font-family: "Poppins", sans-serif !important;
+  padding: 2.5rem 2rem !important;
+  box-shadow: 0 6px 20px rgba(28, 119, 181, 0.15) !important;
+}
+
+.swal2-title {
+  font-size: 1.6rem !important;
+  color: #1c77b5 !important;
+  font-weight: 600 !important;
+}
+
+.swal2-html-container {
+  font-size: 1rem !important;
+  color: #444 !important;
+}
+
+.swal2-icon.swal2-success {
+  border-color: #00bfa5 !important;
+  color: #00bfa5 !important;
+}
+
+.swal2-icon.swal2-warning {
+  border-color: #ffb74d !important;
+  color: #ffb74d !important;
+}
+
+.swal2-icon.swal2-error {
+  border-color: #e53935 !important;
+  color: #e53935 !important;
+}
+
+.swal2-confirm {
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+}
 
 /*  BOTÓN */
 button {

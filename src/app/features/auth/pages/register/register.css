@@ -21,7 +21,7 @@ display: flex;
 .reg-card {
    display: flex;
   width: 1000px; 
-  height: 700px;
+ 
   background: white;
   border-radius: 16px;
   overflow: hidden;
@@ -240,7 +240,26 @@ select.inp {
   cursor: pointer;
   transition: all 0.25s ease;
 }
-
+select.inp option {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f9fafb;
+  color: #111;
+  font-family: "Poppins", sans-serif;
+}
+select.inp::-webkit-scrollbar {
+  width: 8px;
+}
+select.inp::-webkit-scrollbar-thumb {
+  background-color: #c7c7c7;
+  border-radius: 10px;
+}
+select.inp:focus {
+  border-color: #1c77b5;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(28, 119, 181, 0.15);
+  border-radius: 10px;
+}
 select.inp:hover {
   background: #fff;
   border-color: #b4c0cc;
@@ -295,7 +314,13 @@ select.inp.invalid-input {
 .login-link a:hover {
   text-decoration: underline;
 }
-
+/* Firefox necesita un ajuste extra */
+@-moz-document url-prefix() {
+  select.inp {
+    border-radius: 10px;
+    background-color: #f9fafb;
+  }
+}
 
 /* === RESPONSIVE === */
 @media (max-width: 900px) {

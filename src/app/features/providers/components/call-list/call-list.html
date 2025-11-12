@@ -42,9 +42,6 @@
         <!-- Botones solo si la visita ya fue aceptada -->
         <div class="card-buttons accepted-buttons" *ngIf="call.state === 'PENDING'">
           <button class="button-edit" (click)="editCall(call.id!)">Modificar</button>
-          <button class="button-finish" (click)="completeCall(call.id!, call.provider.id)">
-              Completada
-          </button>
         </div>
 
 
