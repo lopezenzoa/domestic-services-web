@@ -217,4 +217,8 @@ button:hover {
   h2 {
     font-size: 1.4rem;
   }
+  .time-field{
+     width: 90%;
+  margin-bottom: 1.8rem;
+  }
 }

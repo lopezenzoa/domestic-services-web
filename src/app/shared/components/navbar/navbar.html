@@ -9,6 +9,8 @@
     @if (userRole() !== 'PROVIDER') {
       <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
       <a routerLink="/providers" routerLinkActive="active">Contratar</a>
+      <a routerLink="/mis-turnos" routerLinkActive="active">Mis turnos</a>
+      
     }
     @if (userRole() === 'PROVIDER') {
       <a routerLinkActive="active" routerLink="/providers/shifts/add">Mis Turnos</a>
