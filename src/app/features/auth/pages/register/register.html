@@ -2,14 +2,14 @@
   <div class="reg-card">
     <!-- LADO IZQUIERDO -->
     <div class="reg-left">
-       <div class="logo-container">
+      <div class="logo-container">
         <img src="../../../../../assets/logo3.png" alt="ServiFácil logo" class="logo" />
       </div>
-   <div class="text-content">
-    <h2>ServiFácil: Tu Hogar, Solucionado</h2>
-    <p>Conectando a los mejores profesionales con tu hogar</p>
+      <div class="text-content">
+        <h2>ServiFácil: Tu Hogar, Solucionado</h2>
+        <p>Conectando a los mejores profesionales con tu hogar</p>
+      </div>
     </div>
-  </div>
 
     <!-- LADO DERECHO -->
     <div class="reg-right">
@@ -17,16 +17,25 @@
       <p class="sub">¿Cómo deseas registrarte?</p>
 
       <div class="type-switch">
-        <button type="button" class="switch-btn" [class.active]="tipoCuenta === 'usuario'" (click)="tipoCuenta = 'usuario'">
+        <button
+          type="button"
+          class="switch-btn"
+          [class.active]="tipoCuenta === 'usuario'"
+          (click)="tipoCuenta = 'usuario'"
+        >
           Soy Cliente
         </button>
-        <button type="button" class="switch-btn" [class.active]="tipoCuenta === 'prestador'" (click)="tipoCuenta = 'prestador'">
+        <button
+          type="button"
+          class="switch-btn"
+          [class.active]="tipoCuenta === 'prestador'"
+          (click)="tipoCuenta = 'prestador'"
+        >
           Soy Prestador
         </button>
       </div>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-
         <!-- Nombre / Apellido -->
         <div class="pair">
           <div class="field">
@@ -36,9 +45,17 @@
               formControlName="firstName"
               placeholder="Nombre"
               required
-              [ngClass]="{ 'invalid-input': form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="
+                form.get('firstName')?.invalid && (form.get('firstName')?.touched || form.valid)
+              "
+            >
               El nombre es obligatorio
             </small>
           </div>
@@ -50,9 +67,15 @@
               formControlName="lastName"
               placeholder="Apellido"
               required
-              [ngClass]="{ 'invalid-input': form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.touched || form.valid)"
+            >
               El apellido es obligatorio
             </small>
           </div>
@@ -67,9 +90,15 @@
               formControlName="username"
               placeholder="Nombre de usuario"
               required
-              [ngClass]="{ 'invalid-input': form.get('username')?.invalid && (form.get('username')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('username')?.invalid && (form.get('username')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('username')?.invalid && (form.get('username')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="form.get('username')?.invalid && (form.get('username')?.touched || form.valid)"
+            >
               El nombre de usuario es obligatorio
             </small>
           </div>
@@ -82,9 +111,15 @@
               formControlName="email"
               placeholder="Correo electrónico"
               required
-              [ngClass]="{ 'invalid-input': form.get('email')?.invalid && (form.get('email')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('email')?.invalid && (form.get('email')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('email')?.invalid && (form.get('email')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="form.get('email')?.invalid && (form.get('email')?.touched || form.valid)"
+            >
               El correo electrónico es obligatorio
             </small>
           </div>
@@ -99,9 +134,18 @@
               formControlName="phoneNumber"
               placeholder="Teléfono"
               required
-              [ngClass]="{ 'invalid-input': form.get('phoneNumber')?.invalid && (form.get('phoneNumber')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('phoneNumber')?.invalid &&
+                  (form.get('phoneNumber')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('phoneNumber')?.invalid && (form.get('phoneNumber')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="
+                form.get('phoneNumber')?.invalid && (form.get('phoneNumber')?.touched || form.valid)
+              "
+            >
               El teléfono es obligatorio
             </small>
           </div>
@@ -113,9 +157,15 @@
               formControlName="address"
               placeholder="Dirección"
               required
-              [ngClass]="{ 'invalid-input': form.get('address')?.invalid && (form.get('address')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('address')?.invalid && (form.get('address')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('address')?.invalid && (form.get('address')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="form.get('address')?.invalid && (form.get('address')?.touched || form.valid)"
+            >
               La dirección es obligatoria
             </small>
           </div>
@@ -131,9 +181,15 @@
               formControlName="password"
               placeholder="Contraseña"
               required
-              [ngClass]="{ 'invalid-input': form.get('password')?.invalid && (form.get('password')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('password')?.invalid && (form.get('password')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('password')?.invalid && (form.get('password')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="form.get('password')?.invalid && (form.get('password')?.touched || form.valid)"
+            >
               La contraseña es obligatoria
             </small>
           </div>
@@ -146,9 +202,19 @@
               formControlName="confirmPassword"
               placeholder="Confirmar contraseña"
               required
-              [ngClass]="{ 'invalid-input': form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('confirmPassword')?.invalid &&
+                  (form.get('confirmPassword')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="
+                form.get('confirmPassword')?.invalid &&
+                (form.get('confirmPassword')?.touched || form.valid)
+              "
+            >
               Debe confirmar la contraseña
             </small>
           </div>
@@ -156,17 +222,23 @@
 
         <!-- Servicio / Licencia (solo prestador) -->
         <div *ngIf="tipoCuenta === 'prestador'" class="pair">
-          <div class="field" formGroupName="facility"> <!-- formGroupName es necesario porque facility es un objeto -->
-            <input
-              class="inp left"
-              name="facility"
-              formControlName="name"
-              placeholder="Servicio que brinda"
-              required
-              [ngClass]="{ 'invalid-input': form.get('name')?.invalid && (form.get('name')?.touched || form.valid) }"
-            />
-            <small class="error-msg" *ngIf="form.get('name')?.invalid && (form.get('name')?.touched || form.valid)">
-              El servicio es obligatorio
+          <div class="field" formGroupName="facility">
+            <select class="inp left" formControlName="name" required>
+              <option value="" disabled selected>Seleccioná un servicio</option>
+
+              <option *ngFor="let f of facilitiesList" [value]="f.name">
+                {{ f.name }}
+              </option>
+            </select>
+
+            <small
+              class="error-msg"
+              *ngIf="
+                form.get('facility.name')?.invalid &&
+                (form.get('facility.name')?.touched || form.valid)
+              "
+            >
+              Debes seleccionar un servicio
             </small>
           </div>
 
@@ -177,9 +249,19 @@
               formControlName="licenseNumber"
               placeholder="Número de licencia profesional"
               required
-              [ngClass]="{ 'invalid-input': form.get('licenseNumber')?.invalid && (form.get('licenseNumber')?.touched || form.valid) }"
+              [ngClass]="{
+                'invalid-input':
+                  form.get('licenseNumber')?.invalid &&
+                  (form.get('licenseNumber')?.touched || form.valid)
+              }"
             />
-            <small class="error-msg" *ngIf="form.get('licenseNumber')?.invalid && (form.get('licenseNumber')?.touched || form.valid)">
+            <small
+              class="error-msg"
+              *ngIf="
+                form.get('licenseNumber')?.invalid &&
+                (form.get('licenseNumber')?.touched || form.valid)
+              "
+            >
               Ingresá tu matrícula o número de registro profesional
             </small>
           </div>
@@ -205,3 +287,4 @@
       </form>
     </div>
   </div>
+</div>

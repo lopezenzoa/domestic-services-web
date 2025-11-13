@@ -1,5 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
@@ -7,6 +13,8 @@ import player from 'lottie-web';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../services/auth';
+import { FacilitiesService } from '../../../facilities/services/facilities-service';
+import { Facilities } from '../../../facilities/models/facilities.model';
 
 export function playerFactory() {
   return player;
@@ -17,19 +25,14 @@ export function playerFactory() {
   standalone: true,
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
-  imports: [
-    FormsModule,
-    CommonModule,
-    MatSnackBarModule,
-    RouterLink,
-    ReactiveFormsModule,
-    NgIf
-  ],
+  imports: [FormsModule, CommonModule, MatSnackBarModule, RouterLink, ReactiveFormsModule, NgIf],
 })
 export class Register {
   options: AnimationOptions = {
     path: '/assets/animations/register-animation1.json',
   };
+  facilitiesService: FacilitiesService = inject(FacilitiesService);
+  facilitiesList: Facilities[] = [];
 
   // Esta variable ayuda a determinar el tipo de cuenta que se esta creando
   tipoCuenta: 'usuario' | 'prestador' = 'usuario';
@@ -55,14 +58,34 @@ export class Register {
   router: Router = inject(Router);
 
   constructor(private snackBar: MatSnackBar) {
-    // Limpiar "token" al registrar un nuevo usuario
-     localStorage.removeItem('token');
+  localStorage.removeItem('token');
   localStorage.removeItem('user');
+
+  this.facilitiesService.getAll().subscribe({
+    next: (res) => {
+      this.facilitiesList = res;
+    },
+    error: (err) => {
+      console.error("Error cargando servicios", err);
+    }
+  });
+}
+
+
+ onRoleChange(role: 'usuario' | 'prestador') {
+  this.form.get("tipoCuenta")?.setValue(role);
+
+  if (role === 'prestador') {
+    this.form.get('facility.name')?.setValidators([Validators.required]);
+    this.form.get('licenseNumber')?.setValidators([Validators.required]);
+  } else {
+    this.form.get('facility.name')?.clearValidators();
+    this.form.get('licenseNumber')?.clearValidators();
   }
 
-  onRoleChange(role: 'usuario' | 'prestador') {
-    this.form.get("tipoCuenta")?.setValue(role);
-  }
+  this.form.get('facility.name')?.updateValueAndValidity();
+  this.form.get('licenseNumber')?.updateValueAndValidity();
+}
 
   onSubmit() {
     if (!this.form.valid) {
@@ -73,7 +96,7 @@ export class Register {
       return;
     }
 
-    if (this.form.get("password")?.value !== this.form.get("confirmPassword")?.value) {
+    if (this.form.get('password')?.value !== this.form.get('confirmPassword')?.value) {
       this.snackBar.open('Las contraseñas no coinciden', 'Cerrar', {
         duration: 3000,
         panelClass: ['error-snackbar'],
@@ -100,10 +123,9 @@ export class Register {
           duration: 3000,
           panelClass: ['success-snackbar'],
         }),
-
-        setTimeout(( ) => {
-          this.router.navigate(["/auth/login"]); // Redirige al inicio de sesion
-        }, 2500);
+          setTimeout(() => {
+            this.router.navigate(['/auth/login']); // Redirige al inicio de sesion
+          }, 2500);
       },
       error: (err) => {
         console.error('Error en el registro: ', err);
