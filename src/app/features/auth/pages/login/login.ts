@@ -4,11 +4,12 @@ import { AnimationOptions } from 'ngx-lottie';
 import { Auth } from '../../services/auth';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../../users/services/users-service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink,NgIf, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -17,6 +18,7 @@ export class Login {
     path: 'assets/animations/login-animations.json',
   };
   animations: any;
+  errorMessage: string = '';
 
   /* Servicio de autenticación para login */
   authService: Auth = inject(Auth);
@@ -73,7 +75,8 @@ export class Login {
           }
         },
         error: (err) => {
-          console.error('Error en el login:', err.error);
+          console.error('Error en el login:', err);
+          this.errorMessage = 'Usuario o contraseña incorrectos';
         },
       });
     }
