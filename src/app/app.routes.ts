@@ -10,6 +10,7 @@ import { ProvidersList } from './features/clients/components/providers-list/prov
 import { AddShiftForm } from './features/providers/pages/add-shift-form/add-shift-form';
 import { ProviderShifts } from './features/providers/pages/provider-shifts/provider-shifts';
 import { NotFoundComponent } from './features/errors/not-found-component/not-found-component';
+import { MisTurnos } from './features/clients/pages/mis-turnos/mis-turnos';
 
 export const routes: Routes = [
   {
@@ -19,7 +20,7 @@ export const routes: Routes = [
       { path: 'register', component: Register },
       { path: 'editar-licencia', component: EditarLicencia },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-    ]
+    ],
   },
   //RUTAS ESPECÍFICAS DEL PRESTADOR (PRIMERO)
   { path: 'providers/shifts', component: ProviderShifts },
@@ -33,6 +34,7 @@ export const routes: Routes = [
 
   //  TURNOS Y SERVICIOS
   { path: 'calls/request/:providerId', component: RequestCallForm },
+  { path: 'mis-turnos', component: MisTurnos },
   { path: 'facilities', component: FacilitiesList },
   { path: 'facilities/edit/:facilityId', component: CreateFacilities },
   { path: 'facilities/create', component: CreateFacilities },

@@ -2,9 +2,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Auth {
   private apiUrl = 'http://localhost:8080/api/auth';
@@ -17,5 +16,9 @@ export class Auth {
 
   login(data: any) {
     return this.http.post(`${this.apiUrl}/login`, data, { observe: 'response' });
+  }
+  getUser() { //método para obtener el usuario logueado
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 }

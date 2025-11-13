@@ -13,10 +13,17 @@ export class Navbar  {
   usersService: UsersService = inject(UsersService);
   userRole: WritableSignal<string | null> = signal(null);
 
-  constructor() {
-    // Obtener el rol del usuario desde el servicio
-    this.usersService.getUserProfile().subscribe(profile => {
-      this.userRole.set(profile.role);
-    });
+ constructor() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    this.userRole.set(null);
+    return; 
   }
+
+  this.usersService.getUserProfile().subscribe({
+    next: (profile) => this.userRole.set(profile.role),
+    error: () => this.userRole.set(null)
+  });
+}
+
 }

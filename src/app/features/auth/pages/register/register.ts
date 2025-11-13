@@ -7,8 +7,6 @@ import player from 'lottie-web';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../services/auth';
-import { FacilitiesService } from '../../../facilities/services/facilities-service';
-import { Facilities } from '../../../facilities/models/facilities.model';
 
 export function playerFactory() {
   return player;
@@ -35,13 +33,8 @@ export class Register {
 
   // Esta variable ayuda a determinar el tipo de cuenta que se esta creando
   tipoCuenta: 'usuario' | 'prestador' = 'usuario';
-  facilities: Facilities[] = [];
 
   fb: FormBuilder = inject(FormBuilder);
-  facilitiesService: FacilitiesService = inject(FacilitiesService);
-  authService: Auth = inject(Auth);
-  router: Router = inject(Router);
-
   form: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -51,31 +44,20 @@ export class Register {
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
     facility: this.fb.group({
-      name: ['',Validators.required],
+      name: [''],
     }), // Servicio que brinda el prestador, es necesario que sea un objeto
     tipoCuenta: ['usuario', Validators.required],
     address: ['', Validators.required],
     licenseNumber: [null], // La API verifica que la licencia sea null o no para decidir si tiene que crear un prestador o un cliente
   });
 
- 
+  authService: Auth = inject(Auth);
+  router: Router = inject(Router);
 
   constructor(private snackBar: MatSnackBar) {
     // Limpiar "token" al registrar un nuevo usuario
-    localStorage.removeItem('token');
-  }
-
-   ngOnInit() {
-    // Cargar servicios creados por el admin
-    this.facilitiesService.getAll().subscribe({
-      next: (data) => {
-        console.log('Servicios cargados:', data);
-        this.facilities = data;
-      },
-      error: (err) => {
-        console.error('Error al cargar los servicios:', err);
-      },
-    });
+     localStorage.removeItem('token');
+  localStorage.removeItem('user');
   }
 
   onRoleChange(role: 'usuario' | 'prestador') {
