@@ -1,0 +1,116 @@
+/* === LAYOUT GENERAL === */
+.agenda-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.agenda-container {
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* === TÍTULO === */
+.agenda-title {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 0.5rem;
+}
+
+.agenda-subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* === GRID DE CARDS === */
+.calls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+/* === CARD ESTÁNDAR === */
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border-left: 12px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover suave */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* === TIPOGRAFÍA === */
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+
+.row {
+  margin-bottom: 6px;
+  display: flex;
+  gap: 5px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+/* === BADGE DE ESTADO === */
+.estado-container {
+  margin-top: 14px;
+}
+
+.estado-badge {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+/* === COLORES POR ESTADO === */
+
+/* Aceptado */
+.accepted {
+  border-left-color: #2ecc71;
+}
+
+.accepted .estado-badge {
+  background-color: #e8f9f0;
+  color: #1e824c;
+  border: 1px solid #2ecc71;
+}
+
+/* Pendiente / requesting */
+.pending {
+  border-left-color: #f1c40f;
+}
+
+.pending .estado-badge {
+  background-color: #fff9e6;
+  color: #b7950b;
+  border: 1px solid #f1c40f;
+}
+
+/* Rechazado */
+.declined {
+  border-left-color: #e74c3c;
+}
+
+.declined .estado-badge {
+  background-color: #fdecea;
+  color: #c0392b;
+  border: 1px solid #e74c3c;
+}
