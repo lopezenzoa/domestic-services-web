@@ -4,15 +4,19 @@ import { AnimationOptions } from 'ngx-lottie';
 import { Auth } from '../../services/auth';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../../users/services/users-service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, NgIf,MatSnackBarModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
 export class Login {
+  constructor(private snackBar: MatSnackBar) {}
   options: AnimationOptions = {
     path: 'assets/animations/login-animations.json',
   };
@@ -22,6 +26,7 @@ export class Login {
   authService: Auth = inject(Auth);
   router: Router = inject(Router);
   users: UsersService = inject(UsersService);
+  errorMessage: string = '';
 
   /* Manejo del formulario reactivo (Login) */
   fb: FormBuilder = inject(FormBuilder);
@@ -73,7 +78,8 @@ export class Login {
           }
         },
         error: (err) => {
-          console.error('Error en el login:', err.error);
+          console.error('Error en el login:', err);
+          this.errorMessage = 'Usuario o contraseña incorrectos';
         },
       });
     }
