@@ -1,14 +1,11 @@
 .navbar {
-  height: 70px;
-  background-color: #0b3954; /* Azul oscuro principal */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 2rem;
-  font-family: "Poppins", sans-serif;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: space-between; /* Espacio uniforme entre bloques */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1d3557; /* Tu color de fondo */
+    color: white;
 }
-
 .navbar-left {
   display: flex;
   align-items: center;
@@ -27,10 +24,69 @@
   font-size: 0.9rem;
   font-weight: 400;
 }
+.logout-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background: #fff;
+  color: #083d56;
+}
 
 .navbar-links {
-  display: flex;
-  gap: 2rem;
+    /* Permitir que este contenedor ocupe el espacio restante */
+    flex-grow: 1; 
+    
+    /* Usar Flexbox para alinear el buscador y los enlaces */
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos hacia la derecha */
+    align-items: center;
+    gap: 15px;
+}
+.search-form {
+    /* Ajuste fino para moverlo más al centro, empujando la forma hacia la derecha */
+    margin-left: 100px; /* Puedes probar con 120px o 150px si es necesario */
+    
+    /* El margen auto derecho asegura que los enlaces de navegación permanezcan agrupados */
+    margin-right: auto; 
+    
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: white;
+    /* Reducir el ancho del input para que no domine el centro */
+    max-width: 250px;
+}
+
+.search-input {
+    padding: 8px 12px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 150px; /* Ancho ajustable */
+}
+
+.search-btn {
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #457b9d; /* Color de tu marca */
+    font-size: 16px;
+    line-height: 1;
+}
+
+.search-btn:hover {
+    background-color: #e0e0e0;
 }
 
 .navbar-links a {

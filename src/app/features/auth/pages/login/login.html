@@ -36,7 +36,7 @@
           formControlName="password"
         />
 
-        <button class="login-btn" [disabled]="!form.valid">Iniciar Sesión</button>
+        <button type="submit" class="login-btn" [disabled]="!form.valid">Iniciar Sesión</button>
 
         <div *ngIf="errorMessage" class="error-text">
           {{ errorMessage }}

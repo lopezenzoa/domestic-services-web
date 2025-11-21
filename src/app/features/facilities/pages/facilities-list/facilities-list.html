@@ -1,24 +1,37 @@
+<header class="list-header">
+  <h2>Busca el Servicio que Necesitas</h2>
+  <p class="subtitle">Explora nuestra lista de profesionales disponibles en tu zona.</p>
+</header>
+<div class="search-container">
+  <input
+    type="text"
+    placeholder="Buscar servicio (ej: Electricista)"
+    [(ngModel)]="searchTerm"
+    (keyup.enter)="fetchFacilities()"
+    class="search-input"
+  />
+  <button type="button" class="search-button" (click)="fetchFacilities()">Buscar</button>
+</div>
 <section>
-  @for (facility of facilitiesList(); track $index) {
-    <div class="facility-card" (click)="verPrestadores(facility.name)">
-      <p>{{ facility.name }}</p>
-      <span>{{ facility.description }}</span>
+  @for (facility of filteredFacilities(); track $index) {
+  <div class="facility-card" (click)="verPrestadores(facility.name)">
+    <p>{{ facility.name }}</p>
+    <span>{{ facility.description }}</span>
 
-      @if (userRole === 'ADMIN') {
-        <div class="actions" (click)="$event.stopPropagation()">
-          <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
-          <button class="delete-btn" (click)="deleteFacility(facility.id)">Eliminar</button>
-        </div>
-      }
+    @if (userRole === 'ADMIN') {
+    <div class="actions" (click)="$event.stopPropagation()">
+      <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
+      <button class="delete-btn" (click)="deleteFacility(facility.id)">Eliminar</button>
     </div>
+    }
+  </div>
   }
 </section>
 
 @if (userRole === 'ADMIN') {
-  <section>
-    <button type="button" class="btn-primary" routerLink="/facilities/create">
-      Agregar Servicio
-    </button>
-  </section>
+<section>
+  <button type="button" class="btn-primary" routerLink="/facilities/create">
+    Agregar Servicio
+  </button>
+</section>
 }
-

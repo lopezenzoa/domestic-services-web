@@ -1,0 +1,102 @@
+.providers-list-wrapper {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.list-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.list-header h2 {
+    color: #457b9d;
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #6c757d;
+}
+
+/* --- Barra de Búsqueda --- */
+.search-controls {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.search-input:focus {
+    border-color: #457b9d;
+    box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.2);
+    outline: none;
+}
+
+/* --- Grid de Tarjetas --- */
+.providers-grid {
+    display: grid;
+    gap: 25px;
+    /* Asegura un buen layout responsivo */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-top: 30px;
+}
+
+/* --- Paginación --- */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+}
+
+.pagination-top {
+    margin-bottom: 30px; /* Separación de la primera card */
+    border-bottom: 1px solid #eee;
+}
+
+.pagination-bottom {
+    margin-top: 30px; /* Separación de la última card */
+    border-top: 1px solid #eee;
+}
+
+.pagination-controls button {
+    padding: 10px 20px;
+    background-color: #457b9d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-controls span {
+    font-weight: 700;
+    color: #333;
+}
+
+.loading-state, .no-results {
+    text-align: center;
+    padding: 50px 20px;
+    color: #6c757d;
+    font-style: italic;
+    border: 1px dashed #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 20px;
+}

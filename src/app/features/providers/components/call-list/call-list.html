@@ -1,11 +1,32 @@
 <div class="agenda-wrapper">
   <header class="agenda-header">
     <h2>Agenda de visitas</h2>
-    <p>Total de visitas: {{ calls()?.length }}</p>
+    <p>
+      Total de visitas: {{ calls()?.length || 0 }}
+    </p>
   </header>
 
+  <!-- PAGINACIÓN SUPERIOR -->
+  <div *ngIf="totalPages() > 1" class="pagination-controls pagination-top">
+    <button (click)="prevPage()" [disabled]="currentPage() === 1">Anterior</button>
+
+    <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
+
+    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">Siguiente</button>
+  </div>
+  <!-- FIN PAGINACIÓN SUPERIOR -->
+
+  <!-- ESTADO DE CARGA Y SIN RESULTADOS -->
+  <div *ngIf="isLoading()" class="loading-state">
+      Cargando agenda...
+  </div>
+
+  <div *ngIf="!isLoading() && filteredCalls()?.length === 0" class="no-results-state">
+      <p>⚠️ No se encontraron visitas programadas.</p>
+  </div>
+  
   <div class="agenda-container">
-       @for (call of calls(); track $index) {
+    @for (call of filteredCalls(); track $index) {
     <div
       class="card"
       [ngClass]="{
@@ -33,27 +54,26 @@
         <p><strong>Estado:</strong> {{ call.state }}</p>
       </div>
 
-  <!-- Botones solo si el estado es REQUESTING -->
-        <div class="card-buttons" *ngIf="call.state === 'REQUESTING'">
-          <button class="button-deny" (click)="denyCall(call.id!, call.provider.id)">Rechazar</button>
-          <button class="button-accept" (click)="acceptCall(call.id!, call.provider.id)">Aceptar</button>
-        </div>
-
-        <!-- Botones solo si la visita ya fue aceptada -->
-        <div class="card-buttons accepted-buttons" *ngIf="call.state === 'PENDING'">
-          <button class="button-edit" (click)="editCall(call.id!)">Modificar</button>
-        </div>
-
-
-        <!-- Mensajes de resultado -->
-        <div class="status-box rejected" *ngIf="call.state === 'DECLINED'">
-          <span>Visita rechazada</span>
-        </div>
-
-        <div class="status-box finished" *ngIf="call.state === 'FINISHED'">
-          <span>Visita completada</span>
-        </div>
+      <div class="card-buttons" *ngIf="call.state === 'REQUESTING'">
+        <button class="button-deny" (click)="denyCall(call.id!, call.provider.id)">Rechazar</button>
+        <button class="button-accept" (click)="acceptCall(call.id!, call.provider.id)">
+          Aceptar
+        </button>
       </div>
+
+      <div class="card-buttons accepted-buttons" *ngIf="call.state === 'PENDING'">
+        <button class="button-edit" (click)="editCall(call.id!)">Modificar</button>
+      </div>
+
+      <div class="status-box rejected" *ngIf="call.state === 'DECLINED'">
+        <span>Visita rechazada</span>
+      </div>
+
+      <div class="status-box finished" *ngIf="call.state === 'FINISHED'">
+        <span>Visita completada</span>
+      </div>
+    </div>
     }
   </div>
+
 </div>
