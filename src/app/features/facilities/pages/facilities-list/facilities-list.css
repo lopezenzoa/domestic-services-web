@@ -95,3 +95,58 @@ section {
   background-color: #1d4ed8;
   box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
 }
+.search-container {
+    max-width: 500px;
+    margin: 20px auto 30px auto; /* Centrar y darle margen */
+    display: flex;
+    border: 2px solid #457b9d; /* Borde del color de tu marca */
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 12px 20px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-button {
+    padding: 10px 15px;
+    background-color: #457b9d; /* Mismo color del borde */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: white; /* Color blanco para el SVG */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button:hover {
+    background-color: #1d3557;
+}
+.list-header {
+    text-align: center;
+    margin: 30px auto 20px auto; /* Margen para centrar el header */
+    max-width: 700px;
+}
+
+.list-header h2 {
+    font-size: 2rem;
+    color: #1d3557; /* Color principal */
+    margin-bottom: 5px;
+}
+
+.list-header .subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}

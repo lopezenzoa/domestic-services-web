@@ -11,6 +11,9 @@ import { AddShiftForm } from './features/providers/pages/add-shift-form/add-shif
 import { ProviderShifts } from './features/providers/pages/provider-shifts/provider-shifts';
 import { NotFoundComponent } from './features/errors/not-found-component/not-found-component';
 import { MisTurnos } from './features/clients/pages/mis-turnos/mis-turnos';
+import { authGuard } from './features/auth/guards/auth-guard';
+import { roleGuard } from './features/auth/guards/role-guard-guard';
+
 
 export const routes: Routes = [
   {
@@ -23,21 +26,21 @@ export const routes: Routes = [
     ],
   },
   //RUTAS ESPECÍFICAS DEL PRESTADOR (PRIMERO)
-  { path: 'providers/shifts', component: ProviderShifts },
-  { path: 'providers/shifts/add', component: AddShiftForm },
-  { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm },
-  { path: 'providers/calls', component: CallList },
+  { path: 'providers/shifts', component: ProviderShifts, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
+  { path: 'providers/shifts/add', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
+  { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
+  { path: 'providers/calls', component: CallList , canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
 
   // CLIENTE (BÚSQUEDA DE PRESTADORES)
-  { path: 'providers/:facilityId', component: ProvidersList },
-  { path: 'providers', component: ProvidersList },
+  { path: 'providers/:facilityId', component: ProvidersList,  canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
+  { path: 'providers', component: ProvidersList,  canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
 
   //  TURNOS Y SERVICIOS
-  { path: 'calls/request/:providerId', component: RequestCallForm },
-  { path: 'mis-turnos', component: MisTurnos },
-  { path: 'facilities', component: FacilitiesList },
-  { path: 'facilities/edit/:facilityId', component: CreateFacilities },
-  { path: 'facilities/create', component: CreateFacilities },
+  { path: 'calls/request/:providerId', component: RequestCallForm, canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
+  { path: 'mis-turnos', component: MisTurnos, canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
+  { path: 'facilities', component: FacilitiesList, canActivate: [authGuard]},
+  { path: 'facilities/edit/:facilityId', component: CreateFacilities, canActivate: [authGuard, roleGuard],data: { role: 'ADMIN' } },
+  { path: 'facilities/create', component: CreateFacilities , canActivate: [authGuard, roleGuard],data: { role: 'ADMIN' }},
 
   // OTROS
   { path: 'editar-licencia', component: EditarLicencia },

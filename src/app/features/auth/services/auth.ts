@@ -17,8 +17,18 @@ export class Auth {
   login(data: any) {
     return this.http.post(`${this.apiUrl}/login`, data, { observe: 'response' });
   }
-  getUser() { //método para obtener el usuario logueado
+  getUser() {
+    //método para obtener el usuario logueado
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
+  }
+  userRole() {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).role : null;
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 }

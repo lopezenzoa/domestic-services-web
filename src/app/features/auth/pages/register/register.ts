@@ -5,6 +5,9 @@ import {
   FormsModule,
   ReactiveFormsModule,
   Validators,
+  AbstractControl, // Importado para el validador
+  ValidationErrors, // Importado para tipado del validador
+  ValidatorFn, // Importado para tipado del validador
 } from '@angular/forms';
 import { CommonModule, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -15,10 +18,58 @@ import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { FacilitiesService } from '../../../facilities/services/facilities-service';
 import { Facilities } from '../../../facilities/models/facilities.model';
+import Swal from 'sweetalert2';
 
 export function playerFactory() {
   return player;
 }
+
+// 1. FUNCIÓN VALIDADORA PERSONALIZADA DE SEGURIDAD (8+ chars, 1 mayúscula, 1 número)
+function passwordSecurityValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value || '';
+    
+    if (!value) {
+      return null; 
+    }
+    const minLength = value.length >= 8; 
+    const hasNumber = /[0-9]/.test(value); 
+    const hasUpperCase = /[A-Z]/.test(value); 
+
+    const valid = minLength && hasNumber && hasUpperCase;
+
+    return valid ? null : { 'strongPassword': true };
+  };
+}
+
+
+// FUNCIÓN VALIDADORA DE COINCIDENCIA (Validador a nivel de FormGroup)
+function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+  const passwordControl = group.get('password');
+  const confirmPasswordControl = group.get('confirmPassword');
+  
+  if (!passwordControl || !confirmPasswordControl) {
+    return null;
+  }
+  
+  // Si confirmPasswordControl ya tiene un error de required, no hacemos nada.
+  if (confirmPasswordControl.errors && confirmPasswordControl.hasError('required')) {
+    return null;
+  }
+  
+  // Marcar error en confirmPassword si no coinciden
+  if (passwordControl.value !== confirmPasswordControl.value) {
+    confirmPasswordControl.setErrors({ mustMatch: true });
+    return { 'passwordMismatch': true }; // Error a nivel de FormGroup
+  } else {
+    // Si coinciden, quitar el error mustMatch (si existía)
+    if (confirmPasswordControl.hasError('mustMatch')) {
+      confirmPasswordControl.setErrors(null);
+    }
+    return null;
+  }
+}
+
 
 @Component({
   selector: 'app-register',
@@ -34,24 +85,33 @@ export class Register {
   facilitiesService: FacilitiesService = inject(FacilitiesService);
   facilitiesList: Facilities[] = [];
 
-  // Esta variable ayuda a determinar el tipo de cuenta que se esta creando
+  
   tipoCuenta: 'usuario' | 'prestador' = 'usuario';
 
   fb: FormBuilder = inject(FormBuilder);
+  
+
   form: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     phoneNumber: ['', Validators.required],
-    password: ['', Validators.required],
-    confirmPassword: ['', Validators.required],
+    
+    // Contraseña: Aplicar validador de seguridad
+    password: ['', [Validators.required, passwordSecurityValidator()]], 
+    
+    // Confirmar Contraseña: Aplicar solo 'required'
+    confirmPassword: ['', Validators.required], 
+    
     facility: this.fb.group({
       name: [''],
     }), // Servicio que brinda el prestador, es necesario que sea un objeto
     tipoCuenta: ['usuario', Validators.required],
     address: ['', Validators.required],
-    licenseNumber: [null], // La API verifica que la licencia sea null o no para decidir si tiene que crear un prestador o un cliente
+    licenseNumber: [null], 
+  }, {
+    validators: passwordMatchValidator 
   });
 
   authService: Auth = inject(Auth);
@@ -89,21 +149,14 @@ export class Register {
 
   onSubmit() {
     if (!this.form.valid) {
-      this.snackBar.open('Completa todos los campos requeridos', 'Cerrar', {
+      
+      this.snackBar.open('Completa todos los campos correctamente. Verifica las contraseñas.', 'Cerrar', {
         duration: 3000,
         panelClass: ['warning-snackbar'],
       });
       return;
     }
-
-    if (this.form.get('password')?.value !== this.form.get('confirmPassword')?.value) {
-      this.snackBar.open('Las contraseñas no coinciden', 'Cerrar', {
-        duration: 3000,
-        panelClass: ['error-snackbar'],
-      });
-      return;
-    }
-
+    
     // Preparar los datos para el registro, excluyendo confirmPassword
     const data = {
       firstName: this.form.get('firstName')?.value,
@@ -119,19 +172,24 @@ export class Register {
 
     this.authService.register(data).subscribe({
       next: () => {
-        this.snackBar.open('Registro exitoso', 'Cerrar', {
-          duration: 3000,
-          panelClass: ['success-snackbar'],
-        }),
-          setTimeout(() => {
-            this.router.navigate(['/auth/login']); // Redirige al inicio de sesion
-          }, 2500);
+       
+        Swal.fire({
+          title: '¡Registro Exitoso!',
+          text: 'Tu cuenta ha sido creada. Serás redirigido al inicio de sesión.',
+          icon: 'success',
+          confirmButtonColor: '#06d6a0',
+        }).then(() => {
+          this.router.navigate(['/auth/login']);
+        });
       },
       error: (err) => {
         console.error('Error en el registro: ', err);
-        this.snackBar.open('Error al registrar el usuario', 'Cerrar', {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
+   
+        Swal.fire({
+          title: 'Error de Registro',
+          text: 'Hubo un problema al registrar el usuario. Intenta nuevamente.',
+          icon: 'error',
+          confirmButtonColor: '#e63946',
         });
       },
     });

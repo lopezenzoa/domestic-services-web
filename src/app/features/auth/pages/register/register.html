@@ -190,7 +190,12 @@
               class="error-msg"
               *ngIf="form.get('password')?.invalid && (form.get('password')?.touched || form.valid)"
             >
-              La contraseña es obligatoria
+              <span *ngIf="form.get('password')?.hasError('required')"
+                >La contraseña es obligatoria.</span
+              >
+              <span *ngIf="form.get('password')?.hasError('strongPassword')">
+                Debe tener 8 caracteres, 1 mayúscula y 1 número.
+              </span>
             </small>
           </div>
 
@@ -204,18 +209,25 @@
               required
               [ngClass]="{
                 'invalid-input':
-                  form.get('confirmPassword')?.invalid &&
-                  (form.get('confirmPassword')?.touched || form.valid)
+                  (form.get('confirmPassword')?.invalid &&
+                    (form.get('confirmPassword')?.touched || form.valid)) ||
+                  form.hasError('passwordMismatch')
               }"
             />
             <small
               class="error-msg"
               *ngIf="
-                form.get('confirmPassword')?.invalid &&
-                (form.get('confirmPassword')?.touched || form.valid)
+                (form.get('confirmPassword')?.invalid &&
+                  (form.get('confirmPassword')?.touched || form.valid)) ||
+                form.hasError('passwordMismatch')
               "
             >
-              Debe confirmar la contraseña
+              <span *ngIf="form.get('confirmPassword')?.hasError('required')"
+                >Debe confirmar la contraseña.</span
+              >
+              <span *ngIf="form.get('confirmPassword')?.hasError('mustMatch')"
+                >Las contraseñas no coinciden.</span
+              >
             </small>
           </div>
         </div>
