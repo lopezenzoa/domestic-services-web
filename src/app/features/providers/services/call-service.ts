@@ -63,4 +63,15 @@ export class CallService {
       headers: this.getHeaders(),
     });
   }
+getHistoryPaginated(providerId: number, page: number, size: number) {
+  return this.http.get<any>(`${this.url}/provider/${providerId}/history`, {
+    params: { 
+      page: page.toString(), 
+      size: size.toString() 
+    },
+    headers: this.getHeaders()
+  });
 }
+
+}
+
