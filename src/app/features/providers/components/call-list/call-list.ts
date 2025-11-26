@@ -14,133 +14,88 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './call-list.css',
 })
 export class CallList implements OnInit {
-
   calls = signal<any[] | undefined>(undefined);
- 
-  filteredCalls = signal<any[] | undefined>(undefined); 
 
-  service = inject(CallService);
+  filteredCalls = signal<any[] | undefined>(undefined);
+
+  callService = inject(CallService);
   router = inject(Router);
-  
+
   // Propiedades de Paginación
   pageSize: number = 5; // Muestra 5 turnos por página
   currentPage = signal(1);
   totalPages = signal(1);
-  
+  totalElements = signal(0);
 
-  isLoading = signal(true); 
+  isLoading = signal(true);
+
+  providerId: number = 0; // Se obtiene del usuario logueado
 
   ngOnInit() {
-    this.getMyCalls();
+    const raw = localStorage.getItem('user');
+
+    if (raw) {
+      const user = JSON.parse(raw);
+
+      if (user.role === 'PROVIDER') {
+        this.providerId = user.id;
+      }
+    }
+
+    this.loadPage(0);
   }
+  loadPage(page: number) {
+    this.isLoading.set(true);
 
-
-  private sortCallsByDate(data: any[]): any[] {
- 
-    return data.sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateA - dateB; 
-    });
-  }
-
-  getMyCalls() {
-    this.isLoading.set(true); 
-    return this.service.getMyCalls().subscribe({
-      next: (calls) => {
-     
-        const sortedCalls = this.sortCallsByDate(calls);
-        this.calls.set(sortedCalls);
-        
-        
-        this.currentPage.set(1);
-        this.paginateCalls(); 
-        this.isLoading.set(false); 
+    this.callService.getHistoryPaginated(this.providerId, page, this.pageSize).subscribe({
+      next: (data) => {
+        this.filteredCalls.set(data.content);
+        this.calls.set(data.content);
+        this.totalPages.set(data.totalPages);
+        this.totalElements.set(data.totalElements);
+        this.currentPage.set(page);
+        this.isLoading.set(false);
       },
       error: (err) => {
-        console.error('Error al cargar visitas:', err);
-        this.isLoading.set(false); 
-      }
+        console.error('Error cargando historial paginado:', err);
+        this.isLoading.set(false);
+      },
     });
   }
 
-  
-  paginateCalls(){
-    const data = this.calls() || []
-    let paginatedData = [...data] 
-
-
-    const total = paginatedData.length;
-    const pages = Math.ceil(total / this.pageSize);
-    this.totalPages.set(pages > 0 ? pages : 1);
-    
-    
-    if (this.currentPage() > this.totalPages()) {
-        this.currentPage.set(1);
-    }
-    
-    const startIndex = (this.currentPage() - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    
-    this.filteredCalls.set(paginatedData.slice(startIndex, endIndex));
-  }
-  
   nextPage() {
-    if (this.currentPage() < this.totalPages()) {
-      this.currentPage.update((val) => val + 1);
-      this.paginateCalls();
+    if (this.currentPage() + 1 < this.totalPages()) {
+      this.loadPage(this.currentPage() + 1);
     }
   }
 
   prevPage() {
-    if (this.currentPage() > 1) {
-      this.currentPage.update((val) => val - 1);
-      this.paginateCalls();
+    if (this.currentPage() > 0) {
+      this.loadPage(this.currentPage() - 1);
     }
   }
 
   acceptCall(idCall: number, providerId: number) {
-    this.service.acceptCall(idCall, providerId).subscribe({
+    this.callService.acceptCall(idCall, providerId).subscribe({
       next: () => {
         Swal.fire({
           title: '¡Contratación aceptada!',
-          text: 'La visita fue aceptada con éxito.',
           icon: 'success',
-          confirmButtonColor: '#06d6a0',
-        }).then(() => this.getMyCalls());
-      },
-      error: () => {
-        Swal.fire({
-          title: 'Error',
-          text: 'No se pudo aceptar la contratación.',
-          icon: 'error',
-          confirmButtonColor: '#e63946',
-        });
+        }).then(() => this.loadPage(this.currentPage()));
       },
     });
   }
 
   denyCall(idCall: number, providerId: number) {
-    this.service.denyCall(idCall, providerId).subscribe({
+    this.callService.denyCall(idCall, providerId).subscribe({
       next: () => {
         Swal.fire({
           title: 'Visita rechazada',
-          text: 'La visita fue rechazada correctamente.',
           icon: 'info',
-          confirmButtonColor: '#457b9d',
-        }).then(() => this.getMyCalls());
-      },
-      error: () => {
-        Swal.fire({
-          title: 'Error',
-          text: 'Hubo un problema al rechazar la visita.',
-          icon: 'error',
-          confirmButtonColor: '#e63946',
-        });
+        }).then(() => this.loadPage(this.currentPage()));
       },
     });
   }
-
   editCall(callId: number) {
     this.router.navigate(['/providers/shifts/edit', callId]);
   }
