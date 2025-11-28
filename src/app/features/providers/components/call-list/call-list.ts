@@ -96,6 +96,39 @@ export class CallList implements OnInit {
       },
     });
   }
+  finishCall(callId: number) {
+  if (!this.providerId) return;
+
+  this.callService.markAsFinished(callId, this.providerId).subscribe({
+    next: () => {
+      Swal.fire({
+        title: "¡Visita finalizada!",
+        text: "La visita fue marcada como finalizada con éxito.",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#3085d6",
+        background: "#fff",
+        color: "#333",
+      }).then(() => {
+        this.loadPage(this.currentPage());
+      });
+    },
+
+    error: (err) => {
+      console.error(err);
+
+      Swal.fire({
+        title: "Error",
+        text: "Ocurrió un error al finalizar la visita.",
+        icon: "error",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#d33",
+      });
+    },
+  });
+}
+
+
   editCall(callId: number) {
     this.router.navigate(['/providers/shifts/edit', callId]);
   }
