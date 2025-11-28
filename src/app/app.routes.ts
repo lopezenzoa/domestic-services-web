@@ -13,6 +13,7 @@ import { NotFoundComponent } from './features/errors/not-found-component/not-fou
 import { MisTurnos } from './features/clients/pages/mis-turnos/mis-turnos';
 import { authGuard } from './features/auth/guards/auth-guard';
 import { roleGuard } from './features/auth/guards/role-guard-guard';
+import { ReviewForm } from './features/review/component/review-form/review-form';
 
 
 export const routes: Routes = [
@@ -42,6 +43,9 @@ export const routes: Routes = [
   { path: 'facilities/edit/:facilityId', component: CreateFacilities, canActivate: [authGuard, roleGuard],data: { role: 'ADMIN' } },
   { path: 'facilities/create', component: CreateFacilities , canActivate: [authGuard, roleGuard],data: { role: 'ADMIN' }},
 
+  // REVIEW
+  { path: 'review/create', component: ReviewForm},
+  
   // OTROS
   { path: 'editar-licencia', component: EditarLicencia },
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
