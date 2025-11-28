@@ -33,6 +33,8 @@
   gap: 20px;
 }
 
+
+
 /* === CARD ESTÁNDAR === */
 .card {
   background: white;
@@ -40,8 +42,21 @@
   border-radius: 14px;
   padding: 1.5rem;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-  border-left: 12px solid transparent;
+  border-left-width: 12px;
+  border-left-style: solid;
+  border-left-color: transparent;
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.done {
+  border-left-color: #2ecc71; /* mismo verde que .accepted */
+}
+
+.done .estado-badge {
+  background-color: #e8f9f0;
+  color: #1e824c;
+  border: 1px solid #2ecc71;
 }
 
 /* Hover suave */

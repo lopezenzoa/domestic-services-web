@@ -14,12 +14,13 @@ export class MisTurnos implements OnInit {
   private auth = inject(Auth);
 
   activeTab: string = 'pendientes';
+  finalizados: any[] = [];
 
   calls: any[] = [];
   pendientes: any[] = [];
   aceptados: any[] = [];
   rechazados: any[] = [];
-  realizados: any[] = [];
+  
 
   cargando = true;
 
@@ -31,7 +32,8 @@ export class MisTurnos implements OnInit {
         this.pendientes = data.filter((t) =>  t.state === 'REQUESTING');
         this.aceptados = data.filter((t) => t.state === 'ACCEPTED' || t.state === 'PENDING');
         this.rechazados = data.filter((t) => t.state === 'DECLINED' || t.state === 'REJECTED');
-        this.realizados = data.filter((t) => t.state === 'DONE');
+       this.finalizados = data.filter(t => t.state === 'FINISHED');
+
         this.cargando = false;
       },
       error: (err) => {
@@ -55,8 +57,9 @@ export class MisTurnos implements OnInit {
         return 'Rechazado';
       case 'ACCEPTED':
         return 'Aceptado';
-      case 'DONE':
+      case 'FINISHED':
         return 'Finalizado';
+
       default:
         return estado;
     }
@@ -73,8 +76,9 @@ getEstadoClass(estado: string): string {
       return 'declined'; 
     case 'REQUESTING': // AMARILLO/NARANJA (Pendientes)
       return 'pending'; 
-    case 'DONE':
-      return 'done'; 
+    case 'FINISHED':
+      return 'done';
+ 
     default:
       return '';
   }
