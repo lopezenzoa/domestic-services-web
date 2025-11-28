@@ -18,6 +18,10 @@
       <button (click)="setTab('rechazados')" [class.active]="activeTab === 'rechazados'">
         Rechazados
       </button>
+      <button (click)="setTab('finalizados')" [class.active]="activeTab === 'finalizados'">
+      Finalizados
+      </button>
+
     </div>
 
     <div class="calls-grid">
@@ -118,6 +122,47 @@
           </div>
         </div>
       </div>
+      <div *ngIf="activeTab === 'finalizados'">
+  <div *ngFor="let turno of finalizados" class="card" [ngClass]="getEstadoClass(turno.state)">
+    <div class="card-content">
+      <h3 class="card-title">Visita</h3>
+
+      <div class="row">
+        <span class="label">Prestador:</span>
+        <span>{{ turno.provider?.firstName }} {{ turno.provider?.lastName }}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Servicio:</span>
+        <span>{{ turno.provider?.facility?.name }}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Descripción:</span>
+        <span>{{ turno.description }}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Dirección:</span>
+        <span>{{ turno.address }}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Fecha:</span>
+        <span>{{ turno.date | date : 'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+
+      <div class="estado-container">
+        <span class="estado-badge" [ngClass]="getEstadoClass(turno.state)">
+          Finalizado
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
     </div>
   </div>
 </div>
