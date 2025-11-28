@@ -16,7 +16,7 @@ export class CallService {
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
   }
@@ -39,20 +39,28 @@ export class CallService {
   }
 
   denyCall(callId: number, providerId: number) {
-    return this.http.put(`${this.url}/provider/${providerId}/decline/${callId}`, {}, {
-      headers: this.getHeaders(),
-    });
+    return this.http.put(
+      `${this.url}/provider/${providerId}/decline/${callId}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
   acceptCall(callId: number, providerId: number) {
-    return this.http.put(`${this.url}/provider/${providerId}/accept/${callId}`, {}, {
-      headers: this.getHeaders(),
-    });
+    return this.http.put(
+      `${this.url}/provider/${providerId}/accept/${callId}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
   markAsFinished(callId: number, providerId: number) {
     return this.http.put(
-      `http://localhost:8080/api/providers/${providerId}/calls/${callId}/finish`,
+      `${this.url}/provider/${providerId}/finish/${callId}`,
       {},
       { headers: this.getHeaders() }
     );
@@ -63,15 +71,13 @@ export class CallService {
       headers: this.getHeaders(),
     });
   }
-getHistoryPaginated(providerId: number, page: number, size: number) {
-  return this.http.get<any>(`${this.url}/provider/${providerId}/history`, {
-    params: { 
-      page: page.toString(), 
-      size: size.toString() 
-    },
-    headers: this.getHeaders()
-  });
+  getHistoryPaginated(providerId: number, page: number, size: number) {
+    return this.http.get<any>(`${this.url}/provider/${providerId}/history`, {
+      params: {
+        page: page.toString(),
+        size: size.toString(),
+      },
+      headers: this.getHeaders(),
+    });
+  }
 }
-
-}
-
