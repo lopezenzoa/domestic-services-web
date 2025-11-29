@@ -80,4 +80,8 @@ export class CallService {
       headers: this.getHeaders(),
     });
   }
+  getCallsHistory(params: any) {
+  return this.http.get<any[]>(`${this.url}/provider/history`, { params });
+}
+
 }
