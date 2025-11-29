@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="review-card">
+
+  <h2 class="title">Dejar una Reseña</h2>
+
+  <!-- DESCRIPTION -->
+  <label class="label">Descripción</label>
+  <textarea class="input" formControlName="description" rows="3" placeholder="Escriba su reseña..."></textarea>
+
+  @if (form.get('description')?.touched && form.get('description')?.invalid) {
+    <div class="error">
+      <small>La descripción es obligatoria y debe tener al menos 5 caracteres.</small>
+    </div>
+  }
+  
+  <!-- DATE -->
+  <label class="label">Fecha de creación</label>
+  <input type="date" class="input" formControlName="creationDate" />
+
+  <!-- CLIENT -->
+  <label class="label">Cliente</label>
+  <input type="text" class="input" formControlName="client" placeholder="ID o nombre del cliente" />
+
+  <!-- PROVIDER -->
+  <label class="label">Proveedor</label>
+  <input type="text" class="input" formControlName="provider" placeholder="ID o nombre del proveedor" />
+
+  <!-- BUTTON -->
+  <button type="submit" class="btn-primary">Guardar Reseña</button>
+
+</form>

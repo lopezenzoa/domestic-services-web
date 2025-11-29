@@ -1,0 +1,70 @@
+.review-card {
+  max-width: 450px;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Título */
+.title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+/* Label */
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  background: #fafafa;
+  transition: all 0.2s ease;
+  margin-bottom: 18px;
+}
+
+.input:focus {
+  border-color: #2d6cdf;
+  background: white;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45, 108, 223, 0.15);
+}
+
+/* Mensajes de error */
+.error small {
+  color: #d9534f;
+  font-size: 12px;
+}
+
+/* Botón */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: #2d6cdf;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #1f56c5;
+}
