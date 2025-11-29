@@ -34,7 +34,7 @@ import Swal from 'sweetalert2';
   styleUrl: './add-shift-form.css',
 })
 export class AddShiftForm {
-  
+  today = new Date();
   fb: FormBuilder = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     date: [null, Validators.required],

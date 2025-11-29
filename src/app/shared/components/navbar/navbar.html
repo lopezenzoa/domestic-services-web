@@ -1,39 +1,35 @@
 <header class="navbar">
-  <div class="navbar-left">
-    <img src="../../../../assets/logo3.png" alt="ServiFácil logo" class="logo" />
-   
-  </div>
+    <div class="navbar-left">
+        <img src="../../../../assets/logo3.png" alt="ServiFácil logo" class="logo" />
 
-  <nav class="navbar-links">
-    
-    <!--SIN LOGUEAR -->
-    @if (userRole() === null) {
-      <a routerLink="/auth/login">Iniciar Sesion</a>
-      <a routerLink="/auth/register">Registrarme</a>
-    }
+    </div>
 
-    <!-- USER -->
-    @if (userRole() === 'CLIENT') {
-      <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
-      <a routerLink="/providers" routerLinkActive="active">Contratar</a>
-      <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a>
-    }
+    <nav class="navbar-links">
 
-    <!--PROVIDER -->
-    @if (userRole() === 'PROVIDER') {
-      <a routerLink="/providers/shifts/add" routerLinkActive="active">Mis Turnos Disponibles</a>
-      <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a>
-    }
+        <!--SIN LOGUEAR -->
+        @if (userRole() === null) {
+        <a routerLink="/auth/login">Iniciar Sesion</a>
+        <a routerLink="/auth/register">Registrarme</a> }
 
-    <!-- ADMIN -->
-    @if (userRole() === 'ADMIN') {
-      <a routerLink="/facilities" routerLinkActive="active">Servicios</a>
-      <a routerLink="/facilities/create" routerLinkActive="active">Crear Servicios</a>
-    }
+        <!-- USER -->
+        @if (userRole() === 'CLIENT') {
+        <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
+        <a routerLink="/providers" routerLinkActive="active">Contratar</a>
+        <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a> }
 
-    <!--LOGOUT SI ESTÁ LOGUEADO -->
-    @if (userRole() !== null) {
-      <button class="logout-btn" (click)="logout()">Salir</button>
-    }
-  </nav>
+        <!--PROVIDER -->
+        @if (userRole() === 'PROVIDER') {
+        <a routerLink="/providers/shifts/add" routerLinkActive="active">Agregar Turno</a>
+        <a routerLink="/providers/shifts" routerLinkActive="active">Mis turnos</a>
+        <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a> }
+
+        <!-- ADMIN -->
+        @if (userRole() === 'ADMIN') {
+        <a routerLink="/facilities" routerLinkActive="active">Servicios</a>
+        <a routerLink="/facilities/create" routerLinkActive="active">Crear Servicios</a> }
+
+        <!--LOGOUT SI ESTÁ LOGUEADO -->
+        @if (userRole() !== null) {
+        <button class="logout-btn" (click)="logout()">Salir</button> }
+    </nav>
 </header>

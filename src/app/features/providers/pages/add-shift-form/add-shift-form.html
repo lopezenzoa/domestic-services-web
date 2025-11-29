@@ -1,33 +1,29 @@
 <div class="shift-wrapper">
-  <div class="form-card">
-    <h2>Agregar nuevo turno</h2>
+    <div class="form-card">
+        <h2>Agregar nuevo turno</h2>
 
-    <form [formGroup]="form">
-      <mat-form-field appearance="outline">
-        <mat-label>Seleccionar fecha</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+        <form [formGroup]="form">
+            <mat-form-field appearance="outline">
+                <mat-label>Seleccionar fecha</mat-label>
 
-      <div class="time-field">
-        <label>Hora de inicio</label>
-        <input type="time" formControlName="startTime">
-      </div>
+                <input matInput [matDatepicker]="picker" formControlName="date" [min]="today">
 
-      <!--
-    <div class="time-field">
-      <label>Hora de fin</label>
-      <input type="time" [(ngModel)]="endTime" name="endTime">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="time-field">
+                <label>Hora de inicio</label>
+                <input type="time" formControlName="startTime">
+            </div>
+
+            <button (click)="shiftId() ? actualizarTurno() : agregarTurno()">
+        {{ shiftId() ? 'Actualizar' : 'Agregar' }} turno
+      </button>
+
+            <p *ngIf="success" class="success">
+                Turno agregado correctamente:<br> {{ form.get("date")?.value | date: 'fullDate' }} - {{ form.get("startTime")?.value }}
+            </p>
+        </form>
     </div>
-  -->
-
-      <button (click)="shiftId() ? actualizarTurno() : agregarTurno()">{{ shiftId() ? 'Actualizar' : 'Agregar' }} turno</button>
-
-      <p *ngIf="success" class="success">
-        Turno agregado correctamente:<br>
-        {{ form.get("date")?.value | date: 'fullDate' }} - {{ form.get("startTime")?.value }}
-      </p>
-    </form>
-  </div>
 </div>
