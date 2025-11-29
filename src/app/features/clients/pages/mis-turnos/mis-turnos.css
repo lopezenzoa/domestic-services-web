@@ -1,149 +1,194 @@
 /* === LAYOUT GENERAL === */
+
 .agenda-wrapper {
-  display: flex;
-  justify-content: center;
-  padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
 }
 
 .agenda-container {
-  width: 90%;
-  max-width: 1200px;
+    width: 90%;
+    max-width: 1200px;
 }
 
+
 /* === TÍTULO === */
+
 .agenda-title {
-  text-align: center;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #003366;
-  margin-bottom: 0.5rem;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #003366;
+    margin-bottom: 0.5rem;
 }
 
 .agenda-subtitle {
-  text-align: center;
-  color: #555;
-  margin-bottom: 2rem;
-  font-size: 1.1rem;
+    text-align: center;
+    color: #555;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
 }
+
 
 /* === GRID DE CARDS === */
-.calls-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
-}
 
+.calls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
 
 
 /* === CARD ESTÁNDAR === */
-.card {
-  background: white;
-  margin-bottom: 15px;
-  border-radius: 14px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-  border-left-width: 12px;
-  border-left-style: solid;
-  border-left-color: transparent;
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.card {
+    background: white;
+    margin-bottom: 15px;
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    border-left-width: 12px;
+    border-left-style: solid;
+    border-left-color: transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .done {
-  border-left-color: #2ecc71; /* mismo verde que .accepted */
+    border-left-color: #2ecc71;
+    /* mismo verde que .accepted */
 }
 
 .done .estado-badge {
-  background-color: #e8f9f0;
-  color: #1e824c;
-  border: 1px solid #2ecc71;
+    background-color: #e8f9f0;
+    color: #1e824c;
+    border: 1px solid #2ecc71;
 }
+
 
 /* Hover suave */
+
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
 }
 
+
 /* === TIPOGRAFÍA === */
+
 .card-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #1a1a1a;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+}
+
+.btn-resenia {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 0.45rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.btn-resenia:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 }
 
 .row {
-  margin-bottom: 6px;
-  display: flex;
-  gap: 5px;
+    margin-bottom: 6px;
+    display: flex;
+    gap: 5px;
 }
 
 .label {
-  font-weight: 600;
+    font-weight: 600;
 }
 
+
 /* === BADGE DE ESTADO === */
+
 .estado-container {
-  margin-top: 14px;
+    margin-top: 14px;
 }
 
 .estado-badge {
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: inline-block;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
 }
+
 
 /* === COLORES POR ESTADO === */
 
+
 /* Aceptado */
+
 .accepted {
-  border-left-color: #2ecc71;
+    border-left-color: #2ecc71;
 }
 
 .accepted .estado-badge {
-  background-color: #e8f9f0;
-  color: #1e824c;
-  border: 1px solid #2ecc71;
+    background-color: #e8f9f0;
+    color: #1e824c;
+    border: 1px solid #2ecc71;
 }
 
+
 /* Pendiente / requesting */
+
 .pending {
-  border-left-color: #f1c40f;
+    border-left-color: #f1c40f;
 }
 
 .pending .estado-badge {
-  background-color: #fff9e6;
-  color: #b7950b;
-  border: 1px solid #f1c40f;
+    background-color: #fff9e6;
+    color: #b7950b;
+    border: 1px solid #f1c40f;
 }
 
+
 /* Rechazado */
+
 .declined {
-  border-left-color: #e74c3c;
+    border-left-color: #e74c3c;
 }
 
 .declined .estado-badge {
-  background-color: #fdecea;
-  color: #c0392b;
-  border: 1px solid #e74c3c;
+    background-color: #fdecea;
+    color: #c0392b;
+    border: 1px solid #e74c3c;
 }
 
+
 /* Estilo general del contenedor de pestañas */
+
 .tabs {
     display: flex;
-    justify-content: flex-start; /* Alinea los botones a la izquierda */
-    gap: 10px; /* Espacio entre botones */
-    margin-bottom: 20px; /* Espacio debajo de los botones */
+    justify-content: flex-start;
+    /* Alinea los botones a la izquierda */
+    gap: 10px;
+    /* Espacio entre botones */
+    margin-bottom: 20px;
+    /* Espacio debajo de los botones */
     padding: 10px 0;
     /* Estilo para hacerlo fixed (ver sección 2) */
     width: 100%;
-    z-index: 10; 
+    z-index: 10;
 }
 
+
 /* Estilo base de los botones */
+
 .tabs button {
     padding: 10px 15px;
     border: 1px solid #ccc;
@@ -155,15 +200,20 @@
     font-weight: 500;
 }
 
+
 /* Estilo al pasar el ratón (hover) */
+
 .tabs button:hover {
     background-color: #e0e0e0;
     border-color: #aaa;
 }
 
+
 /* Estilo de la pestaña ACTIVA (la que debe resaltar) */
+
 .tabs button.active {
-    background-color: #007bff; /* Color primario, usa el color de tu marca */
+    background-color: #007bff;
+    /* Color primario, usa el color de tu marca */
     color: white;
     border-color: #007bff;
     font-weight: bold;
