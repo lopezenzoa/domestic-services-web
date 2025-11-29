@@ -14,22 +14,24 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './call-list.css',
 })
 export class CallList implements OnInit {
-  calls = signal<any[] | undefined>(undefined);
 
+  calls = signal<any[] | undefined>(undefined);
   filteredCalls = signal<any[] | undefined>(undefined);
 
   callService = inject(CallService);
   router = inject(Router);
 
-  // Propiedades de Paginación
-  pageSize: number = 5; // Muestra 5 turnos por página
+  selectedState: string = '';
+  startDate: string = '';
+  endDate: string = '';
+
+  pageSize: number = 5;
   currentPage = signal(1);
   totalPages = signal(1);
   totalElements = signal(0);
 
   isLoading = signal(true);
-
-  providerId: number = 0; // Se obtiene del usuario logueado
+  providerId: number = 0;
 
   ngOnInit() {
     const raw = localStorage.getItem('user');
@@ -44,23 +46,25 @@ export class CallList implements OnInit {
 
     this.loadPage(0);
   }
+
   loadPage(page: number) {
     this.isLoading.set(true);
 
-    this.callService.getHistoryPaginated(this.providerId, page, this.pageSize).subscribe({
-      next: (data) => {
-        this.filteredCalls.set(data.content);
-        this.calls.set(data.content);
-        this.totalPages.set(data.totalPages);
-        this.totalElements.set(data.totalElements);
-        this.currentPage.set(page);
-        this.isLoading.set(false);
-      },
-      error: (err) => {
-        console.error('Error cargando historial paginado:', err);
-        this.isLoading.set(false);
-      },
-    });
+    this.callService.getHistoryPaginated(this.providerId, page, this.pageSize)
+      .subscribe({
+        next: (data) => {
+          this.filteredCalls.set(data.content);
+          this.calls.set(data.content);
+          this.totalPages.set(data.totalPages);
+          this.totalElements.set(data.totalElements);
+          this.currentPage.set(page);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('Error cargando historial paginado:', err);
+          this.isLoading.set(false);
+        },
+      });
   }
 
   nextPage() {
@@ -78,10 +82,8 @@ export class CallList implements OnInit {
   acceptCall(idCall: number, providerId: number) {
     this.callService.acceptCall(idCall, providerId).subscribe({
       next: () => {
-        Swal.fire({
-          title: '¡Contratación aceptada!',
-          icon: 'success',
-        }).then(() => this.loadPage(this.currentPage()));
+        Swal.fire({ title: '¡Contratación aceptada!', icon: 'success' })
+          .then(() => this.loadPage(this.currentPage()));
       },
     });
   }
@@ -89,45 +91,52 @@ export class CallList implements OnInit {
   denyCall(idCall: number, providerId: number) {
     this.callService.denyCall(idCall, providerId).subscribe({
       next: () => {
-        Swal.fire({
-          title: 'Visita rechazada',
-          icon: 'info',
-        }).then(() => this.loadPage(this.currentPage()));
+        Swal.fire({ title: 'Visita rechazada', icon: 'info' })
+          .then(() => this.loadPage(this.currentPage()));
       },
     });
   }
+
   finishCall(callId: number) {
-  if (!this.providerId) return;
+    if (!this.providerId) return;
 
-  this.callService.markAsFinished(callId, this.providerId).subscribe({
-    next: () => {
-      Swal.fire({
-        title: "¡Visita finalizada!",
-        text: "La visita fue marcada como finalizada con éxito.",
-        icon: "success",
-        confirmButtonText: "Aceptar",
-        confirmButtonColor: "#3085d6",
-        background: "#fff",
-        color: "#333",
-      }).then(() => {
-        this.loadPage(this.currentPage());
-      });
+    this.callService.markAsFinished(callId, this.providerId).subscribe({
+      next: () => {
+        Swal.fire({
+          title: '¡Visita finalizada!',
+          text: 'La visita fue marcada como finalizada.',
+          icon: 'success',
+        }).then(() => this.loadPage(this.currentPage()));
+      },
+      error: (err) => {
+        console.error(err);
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrió un problema.',
+          icon: 'error'
+        });
+      },
+    });
+  }
+
+  filterCalls() {
+  const params: any = {
+    providerId: this.providerId
+  };
+
+  if (this.selectedState) params.state = this.selectedState;
+  if (this.startDate) params.start = this.startDate;
+  if (this.endDate) params.end = this.endDate;
+
+  this.callService.getCallsHistory(params).subscribe({
+    next: (data) => {
+      this.filteredCalls.set(data);
     },
-
     error: (err) => {
-      console.error(err);
-
-      Swal.fire({
-        title: "Error",
-        text: "Ocurrió un error al finalizar la visita.",
-        icon: "error",
-        confirmButtonText: "Entendido",
-        confirmButtonColor: "#d33",
-      });
-    },
+      console.error("Error al filtrar:", err);
+    }
   });
 }
-
 
   editCall(callId: number) {
     this.router.navigate(['/providers/shifts/edit', callId]);

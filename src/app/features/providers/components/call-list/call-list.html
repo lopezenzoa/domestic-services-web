@@ -1,66 +1,82 @@
 <div class="agenda-wrapper">
-  <header class="agenda-header">
-    <h2>Agenda de visitas</h2>
-    <p>Total de visitas: {{ totalElements() }}</p>
-  </header>
+    <header class="agenda-header">
 
-  <!-- PAGINACIÓN SUPERIOR -->
-  <div *ngIf="totalPages() > 1" class="pagination-controls pagination-top">
-    <button (click)="prevPage()" [disabled]="currentPage() === 0">◀ Anterior</button>
+        <div class="filter">
+            <div class="filter-bar">
+                <select [(ngModel)]="selectedState">
+    <option value="">Todos los estados</option>
+    <option value="REQUESTING">Solicitado</option>
+    <option value="PENDING">Aceptado</option>
+    <option value="FINISHED">Finalizado</option>
+    <option value="DECLINED">Rechazado</option>
+  </select>
 
-    <span>Página {{ currentPage() + 1 }} de {{ totalPages() }}</span>
+                <input type="date" [(ngModel)]="startDate" />
 
-    <button (click)="nextPage()" [disabled]="currentPage() + 1 >= totalPages()">Siguiente ▶</button>
-  </div>
+                <input type="date" [(ngModel)]="endDate" />
 
-  <!-- ESTADO DE CARGA -->
-  <div *ngIf="isLoading()" class="loading-state">Cargando agenda...</div>
+                <button class="btn-filter" (click)="filterCalls()">Filtrar</button>
+            </div>
+        </div>
 
-  <!-- SIN RESULTADOS -->
-  <div *ngIf="!isLoading() && filteredCalls()?.length === 0" class="no-results-state">
-    <p>No se encontraron visitas programadas.</p>
-  </div>
+        <h2>Agenda de visitas</h2>
+        <p>Total de visitas: {{ totalElements() }}</p>
+    </header>
 
-  <!-- LISTADO PAGINADO -->
-  <div class="agenda-container">
-    @for (call of filteredCalls(); track $index) {
-    <div
-      class="card"
-      [ngClass]="{
+    <!-- PAGINACIÓN SUPERIOR -->
+    <div *ngIf="totalPages() > 1" class="pagination-controls pagination-top">
+        <button (click)="prevPage()" [disabled]="currentPage() === 0">◀ Anterior</button>
+
+        <span>Página {{ currentPage() + 1 }} de {{ totalPages() }}</span>
+
+        <button (click)="nextPage()" [disabled]="currentPage() + 1 >= totalPages()">Siguiente ▶</button>
+    </div>
+
+    <!-- ESTADO DE CARGA -->
+    <div *ngIf="isLoading()" class="loading-state">Cargando agenda...</div>
+
+    <!-- SIN RESULTADOS -->
+    <div *ngIf="!isLoading() && filteredCalls()?.length === 0" class="no-results-state">
+        <p>No se encontraron visitas programadas.</p>
+    </div>
+
+    <!-- LISTADO PAGINADO -->
+    <div class="agenda-container">
+        @for (call of filteredCalls(); track $index) {
+        <div class="card" [ngClass]="{
         pending: call.state === 'REQUESTING',
         accepted: call.state === 'PENDING' || call.state === 'FINISHED',
         rejected: call.state === 'DECLINED'
-      }"
-    >
-      <div class="card-content">
-        <h1>Visita #{{ call.id }}</h1>
-        <p>
-          <strong>Prestador:</strong> {{ call.provider?.firstName }} {{ call.provider?.lastName }}
-        </p>
-        <p><strong>Cliente:</strong> {{ call.client?.firstName }} {{ call.client?.lastName }}</p>
-        <p><strong>Servicio:</strong> {{ call.provider?.facility?.name }}</p>
-        <p><strong>Descripción:</strong> {{ call.description }}</p>
-        <p><strong>Dirección:</strong> {{ call.address }}</p>
-        <p><strong>Fecha:</strong> {{ call.date | date : 'dd/MM/yyyy HH:mm' }}</p>
-        <p><strong>Estado:</strong> {{ call.state }}</p>
-      </div>
+      }">
+            <div class="card-content">
+                <h1>Visita #{{ call.id }}</h1>
+                <p>
+                    <strong>Prestador:</strong> {{ call.provider?.firstName }} {{ call.provider?.lastName }}
+                </p>
+                <p><strong>Cliente:</strong> {{ call.client?.firstName }} {{ call.client?.lastName }}</p>
+                <p><strong>Servicio:</strong> {{ call.provider?.facility?.name }}</p>
+                <p><strong>Descripción:</strong> {{ call.description }}</p>
+                <p><strong>Dirección:</strong> {{ call.address }}</p>
+                <p><strong>Fecha:</strong> {{ call.date | date : 'dd/MM/yyyy HH:mm' }}</p>
+                <p><strong>Estado:</strong> {{ call.state }}</p>
+            </div>
 
-      <div class="card-buttons" *ngIf="call.state === 'REQUESTING'">
-        <button class="button-deny" (click)="denyCall(call.id!, call.provider.id)">Rechazar</button>
-        <button class="button-accept" (click)="acceptCall(call.id!, call.provider.id)">
+            <div class="card-buttons" *ngIf="call.state === 'REQUESTING'">
+                <button class="button-deny" (click)="denyCall(call.id!, call.provider.id)">Rechazar</button>
+                <button class="button-accept" (click)="acceptCall(call.id!, call.provider.id)">
           Aceptar
         </button>
-      </div>
+            </div>
 
-     <div class="card-buttons accepted-buttons" *ngIf="call.state === 'PENDING'">
-  <button class="button-edit" (click)="editCall(call.id!)">Modificar</button>
-  <button class="button-finish" (click)="finishCall(call.id)">Finalizar</button>
-</div>
+            <div class="card-buttons accepted-buttons" *ngIf="call.state === 'PENDING'">
+                <button class="button-edit" (click)="editCall(call.id!)">Modificar</button>
+                <button class="button-finish" (click)="finishCall(call.id)">Finalizar</button>
+            </div>
 
-      <div class="status-box rejected" *ngIf="call.state === 'DECLINED'">Visita rechazada</div>
+            <div class="status-box rejected" *ngIf="call.state === 'DECLINED'">Visita rechazada</div>
 
-      <div class="status-box finished" *ngIf="call.state === 'FINISHED'">Visita completada</div>
+            <div class="status-box finished" *ngIf="call.state === 'FINISHED'">Visita completada</div>
+        </div>
+        }
     </div>
-    }
-  </div>
 </div>
