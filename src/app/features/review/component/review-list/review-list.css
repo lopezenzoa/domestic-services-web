@@ -8,9 +8,18 @@
 
 /* Título */
 .reviews-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 25px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #1e3a5f;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.no-reviews-message {
+  text-align: center;
+  font-size: 18px;
+  color: #4b5563;
+  margin-top: 5px;
 }
 
 /* Tarjetas */

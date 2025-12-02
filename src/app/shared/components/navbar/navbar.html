@@ -17,14 +17,14 @@
       <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
       <a routerLink="/providers" routerLinkActive="active">Contratar</a>
       <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a>
-      <a routerLink="/reviews" routerLinkActive="active">Mis reseñas</a>
+      <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a>
     }
 
     <!--PROVIDER -->
     @if (userRole() === 'PROVIDER') {
       <a routerLink="/providers/shifts/add" routerLinkActive="active">Mis Turnos Disponibles</a>
       <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a>
-      <a routerLink="/reviews" routerLinkActive="active">Mis reseñas</a>
+      <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a>
     }
 
     <!-- ADMIN -->

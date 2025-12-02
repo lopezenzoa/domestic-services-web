@@ -1,7 +1,10 @@
 <div class="reviews-container">
 
   <h2 class="reviews-title">Mis Reseñas</h2>
-
+  @if(reviews().length === 0) {
+    <p class="no-reviews-message">No hay reseñas disponibles.</p>
+  }
+  
   @for (item of reviews(); track $index) {
     <div class="review-card">
       <h3>Reseña #{{ item.id }}</h3>

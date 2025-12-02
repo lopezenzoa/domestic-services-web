@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Review } from '../../models/Review';
 import { ClientsService } from '../../../clients/services/clients-service';
 import { ProvidersService } from '../../../providers/services/providers.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-review-form',
@@ -21,8 +21,11 @@ export class ReviewForm {
   client = signal<any> ({});
   provider= signal<any>({});
   route = inject(ActivatedRoute);
+  router = inject(Router);
   providerId = this.route.snapshot.paramMap.get('providerId');
   today = new Date().toISOString().split('T')[0];
+
+  showSuccessModal = false;
 
   form= this.fb.nonNullable.group({
       description: ['', [Validators.required, Validators.minLength(5)]],
@@ -51,13 +54,27 @@ export class ReviewForm {
         provider: this.provider(),
       }
 
-      this.service.createReview(review).subscribe(c => {
-        this.form.reset();
+      this.service.createReview(review).subscribe({
+        next : () => {
+          this.showSuccessModal = true;
+          //this.form.reset();
+      
+        },
+
+        error: () => {
+          alert("Hubo un error al guardar la reseña.");
+        }
+      
       });
     } else {
       this.form.markAllAsTouched();
     }
   }
+
+  closeSuccessModal() {
+  this.showSuccessModal = false;
+  this.router.navigate(['/reviews']);
+}
 
 
 }
