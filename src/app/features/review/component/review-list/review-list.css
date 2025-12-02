@@ -1,0 +1,35 @@
+
+.reviews-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+/* Título */
+.reviews-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* Tarjetas */
+.review-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 600px; 
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+}
+
+.review-card h3 {
+    margin-bottom: 15px;
+}
+
+.review-card p {
+    margin: 6px 0;
+}
+

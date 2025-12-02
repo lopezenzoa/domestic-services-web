@@ -1,0 +1,19 @@
+<div class="reviews-container">
+
+  <h2 class="reviews-title">Mis Reseñas</h2>
+
+  @for (item of reviews(); track $index) {
+    <div class="review-card">
+      <h3>Reseña #{{ item.id }}</h3>
+
+      <p><strong>Prestador:</strong> {{ item.provider.firstName + ' ' + item.provider.lastName }}</p>
+      <p><strong>Cliente:</strong> {{ item.client.firstName + ' ' + item.client.lastName }}</p>
+      <p><strong>Servicio:</strong> {{ item.provider.facility.name }}</p>
+      <p><strong>Descripción:</strong> {{ item.description }}</p>
+      <p><strong>Fecha:</strong> {{ item.creationDate }}</p>
+  </div>
+}
+
+</div>
+
+

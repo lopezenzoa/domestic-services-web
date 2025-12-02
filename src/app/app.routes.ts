@@ -14,6 +14,7 @@ import { MisTurnos } from './features/clients/pages/mis-turnos/mis-turnos';
 import { authGuard } from './features/auth/guards/auth-guard';
 import { roleGuard } from './features/auth/guards/role-guard-guard';
 import { ReviewForm } from './features/review/component/review-form/review-form';
+import { ReviewList } from './features/review/component/review-list/review-list';
 
 
 export const routes: Routes = [
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'providers/shifts/add', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
   { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
   { path: 'providers/calls', component: CallList , canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
+  { path: 'providers/reviews', component: ReviewList },
 
   // CLIENTE (BÚSQUEDA DE PRESTADORES)
   { path: 'providers/:facilityId', component: ProvidersList,  canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },

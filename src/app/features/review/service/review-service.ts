@@ -14,5 +14,9 @@ export class ReviewService {
   createReview (body: Review): Observable<Review> {
     return this.http.post<Review>(`${this.baseUrl}/create`, body);
   }
+
+  getMyReviews () :Observable<Review []> {
+    return this.http.get<Review []>(`${this.baseUrl}/me`);
+  }
   
 }
