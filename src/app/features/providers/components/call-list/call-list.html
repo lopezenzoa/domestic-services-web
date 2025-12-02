@@ -1,15 +1,14 @@
 <div class="agenda-wrapper">
     <header class="agenda-header">
-
         <div class="filter">
             <div class="filter-bar">
                 <select [(ngModel)]="selectedState">
-    <option value="">Todos los estados</option>
-    <option value="REQUESTING">Solicitado</option>
-    <option value="PENDING">Aceptado</option>
-    <option value="FINISHED">Finalizado</option>
-    <option value="DECLINED">Rechazado</option>
-  </select>
+          <option value="">Todos los estados</option>
+          <option value="REQUESTING">Solicitado</option>
+          <option value="PENDING">Aceptado</option>
+          <option value="FINISHED">Finalizado</option>
+          <option value="DECLINED">Rechazado</option>
+        </select>
 
                 <input type="date" [(ngModel)]="startDate" />
 
@@ -60,7 +59,10 @@
                 <p><strong>Fecha:</strong> {{ call.date | date : 'dd/MM/yyyy HH:mm' }}</p>
                 <p><strong>Estado:</strong> {{ call.state }}</p>
             </div>
+            <div class="card-buttons">
+                <button class="button-chat" (click)="openChat(call.id)">💬 Chat</button>
 
+            </div>
             <div class="card-buttons" *ngIf="call.state === 'REQUESTING'">
                 <button class="button-deny" (click)="denyCall(call.id!, call.provider.id)">Rechazar</button>
                 <button class="button-accept" (click)="acceptCall(call.id!, call.provider.id)">

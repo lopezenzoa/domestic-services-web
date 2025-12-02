@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './call-list.css',
 })
 export class CallList implements OnInit {
-
   calls = signal<any[] | undefined>(undefined);
   filteredCalls = signal<any[] | undefined>(undefined);
 
@@ -50,21 +49,20 @@ export class CallList implements OnInit {
   loadPage(page: number) {
     this.isLoading.set(true);
 
-    this.callService.getHistoryPaginated(this.providerId, page, this.pageSize)
-      .subscribe({
-        next: (data) => {
-          this.filteredCalls.set(data.content);
-          this.calls.set(data.content);
-          this.totalPages.set(data.totalPages);
-          this.totalElements.set(data.totalElements);
-          this.currentPage.set(page);
-          this.isLoading.set(false);
-        },
-        error: (err) => {
-          console.error('Error cargando historial paginado:', err);
-          this.isLoading.set(false);
-        },
-      });
+    this.callService.getHistoryPaginated(this.providerId, page, this.pageSize).subscribe({
+      next: (data) => {
+        this.filteredCalls.set(data.content);
+        this.calls.set(data.content);
+        this.totalPages.set(data.totalPages);
+        this.totalElements.set(data.totalElements);
+        this.currentPage.set(page);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Error cargando historial paginado:', err);
+        this.isLoading.set(false);
+      },
+    });
   }
 
   nextPage() {
@@ -82,8 +80,9 @@ export class CallList implements OnInit {
   acceptCall(idCall: number, providerId: number) {
     this.callService.acceptCall(idCall, providerId).subscribe({
       next: () => {
-        Swal.fire({ title: '¡Contratación aceptada!', icon: 'success' })
-          .then(() => this.loadPage(this.currentPage()));
+        Swal.fire({ title: '¡Contratación aceptada!', icon: 'success' }).then(() =>
+          this.loadPage(this.currentPage())
+        );
       },
     });
   }
@@ -91,8 +90,9 @@ export class CallList implements OnInit {
   denyCall(idCall: number, providerId: number) {
     this.callService.denyCall(idCall, providerId).subscribe({
       next: () => {
-        Swal.fire({ title: 'Visita rechazada', icon: 'info' })
-          .then(() => this.loadPage(this.currentPage()));
+        Swal.fire({ title: 'Visita rechazada', icon: 'info' }).then(() =>
+          this.loadPage(this.currentPage())
+        );
       },
     });
   }
@@ -113,32 +113,36 @@ export class CallList implements OnInit {
         Swal.fire({
           title: 'Error',
           text: 'Ocurrió un problema.',
-          icon: 'error'
+          icon: 'error',
         });
       },
     });
   }
+  
 
   filterCalls() {
-  const params: any = {
-    providerId: this.providerId
-  };
+    const params: any = {
+      providerId: this.providerId,
+    };
 
-  if (this.selectedState) params.state = this.selectedState;
-  if (this.startDate) params.start = this.startDate;
-  if (this.endDate) params.end = this.endDate;
+    if (this.selectedState) params.state = this.selectedState;
+    if (this.startDate) params.start = this.startDate;
+    if (this.endDate) params.end = this.endDate;
 
-  this.callService.getCallsHistory(params).subscribe({
-    next: (data) => {
-      this.filteredCalls.set(data);
-    },
-    error: (err) => {
-      console.error("Error al filtrar:", err);
-    }
-  });
-}
+    this.callService.getCallsHistory(params).subscribe({
+      next: (data) => {
+        this.filteredCalls.set(data);
+      },
+      error: (err) => {
+        console.error('Error al filtrar:', err);
+      },
+    });
+  }
 
   editCall(callId: number) {
     this.router.navigate(['/providers/shifts/edit', callId]);
+  }
+  openChat(callId: number) {
+    this.router.navigate(['/providers/chat', callId]);
   }
 }

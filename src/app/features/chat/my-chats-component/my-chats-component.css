@@ -1,0 +1,102 @@
+.chats-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    font-family: "Poppins", sans-serif;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1d3557;
+    margin-bottom: 20px;
+}
+
+
+/* Cuando no hay chats */
+
+.no-chats {
+    text-align: center;
+    padding: 40px 10px;
+    color: #6c757d;
+    font-size: 18px;
+}
+
+
+/* Cards */
+
+.chat-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 18px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.chat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Información */
+
+.chat-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+/* Avatar redondo */
+
+.avatar {
+    width: 55px;
+    height: 55px;
+    background: #1d3557;
+    color: white;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+
+/* Textos */
+
+.chat-texts h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d3557;
+}
+
+.last-message {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+
+/* Botón de abrir */
+
+.open-btn {
+    padding: 8px 16px;
+    background: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.open-btn:hover {
+    background: #0b5ed7;
+}

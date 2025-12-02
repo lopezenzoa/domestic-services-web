@@ -15,13 +15,15 @@
         @if (userRole() === 'CLIENT') {
         <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
         <a routerLink="/providers" routerLinkActive="active">Contratar</a>
-        <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a> }
+        <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a>
+        <a routerLink="/my-chats" routerLinkActive="active">Chats</a> }
 
         <!--PROVIDER -->
         @if (userRole() === 'PROVIDER') {
         <a routerLink="/providers/shifts/add" routerLinkActive="active">Agregar Turno</a>
         <a routerLink="/providers/shifts" routerLinkActive="active">Mis turnos</a>
-        <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a> }
+        <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a>
+        <a routerLink="/my-chats" routerLinkActive="active">Chats</a> }
 
         <!-- ADMIN -->
         @if (userRole() === 'ADMIN') {

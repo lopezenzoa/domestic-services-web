@@ -71,6 +71,23 @@ export class CallService {
       headers: this.getHeaders(),
     });
   }
+  getCallById(callId: number) {
+    return this.http.get<any>(`${this.url}/client/call/${callId}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+ getProviderCallDetail(providerId: number, callId: number) {
+  return this.http.get<any>(
+    `${this.url}/provider/${providerId}/detail/${callId}`
+  );
+}
+
+ getMyChats() {
+   return this.http.get<any[]>(`${this.url}/chats`);
+}
+
+
   getHistoryPaginated(providerId: number, page: number, size: number) {
     return this.http.get<any>(`${this.url}/provider/${providerId}/history`, {
       params: {
@@ -80,8 +97,16 @@ export class CallService {
       headers: this.getHeaders(),
     });
   }
-  getCallsHistory(params: any) {
-  return this.http.get<any[]>(`${this.url}/provider/history`, { params });
+  getCallDetailForClient(callId: number) {
+  return this.http.get<any>(`${this.url}/client/call/${callId}`);
 }
 
+  /** Obtiene TODOS los llamados del usuario logueado (cliente o proveedor) */
+  getAllMyChats(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/me`, { headers: this.getHeaders() });
+  }
+
+  getCallsHistory(params: any) {
+    return this.http.get<any[]>(`${this.url}/provider/history`, { params });
+  }
 }
