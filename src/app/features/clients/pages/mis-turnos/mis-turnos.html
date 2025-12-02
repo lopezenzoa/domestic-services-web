@@ -158,6 +158,12 @@
         </span>
       </div>
 
+      <div class="estado-container">
+        <button class="estado-badge" [ngClass]="getEstadoClass(turno.state)" routerLink="/review/create/{{ turno.provider?.id }}">
+          Reseñar
+        </button>
+      </div>
+
     </div>
   </div>
 </div>

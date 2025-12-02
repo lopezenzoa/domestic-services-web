@@ -107,7 +107,7 @@ export class RequestCallForm {
       color: '#333',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigate(['/facilities']); // 🔹 Cambiá la ruta según tu proyecto
+        this.router.navigate(['/facilities']); // Cambiá la ruta según tu proyecto
       }
     });
 

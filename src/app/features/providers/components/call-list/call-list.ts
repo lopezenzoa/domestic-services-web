@@ -41,13 +41,12 @@ export class CallList implements OnInit {
         this.providerId = user.id;
       }
     }
-
     this.loadPage(0);
   }
   loadPage(page: number) {
     this.isLoading.set(true);
 
-    this.callService.getHistoryPaginated(this.providerId, page, this.pageSize).subscribe({
+   this.callService.getHistoryPaginated(this.providerId, page, this.pageSize).subscribe({
       next: (data) => {
         this.filteredCalls.set(data.content);
         this.calls.set(data.content);
@@ -61,6 +60,7 @@ export class CallList implements OnInit {
         this.isLoading.set(false);
       },
     });
+
   }
 
   nextPage() {

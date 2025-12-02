@@ -3,6 +3,8 @@ import { ReviewService } from '../../service/review-service';
 import { FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Review } from '../../models/Review';
 import { ClientsService } from '../../../clients/services/clients-service';
+import { ProvidersService } from '../../../providers/services/providers.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-review-form',
@@ -15,11 +17,16 @@ export class ReviewForm {
   fb = inject(FormBuilder);
   service = inject(ReviewService);
   serviceClient = inject(ClientsService);
+  providerService = inject(ProvidersService);
   client = signal<any> ({});
+  provider= signal<any>({});
+  route = inject(ActivatedRoute);
+  providerId = this.route.snapshot.paramMap.get('providerId');
+  today = new Date().toISOString().split('T')[0];
 
   form= this.fb.nonNullable.group({
       description: ['', [Validators.required, Validators.minLength(5)]],
-      creationDate: ['', Validators.required],
+      creationDate: [this.today, Validators.required],
       client: ['', Validators.required],
       provider: ['', Validators.required]
   })
@@ -29,19 +36,24 @@ export class ReviewForm {
       this.client.set(c);
       this.form.patchValue({ client: this.client().firstName + ' ' + this.client().lastName });
     });
+    this.providerService.getProviderById(parseInt(this.providerId!)).subscribe(p => {
+      this.provider.set(p);
+      this.form.patchValue({provider: this.provider().firstName + ' ' + this.provider().lastName})
+    })
   }
 
   submitForm() {
     if (this.form.valid) {
       const review = {
-        id : undefined,
         description : this.form.get('description')?.value!,
         creationDate: this.form.get('creationDate')?.value!,
         client : this.client(),
-        provider: {},
+        provider: this.provider(),
       }
 
-      this.service.createReview(review)
+      this.service.createReview(review).subscribe(c => {
+        this.form.reset();
+      });
     } else {
       this.form.markAllAsTouched();
     }

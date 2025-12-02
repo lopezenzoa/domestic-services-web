@@ -2,10 +2,11 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { CallService } from '../../../providers/services/call-service';
 import { Auth } from '../../../auth/services/auth';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-mis-turnos',
-  imports: [CommonModule, NgFor, NgIf],
+  imports: [CommonModule, NgFor, NgIf, RouterLink],
   templateUrl: './mis-turnos.html',
   styleUrl: './mis-turnos.css',
 })
@@ -32,7 +33,7 @@ export class MisTurnos implements OnInit {
         this.pendientes = data.filter((t) =>  t.state === 'REQUESTING');
         this.aceptados = data.filter((t) => t.state === 'ACCEPTED' || t.state === 'PENDING');
         this.rechazados = data.filter((t) => t.state === 'DECLINED' || t.state === 'REJECTED');
-       this.finalizados = data.filter(t => t.state === 'FINISHED');
+        this.finalizados = data.filter(t => t.state === 'FINISHED');
 
         this.cargando = false;
       },

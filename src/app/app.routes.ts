@@ -44,7 +44,7 @@ export const routes: Routes = [
   { path: 'facilities/create', component: CreateFacilities , canActivate: [authGuard, roleGuard],data: { role: 'ADMIN' }},
 
   // REVIEW
-  { path: 'review/create', component: ReviewForm},
+  { path: 'review/create/:providerId', component: ReviewForm},
   
   // OTROS
   { path: 'editar-licencia', component: EditarLicencia },
