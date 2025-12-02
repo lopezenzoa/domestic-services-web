@@ -94,5 +94,9 @@ irAResenia(turno: any) {
       }
     });
   }
+  irAlChat(turno: any) {
+  this.router.navigate(['/client/chat', turno.id]);
+}
+
 }
 

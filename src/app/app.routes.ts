@@ -15,6 +15,8 @@ import { authGuard } from './features/auth/guards/auth-guard';
 import { roleGuard } from './features/auth/guards/role-guard-guard';
 import { ReviewForm } from './features/review/component/review-form/review-form';
 
+import { MyChatsComponent } from './features/chat/my-chats-component/my-chats-component';
+import { ChatRoomComponent } from './features/chat/chat-room/chat-room';
 
 export const routes: Routes = [
   {
@@ -26,28 +28,42 @@ export const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],
   },
-  //RUTAS ESPECÍFICAS DEL PRESTADOR (PRIMERO)
+
+  // PROVIDER
   { path: 'providers/shifts', component: ProviderShifts, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
-  { path: 'providers/shifts/add', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
-  { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
-  { path: 'providers/calls', component: CallList , canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
+  { path: 'providers/shifts/add', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
+  { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
+  { path: 'providers/calls', component: CallList, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
 
-  // CLIENTE (BÚSQUEDA DE PRESTADORES)
-  { path: 'providers/:facilityId', component: ProvidersList,  canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
-  { path: 'providers', component: ProvidersList,  canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
+  // CHAT PROVIDER
+  { path: 'providers/chat/:callId', component: ChatRoomComponent, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
 
-  //  TURNOS Y SERVICIOS
-  { path: 'calls/request/:providerId', component: RequestCallForm, canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
-  { path: 'mis-turnos', component: MisTurnos, canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
-  { path: 'facilities', component: FacilitiesList, canActivate: [authGuard]},
-  { path: 'facilities/edit/:facilityId', component: CreateFacilities, canActivate: [authGuard, roleGuard],data: { role: 'ADMIN' } },
-  { path: 'facilities/create', component: CreateFacilities , canActivate: [authGuard, roleGuard],data: { role: 'ADMIN' }},
+  // CLIENTE
+  { path: 'providers/:facilityId', component: ProvidersList, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
+  { path: 'providers', component: ProvidersList, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
+
+  // CHAT CLIENTE
+  { path: 'client/chat/:callId', component: ChatRoomComponent, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
+
+  // TURNOS / SERVICIOS
+  { path: 'calls/request/:providerId', component: RequestCallForm, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
+  { path: 'mis-turnos', component: MisTurnos, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
+  { path: 'facilities', component: FacilitiesList, canActivate: [authGuard] },
+  { path: 'facilities/edit/:facilityId', component: CreateFacilities, canActivate: [authGuard, roleGuard], data: { role: 'ADMIN' } },
+  { path: 'facilities/create', component: CreateFacilities, canActivate: [authGuard, roleGuard], data: { role: 'ADMIN' } },
 
   // REVIEW
-  { path: 'review/create', component: ReviewForm},
-  
+  { path: 'review/create', component: ReviewForm },
+
+  // CHATS
+  {
+    path: 'my-chats',
+    component: MyChatsComponent,
+    canActivate: [authGuard]
+  },
+
   // OTROS
   { path: 'editar-licencia', component: EditarLicencia },
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent },
+  { path: '**', component: NotFoundComponent }
 ];

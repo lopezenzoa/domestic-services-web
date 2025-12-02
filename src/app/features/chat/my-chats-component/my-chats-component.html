@@ -1,0 +1,28 @@
+<div class="chats-wrapper">
+    <h2 class="title">Mis Conversaciones</h2>
+
+    <!-- Sin chats -->
+    <div *ngIf="noChats" class="no-chats">
+        No tenés conversaciones todavía.
+    </div>
+
+    <!-- Lista de chats -->
+    <div *ngFor="let chat of chats" class="chat-card" (click)="openChat(chat.id)">
+
+        <div class="chat-info">
+            <div class="avatar">
+                {{ chat.otherUserName.charAt(0).toUpperCase() }}
+            </div>
+
+            <div class="chat-texts">
+                <h3>{{ chat.otherUserName }}</h3>
+                <p class="last-message">
+                    {{ chat.lastMessage || "Tocá para abrir el chat" }}
+                </p>
+            </div>
+        </div>
+
+        <button class="open-btn">Abrir</button>
+
+    </div>
+</div>

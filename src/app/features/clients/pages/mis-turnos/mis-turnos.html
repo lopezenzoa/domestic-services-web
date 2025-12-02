@@ -53,6 +53,7 @@
                 {{ traducirEstado(turno.state) }}
               </span>
                         </div>
+                        <button class="btn-chat" (click)="irAlChat(turno)">Chat</button>
                     </div>
                 </div>
             </div>
@@ -86,6 +87,8 @@
                 {{ traducirEstado(turno.state) }}
               </span>
                         </div>
+                        <button class="btn-chat" (click)="irAlChat(turno)">Chat</button>
+
                     </div>
                 </div>
             </div>
@@ -154,7 +157,6 @@
                         <div class="estado-container">
                             <span class="estado-badge" [ngClass]="getEstadoClass(turno.state)"> Finalizado </span>
                         </div>
-
 
                         <button class="btn-resenia" (click)="irAResenia(turno)">Dejar Reseña</button>
                     </div>
