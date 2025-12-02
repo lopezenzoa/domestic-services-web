@@ -170,3 +170,26 @@
     /* Efecto de sombra para que resalte un poco */
     box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
 }
+
+/* Boton de reseña */ 
+.btn-review {
+  background-color: #2563eb;        
+  color: white;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-weight: 500;
+}
+
+.btn-review:hover {
+  background-color: #1d4ed8;       
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.btn-review:active {
+  transform: scale(0.98);
+}

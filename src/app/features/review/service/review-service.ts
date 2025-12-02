@@ -18,5 +18,13 @@ export class ReviewService {
   getMyReviews () :Observable<Review []> {
     return this.http.get<Review []>(`${this.baseUrl}/me`);
   }
+
+  deleteReview (id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
+  }
+  
+  getAllReviews(): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.baseUrl}/`);
+  }
   
 }

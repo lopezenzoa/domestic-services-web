@@ -32,7 +32,6 @@ export const routes: Routes = [
   { path: 'providers/shifts/add', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
   { path: 'providers/shifts/edit/:shiftId', component: AddShiftForm, canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' }  },
   { path: 'providers/calls', component: CallList , canActivate: [authGuard, roleGuard], data: { role: 'PROVIDER' } },
-  { path: 'providers/reviews', component: ReviewList },
 
   // CLIENTE (BÚSQUEDA DE PRESTADORES)
   { path: 'providers/:facilityId', component: ProvidersList,  canActivate: [authGuard, roleGuard],data: { role: 'CLIENT' } },
@@ -47,6 +46,7 @@ export const routes: Routes = [
 
   // REVIEW
   { path: 'review/create/:providerId', component: ReviewForm},
+  { path: 'reviews', component: ReviewList },
   
   // OTROS
   { path: 'editar-licencia', component: EditarLicencia },

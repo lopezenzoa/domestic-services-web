@@ -11,9 +11,45 @@
       <p><strong>Servicio:</strong> {{ item.provider.facility.name }}</p>
       <p><strong>Descripción:</strong> {{ item.description }}</p>
       <p><strong>Fecha:</strong> {{ item.creationDate }}</p>
+
+      @if(user()?.role === 'CLIENT' || user()?.role === 'ADMIN'){
+        <button class="delete-btn" (click)="openConfirmModal(item.id!)">
+        Eliminar Reseña
+        </button>
+      }
+  </div>
+}
+</div>
+@if (showConfirmModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-icon warning">!</div>
+
+      <h2>¿Eliminar reseña?</h2>
+      <p>Esta acción no se puede deshacer.</p>
+
+      <div class="modal-buttons">
+        <button class="btn-cancel" (click)="showConfirmModal = false">Cancelar</button>
+        <button class="btn-confirm" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
   </div>
 }
 
-</div>
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-icon success">&#10003;</div>
+
+      <h2>¡Reseña eliminada!</h2>
+      <p>La reseña fue eliminada correctamente.</p>
+
+      <button class="btn-confirm" (click)="closeSuccessModal()">
+        Aceptar
+      </button>
+    </div>
+  </div>
+}
+
 
 
