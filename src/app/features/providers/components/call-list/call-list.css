@@ -68,7 +68,7 @@
 .card {
   width: 90%;
   max-width: 800px;
-  background: #fff;
+  background: #fff !important;
   border-radius: 14px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -353,6 +353,7 @@
   background-color: #ecf9f0;
   padding: 1.5rem;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 /* contenedor de los botones */
@@ -376,3 +377,32 @@
   transition: background-color 0.2s ease;
   margin: 2%;
 }
+
+.status-box {
+  position: absolute;
+  top: 20px;
+  right: -35px;
+  transform: rotate(45deg);
+  background: #c62828;
+  color: white;
+  padding: 6px 40px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.ribbon-finished {
+    background: #4caf50;
+}
+/*.status-box {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}*/
+
+/*.rejected {
+  background-color: #fdecea;
+  color: #d93025;
+  border: 1px solid #f8c6c1;
+}*/
+

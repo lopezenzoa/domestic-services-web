@@ -57,8 +57,6 @@ export class ReviewForm {
       this.service.createReview(review).subscribe({
         next : () => {
           this.showSuccessModal = true;
-          //this.form.reset();
-      
         },
 
         error: () => {
