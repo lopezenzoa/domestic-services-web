@@ -1,14 +1,15 @@
 <div class="chats-wrapper">
     <h2 class="title">Mis Conversaciones</h2>
 
-    <!-- Sin chats -->
+    <!-- Mensaje si no hay chats -->
     <div *ngIf="noChats" class="no-chats">
-        No tenés conversaciones todavía.
+        <p>No tenés conversaciones todavía.</p>
     </div>
 
     <!-- Lista de chats -->
     <div *ngFor="let chat of chats" class="chat-card" (click)="openChat(chat.id)">
 
+        <!-- IZQUIERDA: Avatar e Info -->
         <div class="chat-info">
             <div class="avatar">
                 {{ chat.otherUserName.charAt(0).toUpperCase() }}
@@ -16,13 +17,26 @@
 
             <div class="chat-texts">
                 <h3>{{ chat.otherUserName }}</h3>
-                <p class="last-message">
-                    {{ chat.lastMessage || "Tocá para abrir el chat" }}
+
+                <!-- Fecha en negrita si hay mensajes no leídos -->
+                <p class="date-text" [class.bold-text]="chat.unreadCount > 0">
+                    {{ chat.date | date:'shortDate' }} - {{ chat.date | date:'shortTime' }}
                 </p>
             </div>
         </div>
 
-        <button class="open-btn">Abrir</button>
+        <!-- DERECHA: Globito y botón Abrir -->
+        <div class="right-side">
 
+            <!-- ESTO ES EL GLOBITO ROJO -->
+            <!-- Solo se muestra si unreadCount es mayor a 0 -->
+            <div *ngIf="chat.unreadCount > 0" class="unread-badge">
+                {{ chat.unreadCount }}
+            </div>
+
+            <button class="open-btn" (click)="openChat(chat.id)">
+        Abrir
+    </button>
+        </div>
     </div>
 </div>

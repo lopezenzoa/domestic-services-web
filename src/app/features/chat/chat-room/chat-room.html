@@ -1,12 +1,41 @@
 <h3 class="chat-title">Chatea con {{ otherUserName }}</h3>
 
 <div class="messages">
-    <div *ngFor="let m of messages()" class="msg" [ngClass]="isMine(m) ? 'me' : 'other'">
+    <!-- Usamos ng-container para el bucle, así podemos poner el separador fuera de la burbuja del mensaje -->
+    <ng-container *ngFor="let m of messages(); let i = index">
 
-        <p>{{ m.content }}</p>
-        <span>{{ m.timestamp | date:'shortTime' }}</span>
+        <!-- LÓGICA DE FECHA: Se muestra si es el primer mensaje o si cambia el día respecto al anterior -->
+        <div class="date-separator" *ngIf="showDateSeparator(m, i)">
+            <!-- date:'EEEE d MMMM' muestra formato tipo "miércoles 4 diciembre" -->
+            <span>{{ (m.timestamp || m.fechaEnvio) | date:'EEEE d MMMM' }}</span>
+        </div>
 
-    </div>
+        <!-- EL MENSAJE PROPIAMENTE DICHO -->
+        <div class="msg" [ngClass]="isMine(m) ? 'me' : 'other'">
+
+            <p>{{ m.content }}</p>
+
+            <div class="msg-meta">
+                <!-- La hora del mensaje -->
+                <span class="timestamp">{{ (m.timestamp || m.fechaEnvio) | date:'shortTime' }}</span>
+
+                <!-- EL INDICADOR DE VISTO (Solo aparece en mis mensajes) -->
+                <div *ngIf="isMine(m)" class="read-status" style="font-size: 1.2rem;">
+
+
+                    <span class="check" [style.color]="m.seen ? '#34b7f1' : 'rgba(255,255,255,0.6)'">
+                          ✔
+                    </span>
+
+                    <span class="check double" *ngIf="m.seen" style="color: #34b7f1;">
+                          ✔
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </ng-container>
 </div>
 
 <div class="input-box">

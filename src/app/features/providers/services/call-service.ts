@@ -82,9 +82,11 @@ export class CallService {
     `${this.url}/provider/${providerId}/detail/${callId}`
   );
 }
+getMyChats() {
+  const token = localStorage.getItem('token');
+  const headers = { Authorization: `Bearer ${token}` };
 
- getMyChats() {
-   return this.http.get<any[]>(`${this.url}/chats`);
+  return this.http.get<any[]>(`${this.url}/chats`, { headers });
 }
 
 
@@ -109,4 +111,8 @@ export class CallService {
   getCallsHistory(params: any) {
     return this.http.get<any[]>(`${this.url}/provider/history`, { params });
   }
+  markMessagesAsSeen(callId: number, userId: number) {
+  return this.http.put(`http://localhost:8080/api/messages/mark-seen/${callId}/${userId}`, {});
+}
+
 }

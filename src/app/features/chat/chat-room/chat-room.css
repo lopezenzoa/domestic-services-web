@@ -3,12 +3,8 @@
     flex-direction: column;
     height: calc(100vh - 70px);
     background: #f5f6fa;
-    /* Fondo general gris claro */
     padding: 0;
 }
-
-
-/* HEADER FIJO */
 
 .chat-title {
     padding: 15px 25px;
@@ -22,9 +18,6 @@
     z-index: 10;
 }
 
-
-/* CONTENEDOR DE MENSAJES */
-
 .messages {
     flex: 1;
     overflow-y: auto;
@@ -32,110 +25,120 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    /* Reduje un poco el espacio entre mensajes */
 }
 
 
-/* BUBBLE BASE */
+/* --- SEPARADOR DE FECHAS --- */
 
 
-/* BUBBLE BASE */
+/* Esto centra la fecha y le da el estilo de "pastilla" gris */
 
+.date-separator {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    /* Espacio arriba y abajo */
+    position: sticky;
+    top: 5px;
+    z-index: 5;
+}
 
-/* BASE COMÚN */
+.date-separator span {
+    background-color: #e1e4ea;
+    color: #586069;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    text-transform: capitalize;
+}
 
 .msg {
     max-width: 85%;
     min-width: 250px;
-    /* Mantenemos el largo que pediste */
     padding: 15px 20px;
-    /* Más aire interno */
     font-size: 15px;
     line-height: 1.4;
     display: flex;
     flex-direction: column;
     position: relative;
-    /* Transición suave por si hay animaciones */
     transition: all 0.2s ease;
 }
 
-
-/* MENSAJE MÍO: Gradiante Azul y Sombra */
-
 .msg.me {
-    /* Un degradado moderno tipo Messenger/iOS */
     background: linear-gradient(135deg, #007aff 0%, #005ecb 100%);
     color: white;
     align-self: flex-end;
-    /* BORDES: Redondeados, excepto la esquina inferior derecha */
     border-radius: 20px 20px 0 20px;
-    /* SOMBRA: Una luz suave azulada detrás */
     box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
     margin-right: 5px;
-    /* Separación del borde de la pantalla */
 }
-
-
-/* MENSAJE DEL OTRO: Blanco puro con sombra sutil */
 
 .msg.other {
     background: #ffffff;
     color: #1f2937;
-    /* Gris oscuro para el texto, se lee mejor */
     align-self: flex-start;
-    /* BORDES: Redondeados, excepto la esquina inferior izquierda */
     border-radius: 20px 20px 20px 0;
-    /* SOMBRA: Sutil en gris */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     border: 1px solid #f0f0f0;
-    /* Borde muy finito */
     margin-left: 5px;
 }
 
 
-/* HORA */
+/* Alineación de hora y tildes */
 
-.msg span {
-    font-size: 11px;
-    margin-top: 8px;
-    align-self: flex-end;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+.msg-meta {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
 }
 
-
-/* Hora en mi mensaje: un poco transparente para que se funda con el azul */
-
-.msg span {
+.timestamp {
     font-size: 11px;
-    margin-top: 8px;
-    align-self: flex-end;
     font-weight: 500;
-    letter-spacing: 0.5px;
 }
 
-
-/* Hora en mi mensaje: un poco transparente para que se funda con el azul */
-
-.msg.me span {
+.msg.me .timestamp {
     color: rgba(255, 255, 255, 0.75);
 }
 
-
-/* Hora en el otro: gris claro */
-
-.msg.other span {
+.msg.other .timestamp {
     color: #9ca3af;
 }
 
 
-/* INPUT FIJO ABAJO (Sin cambios mayores, solo asegurando visual) */
+/* --- TILDES --- */
+
+.read-status {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+}
+
+
+/* Quitamos el font-size de aquí porque lo pusimos en el HTML para forzarlo */
+
+.check {
+    font-weight: bold;
+}
+
+
+/* Superposición del segundo tilde */
+
+.check.double {
+    margin-left: -8px;
+}
+
+
+/* INPUT */
 
 .input-box {
     display: flex;
     padding: 15px 20px;
     background: #f5f6fa;
-    /* Mismo color que el fondo general para que parezca transparente */
     position: sticky;
     bottom: 0;
     z-index: 10;
@@ -146,18 +149,15 @@
     flex: 1;
     padding: 14px 20px;
     border-radius: 30px;
-    /* Completamente redondo (Pill shape) */
     border: 1px solid #e5e7eb;
     background: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    /* Sombra suave */
     outline: none;
     transition: box-shadow 0.2s;
 }
 
 .input-box input:focus {
     box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
-    /* Brillo azul al escribir */
     border-color: #007aff;
 }
 
@@ -165,16 +165,13 @@
     padding: 12px 25px;
     border-radius: 30px;
     background: #007aff;
-    /* Azul sólido haciendo juego */
     color: white;
     border: none;
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0, 122, 255, 0.3);
-    transition: transform 0.1s;
 }
 
 .input-box button:active {
     transform: scale(0.95);
-    /* Efecto de click */
 }

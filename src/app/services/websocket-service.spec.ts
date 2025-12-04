@@ -1,14 +1,13 @@
-/// <reference types="jasmine" />
 import { TestBed } from '@angular/core/testing';
 
-import { ReviewService } from './review-service';
+import { WebsocketService } from './websocket-service';
 
-describe('ReviewService', () => {
-  let service: ReviewService;
+describe('WebsocketService', () => {
+  let service: WebsocketService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ReviewService);
+    service = TestBed.inject(WebsocketService);
   });
 
   it('should be created', () => {
