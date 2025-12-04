@@ -14,6 +14,7 @@ import { MisTurnos } from './features/clients/pages/mis-turnos/mis-turnos';
 import { authGuard } from './features/auth/guards/auth-guard';
 import { roleGuard } from './features/auth/guards/role-guard-guard';
 import { ReviewForm } from './features/review/component/review-form/review-form';
+import { ReviewList } from './features/review/component/review-list/review-list';
 
 import { MyChatsComponent } from './features/chat/my-chats-component/my-chats-component';
 import { ChatRoomComponent } from './features/chat/chat-room/chat-room';
@@ -54,13 +55,10 @@ export const routes: Routes = [
 
   // REVIEW
   { path: 'review/create', component: ReviewForm },
+  { path: 'reviews', component: ReviewList },
 
   // CHATS
-  {
-    path: 'my-chats',
-    component: MyChatsComponent,
-    canActivate: [authGuard]
-  },
+  { path: 'my-chats', component: MyChatsComponent, canActivate: [authGuard] },
 
   // OTROS
   { path: 'editar-licencia', component: EditarLicencia },

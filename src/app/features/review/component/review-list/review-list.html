@@ -1,0 +1,46 @@
+<div class="reviews-container">
+
+    <h2 class="reviews-title">Mis Reseñas</h2>
+    <div *ngIf="totalPages() > 1" class="pagination-controls pagination-top">
+
+
+        <button class="btn-page" [disabled]="currentPage() === 0" (click)="loadReviews(currentPage() - 1)">
+     Anterior
+  </button>
+
+        <span class="page-info">
+    Página {{ currentPage() + 1 }} de {{ totalPages() }}
+  </span>
+
+        <button class="btn-page" [disabled]="currentPage() + 1 >= totalPages()" (click)="loadReviews(currentPage() + 1)">
+    Siguiente
+  </button>
+
+    </div>
+
+    <ng-container *ngIf="reviews().length === 0; else reviewList">
+        <p class="no-reviews-message">No hay reseñas disponibles.</p>
+    </ng-container>
+
+    <ng-template #reviewList>
+        <ng-container *ngFor="let item of reviews(); index as i">
+            <div class="review-card">
+                <h3>Reseña #{{ item.id }}</h3>
+
+                <p><strong>Prestador:</strong> {{ item.provider.firstName + ' ' + item.provider.lastName }}</p>
+                <p><strong>Cliente:</strong> {{ item.client.firstName + ' ' + item.client.lastName }}</p>
+                <p><strong>Servicio:</strong> {{ item.provider.facility.name }}</p>
+                <p><strong>Descripción:</strong> {{ item.description }}</p>
+                <p><strong>Fecha:</strong> {{ item.creationDate }}</p>
+
+                <button class="delete-btn" *ngIf="user()?.role === 'CLIENT' || user()?.role === 'ADMIN'" (click)="openConfirmModal(item.id!)">
+          Eliminar Reseña
+        </button>
+            </div>
+        </ng-container>
+
+
+
+    </ng-template>
+
+</div>

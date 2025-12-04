@@ -14,7 +14,6 @@ export class ProvidersService {
 
   updateLicense(provideId: number,licenseNumber:string):Observable<any>{
     return this.http.put(`${this.baseUrl}/${provideId}/license`,{licenseNumber})
-
   }
 
   getAllProviders(): Observable<Provider[]> {

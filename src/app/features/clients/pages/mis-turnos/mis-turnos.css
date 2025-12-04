@@ -43,7 +43,6 @@
 
 .card {
     background: white;
-    margin-bottom: 15px;
     border-radius: 14px;
     padding: 1.5rem;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
@@ -51,21 +50,8 @@
     border-left-style: solid;
     border-left-color: transparent;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 25px;
 }
-
-.done {
-    border-left-color: #2ecc71;
-    /* mismo verde que .accepted */
-}
-
-.done .estado-badge {
-    background-color: #e8f9f0;
-    color: #1e824c;
-    border: 1px solid #2ecc71;
-}
-
-
-/* Hover suave */
 
 .card:hover {
     transform: translateY(-4px);
@@ -73,49 +59,13 @@
 }
 
 
-/* === TIPOGRAFÍA === */
+/* === TIPOGRAFÍA DE LA CARD === */
 
 .card-title {
     font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 12px;
     color: #1a1a1a;
-}
-
-.btn-chat {
-    background-color: #0d6efd;
-    color: white;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    margin-top: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.btn-chat:hover {
-    background-color: #0b5cd7;
-}
-
-.btn-resenia {
-    background-color: #0d6efd;
-    color: white;
-    border: none;
-    padding: 0.45rem 1.2rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: all 0.25s ease-in-out;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-}
-
-.btn-resenia:hover {
-    background-color: #0b5ed7;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 }
 
 .row {
@@ -126,6 +76,60 @@
 
 .label {
     font-weight: 600;
+}
+
+
+/* === BOTONES === */
+
+.btn-chat {
+    background-color: #457b9d;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.btn-chat:hover {
+    background-color: #1d3557;
+    transform: translateY(-2px);
+}
+
+.btn-resenia,
+.btn-review {
+    background-color: #457b9d;
+    color: white;
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.btn-resenia:hover,
+.btn-review:hover {
+    background-color: #1d3557;
+    transform: translateY(-2px);
+}
+
+.btn-review:active {
+    transform: scale(0.98);
+}
+
+.actions-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
 }
 
 
@@ -146,9 +150,6 @@
 
 /* === COLORES POR ESTADO === */
 
-
-/* Aceptado */
-
 .accepted {
     border-left-color: #2ecc71;
 }
@@ -158,9 +159,6 @@
     color: #1e824c;
     border: 1px solid #2ecc71;
 }
-
-
-/* Pendiente / requesting */
 
 .pending {
     border-left-color: #f1c40f;
@@ -172,9 +170,6 @@
     border: 1px solid #f1c40f;
 }
 
-
-/* Rechazado */
-
 .declined {
     border-left-color: #e74c3c;
 }
@@ -185,25 +180,25 @@
     border: 1px solid #e74c3c;
 }
 
+.done {
+    border-left-color: #2ecc71;
+}
 
-/* Estilo general del contenedor de pestañas */
-
-.tabs {
-    display: flex;
-    justify-content: flex-start;
-    /* Alinea los botones a la izquierda */
-    gap: 10px;
-    /* Espacio entre botones */
-    margin-bottom: 20px;
-    /* Espacio debajo de los botones */
-    padding: 10px 0;
-    /* Estilo para hacerlo fixed (ver sección 2) */
-    width: 100%;
-    z-index: 10;
+.done .estado-badge {
+    background-color: #e8f9f0;
+    color: #1e824c;
+    border: 1px solid #2ecc71;
 }
 
 
-/* Estilo base de los botones */
+/* === TABS === */
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
 
 .tabs button {
     padding: 10px 15px;
@@ -212,27 +207,18 @@
     color: #333;
     cursor: pointer;
     border-radius: 5px;
-    transition: all 0.3s ease;
     font-weight: 500;
 }
-
-
-/* Estilo al pasar el ratón (hover) */
 
 .tabs button:hover {
     background-color: #e0e0e0;
     border-color: #aaa;
 }
 
-
-/* Estilo de la pestaña ACTIVA (la que debe resaltar) */
-
 .tabs button.active {
     background-color: #007bff;
-    /* Color primario, usa el color de tu marca */
     color: white;
     border-color: #007bff;
     font-weight: bold;
-    /* Efecto de sombra para que resalte un poco */
     box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
 }

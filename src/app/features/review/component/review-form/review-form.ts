@@ -3,7 +3,8 @@ import { ReviewService } from '../../service/review-service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Review } from '../../models/Review';
 import { ClientsService } from '../../../clients/services/clients-service';
-import { ActivatedRoute } from '@angular/router';
+import { ProvidersService } from '../../../providers/services/providers.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-review-form',
@@ -13,56 +14,98 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ReviewForm {
   providerId!: number;
+
+  // SERVICES & INJECTIONS
   fb = inject(FormBuilder);
   service = inject(ReviewService);
   serviceClient = inject(ClientsService);
-  client = signal<any>({});
-  route = inject(ActivatedRoute);
+  providerService = inject(ProvidersService);
 
+  // ROUTING
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+
+  // DATA
+  client = signal<any | null>(null);
+  provider = signal<any | null>(null);
+
+  today = new Date().toISOString().split('T')[0];
+
+  // MODAL
+  showSuccessModal = false;
+
+  // FORM
   form = this.fb.nonNullable.group({
     description: ['', [Validators.required, Validators.minLength(5)]],
-    creationDate: ['', Validators.required],
+    creationDate: [this.today, Validators.required],
     client: ['', Validators.required],
     provider: ['', Validators.required],
   });
 
   constructor() {
+    // CLIENTE LOGUEADO
     this.serviceClient.getClientProfile().subscribe((c) => {
       this.client.set(c);
       this.form.patchValue({
-        client: this.client().firstName + ' ' + this.client().lastName,
+        client: this.client()!.firstName + ' ' + this.client()!.lastName,
       });
     });
+
+    // PARAMS: providerId, providerName, fecha del turno
     this.route.queryParams.subscribe((params) => {
       const providerId = params['providerId'];
       const providerName = params['providerName'];
       const date = params['date'];
 
-      //cargar el provedor
       if (providerId) {
-        this.form.patchValue({ provider: providerName });
         this.providerId = providerId;
+        this.form.patchValue({ provider: providerName });
       }
+
       if (date) {
         const formatted = date.split('T')[0];
         this.form.patchValue({ creationDate: formatted });
       }
     });
+
+    // CARGAR PROVIDER REAL
+    if (this.providerId) {
+      this.providerService.getProviderById(Number(this.providerId)).subscribe((p) => {
+        this.provider.set(p);
+
+        this.form.patchValue({
+          provider: p.firstName + ' ' + p.lastName,
+        });
+      });
+    }
   }
 
+  // ENVIAR FORMULARIO
   submitForm() {
     if (this.form.valid) {
       const review = {
         id: undefined,
         description: this.form.get('description')?.value!,
-        creationDate: this.form.value.creationDate!, // ya vino del turno
-        client: this.client(), // cliente real
-        provider: { id: Number(this.providerId) },
+        creationDate: this.form.get('creationDate')?.value!,
+        client: this.client(),
+        provider: { id: Number(this.providerId) }, // <-- versión correcta
       };
 
-      this.service.createReview(review);
+      this.service.createReview(review).subscribe({
+        next: () => {
+          this.showSuccessModal = true;
+        },
+        error: () => {
+          alert('Hubo un error al guardar la reseña.');
+        },
+      });
     } else {
       this.form.markAllAsTouched();
     }
+  }
+
+  closeSuccessModal() {
+    this.showSuccessModal = false;
+    this.router.navigate(['/reviews']);
   }
 }

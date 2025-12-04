@@ -1,4 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="submitForm()" class="review-card">
+
     <h2 class="title">Dejar una Reseña</h2>
 
     <!-- DESCRIPTION -->
@@ -10,17 +11,33 @@
     }
 
     <!-- DATE -->
-    <label>Fecha de visita</label>
-    <input type="text" formControlName="creationDate" readonly class="readonly-input" />
+    <label class="label">Fecha de creación</label>
+    <input type="date" class="input" formControlName="creationDate" />
 
     <!-- CLIENT -->
     <label class="label">Cliente</label>
-    <input type="text" class="input" formControlName="client" placeholder="ID o nombre del cliente" />
+    <input type="text" class="input" formControlName="client" placeholder="Nombre del cliente" readonly />
 
     <!-- PROVIDER -->
     <label class="label">Proveedor</label>
-    <input type="text" class="input" formControlName="provider" placeholder="ID o nombre del proveedor" />
+    <input type="text" class="input" formControlName="provider" placeholder="Nombre del proveedor" readonly />
 
     <!-- BUTTON -->
     <button type="submit" class="btn-primary">Guardar Reseña</button>
 </form>
+
+<!-- SUCCESS MODAL -->
+@if (showSuccessModal) {
+<div class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-icon success">✓</div>
+
+        <h3>¡Reseña guardada!</h3>
+        <p>La reseña se guardó correctamente.</p>
+
+        <div class="modal-buttons">
+            <button class="btn-confirm" (click)="closeSuccessModal()">Aceptar</button>
+        </div>
+    </div>
+</div>
+}

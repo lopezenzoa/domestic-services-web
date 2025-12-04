@@ -75,10 +75,15 @@
                 <button class="button-finish" (click)="finishCall(call.id)">Finalizar</button>
             </div>
 
+            <div class="status-box rejected" *ngIf="call.state === 'DECLINED'">Rechazada</div>
+
+            <div class="status-box finished ribbon-finished" *ngIf="call.state === 'FINISHED'">Completada</div>
+
             <div class="status-box rejected" *ngIf="call.state === 'DECLINED'">Visita rechazada</div>
 
             <div class="status-box finished" *ngIf="call.state === 'FINISHED'">Visita completada</div>
         </div>
         }
+
     </div>
 </div>

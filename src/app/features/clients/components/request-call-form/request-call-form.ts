@@ -20,7 +20,7 @@ export class RequestCallForm {
   providersService: ProvidersService = inject(ProvidersService);
   callsService: CallService = inject(CallService);
   route: ActivatedRoute = inject(ActivatedRoute);
-  // Obtener el ID del proveedor desde la ruta
+
   providerIdFromRoute: number | null = Number(this.route.snapshot.paramMap.get('providerId'));
   facility: WritableSignal<string> = signal('');
 
@@ -38,65 +38,34 @@ export class RequestCallForm {
   providerShifts: WritableSignal<any[]> = signal([]);
 
   constructor() {
-    /*
-    // Datos de ejemplo para estilos de formulario
-    this.form.patchValue({ clientName: 'Juan Pérez' });
-    this.form.patchValue({ providerName: 'María Gómez' });
-    this.form.patchValue({ address: 'Calle Falsa 123' });
-
-    // Datos de ejemplo para estilos de turnos
-    //Simulamos los turnos disponibles (como si vinieran del backend)
-    setTimeout(() => {
-  this.providerShifts.set([
-    { id: 1, dateTime: 'Lunes 09:00 - 10:00' },
-    { id: 2, dateTime: 'Martes 10:00 - 11:00' },
-    { id: 3, dateTime: 'Miércoles 11:00 - 12:00' },
-    { id: 4, dateTime: 'Jueves 14:00 - 15:00' },
-    { id: 5, dateTime: 'Viernes 16:00 - 17:00' }
-  ]);
-
-  console.log(' Turnos cargados:', this.providerShifts());
-}, 1000);
-// simulamos una “carga” como si fuese un fetch
-    */
-
-    // Inicializar el formulario con datos del cliente y proveedor
-
-    // Buscar el perfil del cliente para autocompletar el nombre
     this.clientsService.getClientProfile().subscribe((client: any) => {
       this.form.patchValue({ clientName: client.firstName + ' ' + client.lastName });
       this.form.patchValue({ address: client.address });
-      this.clientId.set(client.id); // Asignar el ID del cliente a la data de la solicitud
+      this.clientId.set(client.id);
     });
 
-    // Buscar el perfil del proveedor para autocompletar el nombre
     this.providersService.getProviderById(this.providerIdFromRoute!).subscribe((provider: any) => {
       this.form.patchValue({ providerName: provider.firstName + ' ' + provider.lastName });
       this.providerId.set(provider.id);
       this.facility.set(provider.facility.name);
     });
 
-    // Cargar solo turnos FUTUROS del proveedor y ordenarlos por fecha/hora
-    this.providersService
-      .getProviderShifts(this.providerIdFromRoute!)
-      .subscribe((shifts: any[]) => {
-        const now = new Date();
+    this.providersService.getProviderShifts(this.providerIdFromRoute!).subscribe((shifts: any[]) => {
+      const now = new Date();
 
-        // Filtrar turnos futuros
-        const futureShifts = shifts.filter((shift) => {
-          const shiftDate = new Date(shift.dateTime);
-          return shiftDate >= now;
-        });
-
-        // Ordenar turnos futuros
-        futureShifts.sort((a, b) => {
-          const dateA = new Date(a.dateTime).getTime();
-          const dateB = new Date(b.dateTime).getTime();
-          return dateA - dateB; // orden ascendente
-        });
-
-        this.providerShifts.set(futureShifts);
+      const futureShifts = shifts.filter((shift) => {
+        const shiftDate = new Date(shift.dateTime);
+        return shiftDate >= now;
       });
+
+      futureShifts.sort((a, b) => {
+        const dateA = new Date(a.dateTime).getTime();
+        const dateB = new Date(b.dateTime).getTime();
+        return dateA - dateB;
+      });
+
+      this.providerShifts.set(futureShifts);
+    });
   }
 
   submitRequest() {
@@ -123,7 +92,7 @@ export class RequestCallForm {
             color: '#333',
           }).then((result) => {
             if (result.isConfirmed) {
-              this.router.navigate(['/facilities']); // 🔹 Cambiá la ruta según tu proyecto
+              this.router.navigate(['/facilities']);
             }
           });
 
