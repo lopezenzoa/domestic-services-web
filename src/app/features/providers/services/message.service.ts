@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Message } from '../models/Message';
 import { Observable } from 'rxjs';
@@ -18,6 +18,22 @@ export class MessageService {
 
   
 
+  markAsSeen(callId: number, userId: number) {
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(
+      `${this.baseUrl}/seen/${callId}/${userId}`,
+      {}, // body vacío
+      { headers }
+    );
+  }
+
+
 
 sendMessage(msg: any) {
   const token = localStorage.getItem('token');
@@ -36,6 +52,7 @@ sendMessage(msg: any) {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json'
   }
+  
 });
 
 
