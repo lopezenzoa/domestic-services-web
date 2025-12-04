@@ -71,6 +71,25 @@ export class CallService {
       headers: this.getHeaders(),
     });
   }
+  getCallById(callId: number) {
+    return this.http.get<any>(`${this.url}/client/call/${callId}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+ getProviderCallDetail(providerId: number, callId: number) {
+  return this.http.get<any>(
+    `${this.url}/provider/${providerId}/detail/${callId}`
+  );
+}
+getMyChats() {
+  const token = localStorage.getItem('token');
+  const headers = { Authorization: `Bearer ${token}` };
+
+  return this.http.get<any[]>(`${this.url}/chats`, { headers });
+}
+
+
   getHistoryPaginated(providerId: number, page: number, size: number) {
     return this.http.get<any>(`${this.url}/provider/${providerId}/history`, {
       params: {
@@ -80,4 +99,20 @@ export class CallService {
       headers: this.getHeaders(),
     });
   }
+  getCallDetailForClient(callId: number) {
+  return this.http.get<any>(`${this.url}/client/call/${callId}`);
+}
+
+  /** Obtiene TODOS los llamados del usuario logueado (cliente o proveedor) */
+  getAllMyChats(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/me`, { headers: this.getHeaders() });
+  }
+
+  getCallsHistory(params: any) {
+    return this.http.get<any[]>(`${this.url}/provider/history`, { params });
+  }
+  markMessagesAsSeen(callId: number, userId: number) {
+  return this.http.put(`http://localhost:8080/api/messages/mark-seen/${callId}/${userId}`, {});
+}
+
 }

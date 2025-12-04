@@ -1,42 +1,40 @@
 <header class="navbar">
-  <div class="navbar-left">
-    <img src="../../../../assets/logo3.png" alt="ServiFácil logo" class="logo" />
-   
-  </div>
+    <div class="navbar-left">
+        <img src="../../../../assets/logo3.png" alt="ServiFácil logo" class="logo" />
+    </div>
 
-  <nav class="navbar-links">
-    
-    <!--SIN LOGUEAR -->
-    @if (userRole() === null) {
-      <a routerLink="/auth/login">Iniciar Sesion</a>
-      <a routerLink="/auth/register">Registrarme</a>
-    }
+    <nav class="navbar-links">
 
-    <!-- USER -->
-    @if (userRole() === 'CLIENT') {
-      <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
-      <a routerLink="/providers" routerLinkActive="active">Contratar</a>
-      <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a>
-      <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a>
-    }
+        <!-- SIN LOGUEAR -->
+        @if (userRole() === null) {
+        <a routerLink="/auth/login">Iniciar Sesión</a>
+        <a routerLink="/auth/register">Registrarme</a> }
 
-    <!--PROVIDER -->
-    @if (userRole() === 'PROVIDER') {
-      <a routerLink="/providers/shifts/add" routerLinkActive="active">Mis Turnos Disponibles</a>
-      <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a>
-      <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a>
-    }
+        <!-- CLIENT -->
+        @if (userRole() === 'CLIENT') {
+        <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
+        <a routerLink="/providers" routerLinkActive="active">Contratar</a>
+        <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a>
+        <a routerLink="/my-chats" routerLinkActive="active">Chats</a>
+        <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a> }
 
-    <!-- ADMIN -->
-    @if (userRole() === 'ADMIN') {
-      <a routerLink="/facilities" routerLinkActive="active">Servicios</a>
-      <a routerLink="/facilities/create" routerLinkActive="active">Crear Servicios</a>
-      <a routerLink="/reviews" routerLinkActive="active">Reseñas</a>
-    }
+        <!-- PROVIDER -->
+        @if (userRole() === 'PROVIDER') {
+        <a routerLink="/providers/shifts/add" routerLinkActive="active">Agregar Turno</a>
+        <a routerLink="/providers/shifts" routerLinkActive="active">Mis Turnos</a>
+        <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a>
+        <a routerLink="/my-chats" routerLinkActive="active">Chats</a>
+        <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a> }
 
-    <!--LOGOUT SI ESTÁ LOGUEADO -->
-    @if (userRole() !== null) {
-      <button class="logout-btn" (click)="logout()">Salir</button>
-    }
-  </nav>
+        <!-- ADMIN -->
+        @if (userRole() === 'ADMIN') {
+        <a routerLink="/facilities" routerLinkActive="active">Servicios</a>
+        <a routerLink="/facilities/create" routerLinkActive="active">Crear Servicio</a>
+        <a routerLink="/reviews" routerLinkActive="active">Reseñas</a> }
+
+        <!-- LOGOUT -->
+        @if (userRole() !== null) {
+        <button class="logout-btn" (click)="logout()">Salir</button> }
+
+    </nav>
 </header>

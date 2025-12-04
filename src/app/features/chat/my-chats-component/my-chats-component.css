@@ -1,0 +1,476 @@
+.chats-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    font-family: "Poppins", sans-serif;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1d3557;
+    margin-bottom: 20px;
+}
+
+
+/* 🔔 BANNER DE NOTIFICACIÓN */
+
+.notification-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    animation: slideDown 0.5s ease-out;
+    border-left: 5px solid #ff3b30;
+}
+
+.notification-banner.pulse {
+    animation: slideDown 0.5s ease-out, gentlePulse 2s infinite;
+}
+
+.banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.banner-icon {
+    font-size: 20px;
+    animation: bellRing 1s ease-in-out;
+}
+
+.banner-text {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.banner-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.mark-all-read {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mark-all-read:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.close-banner {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.close-banner:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* Card del Chat - MEJORADO */
+
+.chat-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 18px 20px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.chat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Resaltar chats con mensajes no leídos */
+
+.chat-card.has-unread {
+    background: linear-gradient(135deg, #fff8f8 0%, #fff 100%);
+    border-left: 4px solid #ff3b30;
+    border-right: 1px solid #ffcdd2;
+    animation: highlightChat 0.5s ease-out;
+}
+
+
+/* Info Izquierda */
+
+.chat-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #457b9d;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.avatar.has-unread-avatar {
+    background-color: #1d3557;
+    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.2);
+}
+
+
+/* Punto rojo pequeño en el avatar */
+
+.unread-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background-color: #ff3b30;
+    border-radius: 50%;
+    border: 2px solid white;
+    animation: dotPulse 1.5s infinite;
+}
+
+.chat-texts h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.bold-name {
+    font-weight: 700 !important;
+    color: #1d3557 !important;
+}
+
+
+/* Estado del chat */
+
+.chat-state {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.state-badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.state-active,
+.state-accepted {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.state-pending,
+.state-requested {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.state-finished,
+.state-completed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.state-cancelled,
+.state-declined {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.date-text {
+    margin: 0;
+    font-size: 12px;
+    color: #888;
+}
+
+.bold-text {
+    font-weight: 700;
+    color: #1d3557;
+}
+
+
+/* 🔴 BADGE MEJORADO */
+
+.unread-badge {
+    background: linear-gradient(135deg, #ff3b30 0%, #ff6b6b 100%);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    box-shadow: 0 3px 8px rgba(255, 59, 48, 0.4);
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Animación de pulso para badge */
+
+.unread-badge.badge-pulse {
+    animation: badgePulse 1.5s infinite;
+}
+
+
+/* Botón Abrir mejorado */
+
+.open-btn {
+    padding: 8px 20px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.open-btn:hover {
+    background: #1d3557;
+    color: white;
+    border-color: #1d3557;
+    transform: translateX(3px);
+}
+
+.unread-arrow {
+    color: #ff3b30;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.open-btn:hover .unread-arrow {
+    color: white;
+    transform: translateX(3px);
+}
+
+.no-chats {
+    text-align: center;
+    color: #777;
+    margin-top: 40px;
+    padding: 40px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    /* Uno arriba del otro */
+    align-items: center;
+    /* Centrados */
+    gap: 5px;
+}
+
+
+/* El círculo rojo */
+
+.unread-badge {
+    background-color: #ff3b30;
+    /* Rojo */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /* Esto lo hace redondo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 5px;
+    /* Espacio con el botón */
+}
+
+
+/* El botón */
+
+.open-btn {
+    border: 1px solid #ccc;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* ANIMACIONES */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gentlePulse {
+    0%,
+    100% {
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6);
+    }
+}
+
+@keyframes bellRing {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: rotate(-10deg);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: rotate(10deg);
+    }
+}
+
+@keyframes badgePulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 3px 8px rgba(255, 59, 48, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(255, 59, 48, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 3px 8px rgba(255, 59, 48, 0.4);
+    }
+}
+
+@keyframes dotPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+@keyframes highlightChat {
+    from {
+        background: linear-gradient(135deg, #ffebee 0%, #fff 100%);
+    }
+    to {
+        background: linear-gradient(135deg, #fff8f8 0%, #fff 100%);
+    }
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .chats-wrapper {
+        padding: 15px;
+    }
+    .notification-banner {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+    }
+    .banner-content {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .banner-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .chat-card {
+        padding: 15px;
+    }
+    .avatar {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+    }
+    .unread-badge {
+        min-width: 25px;
+        height: 25px;
+        font-size: 11px;
+    }
+    .open-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}

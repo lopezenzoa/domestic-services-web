@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   selector: 'app-request-call-form',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './request-call-form.html',
-  styleUrls: ['./request-call-form.css']
+  styleUrls: ['./request-call-form.css'],
 })
 export class RequestCallForm {
   router: Router = inject(Router);
@@ -20,7 +20,7 @@ export class RequestCallForm {
   providersService: ProvidersService = inject(ProvidersService);
   callsService: CallService = inject(CallService);
   route: ActivatedRoute = inject(ActivatedRoute);
-  // Obtener el ID del proveedor desde la ruta
+
   providerIdFromRoute: number | null = Number(this.route.snapshot.paramMap.get('providerId'));
   facility: WritableSignal<string> = signal('');
 
@@ -30,7 +30,7 @@ export class RequestCallForm {
     clientName: ['', [Validators.required]],
     providerName: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    address: ['', [Validators.required]]
+    address: ['', [Validators.required]],
   });
 
   providerId: WritableSignal<number | null> = signal(null);
@@ -38,103 +38,89 @@ export class RequestCallForm {
   providerShifts: WritableSignal<any[]> = signal([]);
 
   constructor() {
-    /*
-    // Datos de ejemplo para estilos de formulario
-    this.form.patchValue({ clientName: 'Juan Pérez' });
-    this.form.patchValue({ providerName: 'María Gómez' });
-    this.form.patchValue({ address: 'Calle Falsa 123' });
-
-    // Datos de ejemplo para estilos de turnos
-    //Simulamos los turnos disponibles (como si vinieran del backend)
-    setTimeout(() => {
-  this.providerShifts.set([
-    { id: 1, dateTime: 'Lunes 09:00 - 10:00' },
-    { id: 2, dateTime: 'Martes 10:00 - 11:00' },
-    { id: 3, dateTime: 'Miércoles 11:00 - 12:00' },
-    { id: 4, dateTime: 'Jueves 14:00 - 15:00' },
-    { id: 5, dateTime: 'Viernes 16:00 - 17:00' }
-  ]);
-
-  console.log(' Turnos cargados:', this.providerShifts());
-}, 1000);
-// simulamos una “carga” como si fuese un fetch
-    */
-
-
-    // Inicializar el formulario con datos del cliente y proveedor
-
-    // Buscar el perfil del cliente para autocompletar el nombre
     this.clientsService.getClientProfile().subscribe((client: any) => {
       this.form.patchValue({ clientName: client.firstName + ' ' + client.lastName });
       this.form.patchValue({ address: client.address });
-      this.clientId.set(client.id); // Asignar el ID del cliente a la data de la solicitud
+      this.clientId.set(client.id);
     });
 
-    // Buscar el perfil del proveedor para autocompletar el nombre
     this.providersService.getProviderById(this.providerIdFromRoute!).subscribe((provider: any) => {
       this.form.patchValue({ providerName: provider.firstName + ' ' + provider.lastName });
       this.providerId.set(provider.id);
       this.facility.set(provider.facility.name);
     });
 
-    // Cargar los turnos del proveedor (opcional)
     this.providersService.getProviderShifts(this.providerIdFromRoute!).subscribe((shifts: any[]) => {
-      this.providerShifts.set(shifts);
+      const now = new Date();
+
+      const futureShifts = shifts.filter((shift) => {
+        const shiftDate = new Date(shift.dateTime);
+        return shiftDate >= now;
+      });
+
+      futureShifts.sort((a, b) => {
+        const dateA = new Date(a.dateTime).getTime();
+        const dateB = new Date(b.dateTime).getTime();
+        return dateA - dateB;
+      });
+
+      this.providerShifts.set(futureShifts);
     });
   }
 
   submitRequest() {
-     if (this.form.valid) {
-    const requestData = {
-      date: this.form.get('date')?.value,
-      client: { id: this.clientId() },
-      provider: { id: this.providerId() },
-      description: this.form.get('description')?.value,
-      address: this.form.get('address')?.value
-    };
+    if (this.form.valid) {
+      const requestData = {
+        date: this.form.get('date')?.value,
+        client: { id: this.clientId() },
+        provider: { id: this.providerId() },
+        description: this.form.get('description')?.value,
+        address: this.form.get('address')?.value,
+      };
 
-    this.callsService.requestCall(requestData).subscribe({
-  next: (response) => {
-    console.log('Solicitud enviada con éxito:', response);
+      this.callsService.requestCall(requestData).subscribe({
+        next: (response) => {
+          console.log('Solicitud enviada con éxito:', response);
 
-    Swal.fire({
-      title: '¡Solicitud enviada!',
-      text: 'Tu visita fue solicitada con éxito.',
-      icon: 'success',
-      confirmButtonColor: '#00bfa5',
-      confirmButtonText: 'Ir a buscar servicios',
-      background: '#ffffff',
-      color: '#333',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.router.navigate(['/facilities']); // Cambiá la ruta según tu proyecto
-      }
-    });
+          Swal.fire({
+            title: '¡Solicitud enviada!',
+            text: 'Tu visita fue solicitada con éxito.',
+            icon: 'success',
+            confirmButtonColor: '#00bfa5',
+            confirmButtonText: 'Ir a buscar servicios',
+            background: '#ffffff',
+            color: '#333',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/facilities']);
+            }
+          });
 
-    this.form.reset();
-  },
-  error: (error) => {
-    console.error('Error al enviar la solicitud:', error);
-    Swal.fire({
-      title: 'Error',
-      text: 'Ocurrió un problema al enviar la solicitud. Intenta nuevamente.',
-      icon: 'error',
-      confirmButtonColor: '#ef4444',
-      confirmButtonText: 'Cerrar',
-      background: '#ffffff',
-      color: '#333',
-    });
+          this.form.reset();
+        },
+        error: (error) => {
+          console.error('Error al enviar la solicitud:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un problema al enviar la solicitud. Intenta nuevamente.',
+            icon: 'error',
+            confirmButtonColor: '#ef4444',
+            confirmButtonText: 'Cerrar',
+            background: '#ffffff',
+            color: '#333',
+          });
+        },
+      });
+    } else {
+      Swal.fire({
+        title: 'Formulario incompleto',
+        text: 'Por favor completá todos los campos obligatorios.',
+        icon: 'warning',
+        confirmButtonColor: '#facc15',
+        confirmButtonText: 'Entendido',
+        background: '#ffffff',
+        color: '#333',
+      });
+    }
   }
-});
-  } else {
-    Swal.fire({
-      title: 'Formulario incompleto',
-      text: 'Por favor completá todos los campos obligatorios.',
-      icon: 'warning',
-      confirmButtonColor: '#facc15',
-      confirmButtonText: 'Entendido',
-      background: '#ffffff',
-      color: '#333',
-    });
-  }
-  }}
+}

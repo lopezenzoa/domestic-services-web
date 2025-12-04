@@ -2,18 +2,19 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { CallService } from '../../../providers/services/call-service';
 import { Auth } from '../../../auth/services/auth';
-import { RouterLink } from "@angular/router";
+
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-mis-turnos',
-  imports: [CommonModule, NgFor, NgIf, RouterLink],
+  imports: [CommonModule, NgFor, NgIf],
   templateUrl: './mis-turnos.html',
   styleUrl: './mis-turnos.css',
 })
 export class MisTurnos implements OnInit {
   private callService = inject(CallService);
   private auth = inject(Auth);
-
+  private router = inject(Router);
   activeTab: string = 'pendientes';
   finalizados: any[] = [];
 
@@ -84,4 +85,19 @@ getEstadoClass(estado: string): string {
       return '';
   }
 }
+irAResenia(turno: any) {
+    this.router.navigate(['/review/create'], {
+      queryParams: {
+        providerId: turno.provider?.id,
+        providerName: turno.provider?.firstName + ' ' + turno.provider?.lastName,
+        date: turno.date,
+        callId: turno.id
+      }
+    });
+  }
+  irAlChat(turno: any) {
+  this.router.navigate(['/client/chat', turno.id]);
 }
+
+}
+
