@@ -1,224 +1,205 @@
 .shift-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f8fafa;
-  font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8fafa;
+    font-family: "Poppins", sans-serif;
 }
 
-/*  TARJETA PRINCIPAL */
 .form-card {
-  background-color: #ffffff;
-  border: 2px solid #c7c7c7;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(28, 119, 181, 0.15);
-  width: 95%;
-  max-width: 600px;
-  padding: 3rem 3.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-repeat: no-repeat;
-  background-size: 70%; 
-  background-position: center;
-  background-blend-mode: lighten; 
-  opacity: 0.98; 
+    background-color: #ffffff;
+    border: 2px solid #c7c7c7;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(28, 119, 181, 0.15);
+    width: 95%;
+    max-width: 600px;
+    padding: 3rem 3.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+    background-blend-mode: lighten;
+    opacity: 0.98;
 }
 
 .form-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(28, 119, 181, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(28, 119, 181, 0.2);
 }
 
-/*  TÍTULO */
 h2 {
-  margin-bottom: 2rem;
-  color: #1c77b5;
-  font-weight: 600;
-  text-align: center;
-  font-size: 1.7rem; 
+    margin-bottom: 2rem;
+    color: #1c77b5;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.7rem;
 }
 
-/* CAMPO FECHA */
 mat-form-field {
-  display: block;
-  width: 70%; 
-  margin: 0 auto 1.8rem auto;
+    display: block;
+    width: 70%;
+    margin: 0 auto 1.8rem auto;
 }
 
-/* CAMPOS DE HORA */
 .time-field {
-  width: 100%;
-  margin-bottom: 1.8rem;
+    width: 100%;
+    margin-bottom: 1.8rem;
 }
 
 .time-field label {
-  display: block;
-  margin-bottom: 0.4rem;
-  color: #1c77b5;
-  font-weight: 500;
-  font-size: 1rem;
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #1c77b5;
+    font-weight: 500;
+    font-size: 1rem;
 }
 
-/*  INPUTS DE HORA */
 .time-field input[type="time"] {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1px solid #c7c7c7;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: #333;
-  background-color: #fff;
-  transition: border 0.2s, box-shadow 0.2s;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #c7c7c7;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    transition: border 0.2s, box-shadow 0.2s;
 }
 
 .time-field input[type="time"]:focus {
-  outline: none;
-  border-color: #00bfa5;
-  box-shadow: 0 0 6px #00bfa5;
+    outline: none;
+    border-color: #00bfa5;
+    box-shadow: 0 0 6px #00bfa5;
 }
-/* === SWEETALERT2 MODAL PERSONALIZADO === */
+
 .swal2-popup.rounded-modal {
-  border-radius: 18px !important;
-  font-family: "Poppins", sans-serif !important;
-  padding: 2.5rem 2rem !important;
-  box-shadow: 0 6px 20px rgba(28, 119, 181, 0.15) !important;
+    border-radius: 18px !important;
+    font-family: "Poppins", sans-serif !important;
+    padding: 2.5rem 2rem !important;
+    box-shadow: 0 6px 20px rgba(28, 119, 181, 0.15) !important;
 }
 
 .swal2-title {
-  font-size: 1.6rem !important;
-  color: #1c77b5 !important;
-  font-weight: 600 !important;
+    font-size: 1.6rem !important;
+    color: #1c77b5 !important;
+    font-weight: 600 !important;
 }
 
 .swal2-html-container {
-  font-size: 1rem !important;
-  color: #444 !important;
+    font-size: 1rem !important;
+    color: #444 !important;
 }
 
 .swal2-icon.swal2-success {
-  border-color: #00bfa5 !important;
-  color: #00bfa5 !important;
+    border-color: #00bfa5 !important;
+    color: #00bfa5 !important;
 }
 
 .swal2-icon.swal2-warning {
-  border-color: #ffb74d !important;
-  color: #ffb74d !important;
+    border-color: #ffb74d !important;
+    color: #ffb74d !important;
 }
 
 .swal2-icon.swal2-error {
-  border-color: #e53935 !important;
-  color: #e53935 !important;
+    border-color: #e53935 !important;
+    color: #e53935 !important;
 }
 
 .swal2-confirm {
-  font-weight: 600 !important;
-  border-radius: 8px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
 }
 
-/*  BOTÓN */
 button {
-  background-color: #00bfa5;
-  color: white;
-  border: none;
-  padding: 1rem 2.2rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  display: block;
-  margin: 1rem auto 0 auto;
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+    padding: 1rem 2.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    display: block;
+    margin: 1rem auto 0 auto;
 }
 
 button:hover {
-  background-color: #009e8d;
-  transform: scale(1.03);
+    background-color: #009e8d;
+    transform: scale(1.03);
 }
 
-/* MENSAJE DE ÉXITO */
 .success {
-  color: #4caf50;
-  font-weight: 500;
-  margin-top: 1.8rem;
-  text-align: center;
-  font-size: 1rem;
+    color: #4caf50;
+    font-weight: 500;
+    margin-top: 1.8rem;
+    text-align: center;
+    font-size: 1rem;
 }
 
-/*  PERSONALIZACIÓN DEL DATEPICKER ANGULAR MATERIAL */
 ::ng-deep .mat-datepicker-content {
-  background-color: #ffffff !important;
-  border: 2px solid #c7c7c7 !important;
-  border-radius: 12px !important;
-  box-shadow: 0 6px 16px rgba(28, 119, 181, 0.15) !important;
-  overflow: hidden !important;
+    background-color: #ffffff !important;
+    border: 2px solid #c7c7c7 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 6px 16px rgba(28, 119, 181, 0.15) !important;
+    overflow: hidden !important;
 }
 
-/* Encabezado del calendario */
 ::ng-deep .mat-calendar-header {
-  background-color: #1c77b5 !important;
-  color: #ffffff !important;
-  border-top-left-radius: 12px !important;
-  border-top-right-radius: 12px !important;
-  padding: 0.6rem 0 !important;
-  margin-bottom: 0 !important;
+    background-color: #1c77b5 !important;
+    color: #ffffff !important;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    padding: 0.6rem 0 !important;
+    margin-bottom: 0 !important;
 }
 
-/* Botones de navegación (< >) */
 ::ng-deep .mat-calendar-previous-button,
 ::ng-deep .mat-calendar-next-button {
-  color: #ffffff !important;
+    color: #ffffff !important;
 }
 
-/* Días del calendario */
 ::ng-deep .mat-calendar-body-cell {
-  color: #333 !important;
-  border-radius: 50% !important;
+    color: #333 !important;
+    border-radius: 50% !important;
 }
 
-/* Día actual */
 ::ng-deep .mat-calendar-body-today {
-  border: 1px solid #00bfa5 !important;
+    border: 1px solid #00bfa5 !important;
 }
 
-/* Día seleccionado */
 ::ng-deep .mat-calendar-body-selected {
-  background-color: #00bfa5 !important;
-  color: #ffffff !important;
+    background-color: #00bfa5 !important;
+    color: #ffffff !important;
 }
 
-/* Hover sobre días */
 ::ng-deep .mat-calendar-body-cell:hover {
-  background-color: rgba(28, 119, 181, 0.1) !important;
-  border-radius: 50% !important;
+    background-color: rgba(28, 119, 181, 0.1) !important;
+    border-radius: 50% !important;
 }
 
-/* Texto del mes/año */
 ::ng-deep .mat-calendar-period-button {
-  color: #ffffff !important;
-  font-weight: 500 !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
 }
 
-/* Días inactivos */
 ::ng-deep .mat-calendar-body-disabled {
-  color: #c7c7c7 !important;
+    color: #c7c7c7 !important;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
-  .form-card {
-    max-width: 90%;
-    padding: 2rem;
-  }
-
-  mat-form-field {
-    width: 100%;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-  }
-  .time-field{
-     width: 90%;
-  margin-bottom: 1.8rem;
-  }
+    .form-card {
+        max-width: 90%;
+        padding: 2rem;
+    }
+    mat-form-field {
+        width: 100%;
+    }
+    h2 {
+        font-size: 1.4rem;
+    }
+    .time-field {
+        width: 90%;
+        margin-bottom: 1.8rem;
+    }
 }

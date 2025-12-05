@@ -22,7 +22,7 @@
         <p>Total de visitas: {{ totalElements() }}</p>
     </header>
 
-    <!-- PAGINACIÓN SUPERIOR -->
+
     <div *ngIf="totalPages() > 1" class="pagination-controls pagination-top">
         <button (click)="prevPage()" [disabled]="currentPage() === 0">◀ Anterior</button>
 
@@ -31,15 +31,12 @@
         <button (click)="nextPage()" [disabled]="currentPage() + 1 >= totalPages()">Siguiente ▶</button>
     </div>
 
-    <!-- ESTADO DE CARGA -->
+
     <div *ngIf="isLoading()" class="loading-state">Cargando agenda...</div>
 
-    <!-- SIN RESULTADOS -->
     <div *ngIf="!isLoading() && filteredCalls()?.length === 0" class="no-results-state">
         <p>No se encontraron visitas programadas.</p>
     </div>
-
-    <!-- LISTADO PAGINADO -->
     <div class="agenda-container">
         @for (call of filteredCalls(); track $index) {
         <div class="card" [ngClass]="{

@@ -39,7 +39,7 @@ export class ReviewList {
     });
   }
 openConfirmModal(id: number) {
-  console.log("ABRIENDO MODAL PARA:", id);  // <-- AGREGAR
+  console.log("ABRIENDO MODAL PARA:", id);  
   this.selectedReviewId = id;
   this.showConfirmModal = true;
 }

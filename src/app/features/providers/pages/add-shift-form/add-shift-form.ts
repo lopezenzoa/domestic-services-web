@@ -13,7 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router'; // lo puse para que redirija al futuro ver listas
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProvidersService } from '../../services/providers.service';
 import Swal from 'sweetalert2';
 
@@ -54,7 +54,7 @@ export class AddShiftForm {
     this.activatedRoute.params.subscribe((params) => {
       this.shiftId.set(params['shiftId']);
 
-      // Buscar el turno existente si shiftId no es nulo
+
       if (this.shiftId()) {
         this.providersService.getMyProvider().subscribe((providerData) => {
           this.provider.set(providerData);
@@ -63,10 +63,10 @@ export class AddShiftForm {
             (shift: any) => shift.id == this.shiftId()!
           );
           if (existingShift) {
-            // Separar la fecha y hora del dateTime
+            
             const [date, time] = existingShift.dateTime.split('T');
             this.form.get('date')?.setValue(new Date(date));
-            this.form.get('startTime')?.setValue(time.substring(0, 5)); // Formato HH:mm
+            this.form.get('startTime')?.setValue(time.substring(0, 5)); 
           }
         });
       }
@@ -75,7 +75,7 @@ export class AddShiftForm {
 
   agregarTurno() {
     if (this.form.valid) {
-      // Formatear fecha y hora
+     
       const year = this.form.get('date')?.value.getFullYear();
       const month = String(this.form.get('date')?.value.getMonth() + 1).padStart(2, '0');
       const day = String(this.form.get('date')?.value.getDate()).padStart(2, '0');
@@ -88,7 +88,6 @@ export class AddShiftForm {
         available: true,
       };
 
-      // Obtener el proveedor actual
           this.providersService.getMyProvider().subscribe({
         next: (providerData) => {
           this.provider.set(providerData);

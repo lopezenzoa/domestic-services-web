@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../../users/services/users-service';
 import { NgIf } from '@angular/common';
@@ -9,7 +9,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink,NgIf, ReactiveFormsModule],
+  imports: [RouterLink, NgIf, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -20,12 +20,10 @@ export class Login {
   animations: any;
   errorMessage: string = '';
 
-  /* Servicio de autenticación para login */
-  authService: Auth = inject(Auth);
+  authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   users: UsersService = inject(UsersService);
 
-  /* Manejo del formulario reactivo (Login) */
   fb: FormBuilder = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     username: ['', [Validators.required]],
@@ -43,42 +41,40 @@ export class Login {
   }
 
   login() {
-    if (this.form.valid) {
-      const loginData = this.form.value;
+  if (!this.form.valid) return;
 
-      this.authService.login(loginData).subscribe({
-        next: (response) => {
-          const token = response.headers.get('Authorization');
+  const loginData = this.form.value;
 
-          if (token) {
-            // 1) Guardar token
-            localStorage.setItem('token', token);
+  this.authService.login(loginData).subscribe({
+    next: (response) => {
 
-            // 2) Pedir perfil del usuario autenticado
-            this.users.getUserProfile().subscribe({
-              next: (user) => {
-                localStorage.setItem('user', JSON.stringify(user)); // ⬅️ GUARDAR USER
-                console.log('Usuario logueado:', user);
+      const token = response?.headers?.get('Authorization');
+      if (!token) {
+        console.warn("El token no vino en la respuesta (puede ser preflight)");
+        return;
+      }
 
-                if (user.role === 'CLIENT') {
-                  this.router.navigate(['/facilities']);
-                } else if (user.role === 'PROVIDER') {
-                  this.router.navigate(['/providers/calls']);
-                } else {
-                  this.router.navigate(['/facilities']);
-                }
-              },
-              error: (err) => {
-                console.error('Error al obtener el perfil de usuario:', err);
-              },
-            });
+      localStorage.setItem('token', token);
+
+      this.users.getUserProfile().subscribe({
+        next: (user) => {
+          localStorage.setItem('user', JSON.stringify(user));
+
+          if (user.role === 'CLIENT') {
+            this.router.navigate(['/facilities']);
+          } else if (user.role === 'PROVIDER') {
+            this.router.navigate(['/providers/calls']);
+          } else {
+            this.router.navigate(['/']);
           }
         },
-        error: (err) => {
-          console.error('Error en el login:', err);
-          this.errorMessage = 'Usuario o contraseña incorrectos';
-        },
+        error: (err) => console.error('Error obteniendo perfil:', err)
       });
+    },
+
+    error: () => {
+      this.errorMessage = 'Usuario o contraseña incorrectos';
     }
-  }
+  });
+}
 }

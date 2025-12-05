@@ -1,7 +1,7 @@
 import { Shift } from "./Shift";
 
 export interface Provider {
-    // Define the properties of the Provider interface
+   
     id: number;
     firstName: string;
     lastName: string;

@@ -1,16 +1,24 @@
 <div class="agenda-wrapper">
     <div class="agenda-container">
 
-        <h2 class="agenda-title">Mis Turnos</h2>
-        <p class="agenda-subtitle">Total de turnos: {{ calls.length }}</p>
-
-        <div *ngIf="cargando" class="loading">Cargando tus turnos...</div>
-
-        <div *ngIf="!cargando && calls.length === 0" class="no-turnos">
-            No tenés turnos reservados aún.
+        <div class="filter-bar">
+            <input type="date" [(ngModel)]="startDate" />
+            <input type="date" [(ngModel)]="endDate" />
+            <button class="btn-filter" (click)="applyFilters()">Filtrar</button>
+            <button class="btn-filter reset" (click)="resetFilters()">Limpiar</button>
         </div>
 
-        <!-- TABS -->
+        <h2 class="agenda-title">Mis Turnos</h2>
+        <p class="agenda-subtitle">Total: {{ filteredList.length }}</p>
+
+
+        <div *ngIf="totalPages > 1" class="pagination-controls pagination-top">
+            <button (click)="prevPage()" [disabled]="currentPage === 0">◀ Anterior</button>
+            <span>Página {{ currentPage + 1 }} de {{ totalPages }}</span>
+            <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPages">Siguiente ▶</button>
+        </div>
+
+
         <div class="tabs">
             <button (click)="setTab('pendientes')" [class.active]="activeTab === 'pendientes'">Pendientes</button>
             <button (click)="setTab('aceptados')" [class.active]="activeTab === 'aceptados'">Aceptados</button>
@@ -18,101 +26,42 @@
             <button (click)="setTab('finalizados')" [class.active]="activeTab === 'finalizados'">Finalizados</button>
         </div>
 
-        <!-- GRID -->
         <div class="calls-grid">
 
-            <!-- PENDIENTES -->
-            <div *ngIf="activeTab === 'pendientes'">
-                <div *ngFor="let turno of pendientes" class="card" [ngClass]="getEstadoClass(turno.state)">
-                    <div class="card-content">
-                        <h3 class="card-title">Visita</h3>
+            <div *ngFor="let turno of paginatedList" class="card" [ngClass]="getEstadoClass(turno.state)">
 
-                        <div class="row"><span class="label">Prestador:</span> {{ turno.provider?.firstName }} {{ turno.provider?.lastName }}</div>
-                        <div class="row"><span class="label">Servicio:</span> {{ turno.provider?.facility?.name }}</div>
-                        <div class="row"><span class="label">Descripción:</span> {{ turno.description }}</div>
-                        <div class="row"><span class="label">Dirección:</span> {{ turno.address }}</div>
-                        <div class="row"><span class="label">Fecha:</span> {{ turno.date | date : 'dd/MM/yyyy HH:mm' }}</div>
-                        <div class="actions-row">
-                            <span class="estado-badge">{{ traducirEstado(turno.state) }}</span>
+                <div class="card-content">
 
-                            <button class="btn-chat" (click)="irAlChat(turno)">
-                             Chat
-                            </button>
-                        </div>
+                    <h3 class="card-title">Visita</h3>
 
-                    </div>
-                </div>
-            </div>
+                    <div class="row"><span class="label">Prestador:</span> {{ turno.provider?.firstName }} {{ turno.provider?.lastName }}</div>
+                    <div class="row"><span class="label">Servicio:</span> {{ turno.provider?.facility?.name }}</div>
+                    <div class="row"><span class="label">Descripción:</span> {{ turno.description }}</div>
+                    <div class="row"><span class="label">Dirección:</span> {{ turno.address }}</div>
+                    <div class="row"><span class="label">Fecha:</span> {{ turno.date | date : 'dd/MM/yyyy HH:mm' }}</div>
 
-            <!-- ACEPTADOS -->
-            <div *ngIf="activeTab === 'aceptados'">
-                <div *ngFor="let turno of aceptados" class="card" [ngClass]="getEstadoClass(turno.state)">
-                    <div class="card-content">
-                        <h3 class="card-title">Visita</h3>
 
-                        <div class="row"><span class="label">Prestador:</span> {{ turno.provider?.firstName }} {{ turno.provider?.lastName }}</div>
-                        <div class="row"><span class="label">Servicio:</span> {{ turno.provider?.facility?.name }}</div>
-                        <div class="row"><span class="label">Descripción:</span> {{ turno.description }}</div>
-                        <div class="row"><span class="label">Dirección:</span> {{ turno.address }}</div>
-                        <div class="row"><span class="label">Fecha:</span> {{ turno.date | date : 'dd/MM/yyyy HH:mm' }}</div>
+                    <div class="actions-row">
 
-                        <div class="actions-row">
-                            <span class="estado-badge">{{ traducirEstado(turno.state) }}</span>
+                        <span class="estado-badge">{{ traducirEstado(turno.state) }}</span>
 
-                            <button class="btn-chat" (click)="irAlChat(turno)">
-                                Chat
-                            </button>
-                        </div>
+                        <div class="spacer"></div>
+
+
+                        <button *ngIf="activeTab !== 'finalizados'" class="btn-chat" (click)="irAlChat(turno)">
+              Chat
+            </button>
+
+
+                        <button *ngIf="activeTab === 'finalizados'" class="btn-review" (click)="irAResenia(turno)">
+              Dejar Reseña
+            </button>
 
                     </div>
+
                 </div>
             </div>
-
-            <!-- RECHAZADOS -->
-            <div *ngIf="activeTab === 'rechazados'">
-                <div *ngFor="let turno of rechazados" class="card" [ngClass]="getEstadoClass(turno.state)">
-                    <div class="card-content">
-                        <h3 class="card-title">Visita</h3>
-
-                        <div class="row"><span class="label">Prestador:</span> {{ turno.provider?.firstName }} {{ turno.provider?.lastName }}</div>
-                        <div class="row"><span class="label">Servicio:</span> {{ turno.provider?.facility?.name }}</div>
-                        <div class="row"><span class="label">Descripción:</span> {{ turno.description }}</div>
-                        <div class="row"><span class="label">Dirección:</span> {{ turno.address }}</div>
-                        <div class="row"><span class="label">Fecha:</span> {{ turno.date | date : 'dd/MM/yyyy HH:mm' }}</div>
-
-                        <div class="estado-container">
-                            <span class="estado-badge" [ngClass]="getEstadoClass(turno.state)">{{ traducirEstado(turno.state) }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FINALIZADOS -->
-            <div *ngIf="activeTab === 'finalizados'">
-                <div *ngFor="let turno of finalizados" class="card done">
-                    <div class="card-content">
-                        <h3 class="card-title">Visita</h3>
-
-                        <div class="row"><span class="label">Prestador:</span> {{ turno.provider?.firstName }} {{ turno.provider?.lastName }}</div>
-                        <div class="row"><span class="label">Servicio:</span> {{ turno.provider?.facility?.name }}</div>
-                        <div class="row"><span class="label">Descripción:</span> {{ turno.description }}</div>
-                        <div class="row"><span class="label">Dirección:</span> {{ turno.address }}</div>
-                        <div class="row"><span class="label">Fecha:</span> {{ turno.date | date : 'dd/MM/yyyy HH:mm' }}</div>
-
-                        <div class="actions-row">
-                            <span class="estado-badge">Finalizado</span>
-
-                            <button class="btn-review" (click)="irAResenia(turno)">
-                            Dejar Reseña
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <!-- cierre calls-grid -->
 
     </div>
 </div>

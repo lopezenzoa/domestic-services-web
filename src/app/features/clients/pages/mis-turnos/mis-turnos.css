@@ -1,5 +1,3 @@
-/* === LAYOUT GENERAL === */
-
 .agenda-wrapper {
     display: flex;
     justify-content: center;
@@ -9,77 +7,155 @@
 .agenda-container {
     width: 90%;
     max-width: 1200px;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    animation: fadeInUp 0.6s ease;
 }
-
-
-/* === TÍTULO === */
 
 .agenda-title {
     text-align: center;
     font-size: 2.2rem;
     font-weight: 700;
-    color: #003366;
-    margin-bottom: 0.5rem;
+    color: #1e3a5f;
+    margin-bottom: 0.3rem;
 }
 
 .agenda-subtitle {
     text-align: center;
     color: #555;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
+    margin-bottom: 1.8rem;
+    font-size: 1.05rem;
 }
 
-
-/* === GRID DE CARDS === */
-
-.calls-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 20px;
+.filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+    width: fit-content;
+    margin: 0 auto 1.8rem auto;
 }
 
+.filter-bar select,
+.filter-bar input[type="date"] {
+    padding: 0.45rem 0.7rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background: #f8f9fa;
+    font-size: 0.9rem;
+}
 
-/* === CARD ESTÁNDAR === */
+.btn-filter {
+    background-color: #457b9d;
+    color: white;
+    border: none;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
 
-.card {
-    background: white;
-    border-radius: 14px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-    border-left-width: 12px;
-    border-left-style: solid;
-    border-left-color: transparent;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.btn-filter:hover {
+    background-color: #1d3557;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 12px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.pagination-controls button {
+    padding: 8px 18px;
+    background-color: #457b9d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.pagination-controls button:hover:not([disabled]) {
+    background-color: #1d3557;
+}
+
+.pagination-controls button[disabled] {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
+}
+
+.pagination-controls span {
+    font-weight: 700;
+    color: #333;
+    font-size: 1rem;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
     margin-bottom: 25px;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+.tabs button {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    color: #333;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: 0.25s ease;
 }
 
-
-/* === TIPOGRAFÍA DE LA CARD === */
-
-.card-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #1a1a1a;
+.tabs button:hover {
+    background-color: #e0e0e0;
+    border-color: #aaa;
 }
 
-.row {
-    margin-bottom: 6px;
+.tabs button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+
+.calls-grid {
     display: flex;
-    gap: 5px;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.label {
-    font-weight: 600;
+.actions-row {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    width: 100%;
 }
 
-
-/* === BOTONES === */
+.spacer {
+    flex: 1;
+}
 
 .btn-chat {
     background-color: #457b9d;
@@ -91,7 +167,6 @@
     font-weight: 500;
     cursor: pointer;
     transition: 0.2s ease;
-    margin-top: 1rem;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
@@ -100,64 +175,61 @@
     transform: translateY(-2px);
 }
 
-.btn-resenia,
 .btn-review {
-    background-color: #457b9d;
-    color: white;
+    background-color: #ffb703;
+    color: black;
     padding: 8px 18px;
     border: none;
     border-radius: 8px;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.2s ease;
-    margin-top: 1rem;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
-.btn-resenia:hover,
 .btn-review:hover {
-    background-color: #1d3557;
+    background-color: #e09e00;
     transform: translateY(-2px);
 }
 
-.btn-review:active {
-    transform: scale(0.98);
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.4rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    border-left-width: 12px;
+    border-left-style: solid;
+    transition: 0.25s ease;
 }
 
-.actions-row {
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+}
+
+.row {
+    margin-bottom: 6px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
+    gap: 6px;
 }
 
-
-/* === BADGE DE ESTADO === */
-
-.estado-container {
-    margin-top: 14px;
+.label {
+    font-weight: 600;
 }
 
 .estado-badge {
     padding: 6px 14px;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     display: inline-block;
-}
-
-
-/* === COLORES POR ESTADO === */
-
-.accepted {
-    border-left-color: #2ecc71;
-}
-
-.accepted .estado-badge {
-    background-color: #e8f9f0;
-    color: #1e824c;
-    border: 1px solid #2ecc71;
 }
 
 .pending {
@@ -168,6 +240,16 @@
     background-color: #fff9e6;
     color: #b7950b;
     border: 1px solid #f1c40f;
+}
+
+.accepted {
+    border-left-color: #2ecc71;
+}
+
+.accepted .estado-badge {
+    background-color: #e8f9f0;
+    color: #1e824c;
+    border: 1px solid #2ecc71;
 }
 
 .declined {
@@ -190,35 +272,47 @@
     border: 1px solid #2ecc71;
 }
 
-
-/* === TABS === */
-
-.tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding: 10px 0;
-}
-
-.tabs button {
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
-    color: #333;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: 500;
-}
-
-.tabs button:hover {
-    background-color: #e0e0e0;
-    border-color: #aaa;
-}
-
-.tabs button.active {
-    background-color: #007bff;
+.btn-chat,
+.btn-review {
+    background-color: #457b9d;
     color: white;
-    border-color: #007bff;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.25s ease;
+    margin-top: 1rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.btn-chat:hover,
+.btn-review:hover {
+    background-color: #1d3557;
+    transform: translateY(-2px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-bar {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+    }
+    .filter-bar select,
+    .filter-bar input[type="date"],
+    .btn-filter {
+        width: 100%;
+    }
 }

@@ -23,9 +23,9 @@ export class Navbar {
   searchServices() {
     const term = this.searchTerm.trim();
     if (term) {
-      // Redirigir a la página de servicios (FacilitiesList) y pasar el término como query parameter
+      
       this.router.navigate(['/facilities'], { queryParams: { search: term } });
-      // Opcional: Limpiar el campo después de la búsqueda
+    
       this.searchTerm = '';
     }
   }

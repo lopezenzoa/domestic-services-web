@@ -43,7 +43,7 @@ export class ReviewForm {
   });
 
   constructor() {
-    // CLIENTE LOGUEADO
+  
     this.serviceClient.getClientProfile().subscribe((c) => {
       this.client.set(c);
       this.form.patchValue({
@@ -51,7 +51,7 @@ export class ReviewForm {
       });
     });
 
-    // PARAMS: providerId, providerName, fecha del turno
+    
     this.route.queryParams.subscribe((params) => {
       const providerId = params['providerId'];
       const providerName = params['providerName'];
@@ -68,7 +68,7 @@ export class ReviewForm {
       }
     });
 
-    // CARGAR PROVIDER REAL
+  
     if (this.providerId) {
       this.providerService.getProviderById(Number(this.providerId)).subscribe((p) => {
         this.provider.set(p);
@@ -80,7 +80,7 @@ export class ReviewForm {
     }
   }
 
-  // ENVIAR FORMULARIO
+  
   submitForm() {
     if (this.form.valid) {
       const review = {
@@ -88,7 +88,7 @@ export class ReviewForm {
         description: this.form.get('description')?.value!,
         creationDate: this.form.get('creationDate')?.value!,
         client: this.client(),
-        provider: { id: Number(this.providerId) }, // <-- versión correcta
+        provider: { id: Number(this.providerId) }, 
       };
 
       this.service.createReview(review).subscribe({

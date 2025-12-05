@@ -6,9 +6,6 @@
     padding: 2rem 0;
 }
 
-
-/* BOTÓN FINALIZAR */
-
 .button-finish {
     background-color: #06d6a0;
     color: white;
@@ -27,9 +24,6 @@
     box-shadow: 0 6px 14px rgba(0, 0, 11, 0.18);
 }
 
-
-/* WRAPPER */
-
 .agenda-wrapper {
     background-color: #ffffff;
     border-radius: 16px;
@@ -41,9 +35,6 @@
     animation: fadeInUp 0.8s ease;
     position: relative;
 }
-
-
-/* HEADER */
 
 .agenda-header {
     text-align: center;
@@ -62,9 +53,6 @@
     font-size: 0.95rem;
 }
 
-
-/* LISTA */
-
 .agenda-container {
     display: flex;
     flex-direction: column;
@@ -72,9 +60,6 @@
     gap: 1.5rem;
     padding: 0 1rem;
 }
-
-
-/* TARJETA DE TURNO */
 
 .card {
     width: 90%;
@@ -97,9 +82,6 @@
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-
-/* CONTENIDO */
-
 .card-content h1 {
     font-size: 1.3rem;
     color: #333;
@@ -115,22 +97,15 @@
     color: #222;
 }
 
-
-/* BOTONES */
-
 .card-buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;
     margin-top: 1.5rem;
-    /* Para el card con position absolute */
     position: absolute;
     bottom: 1rem;
     right: 1rem;
 }
-
-
-/* BOTONES GENERALES */
 
 .card-buttons button {
     padding: 0.6rem 1.2rem;
@@ -141,9 +116,6 @@
     transition: all 0.2s ease;
 }
 
-
-/* BOTÓN ACEPTAR */
-
 .button-accept {
     background-color: #00bfa5;
     color: white;
@@ -152,9 +124,6 @@
 .button-accept:hover {
     background-color: #009e87;
 }
-
-
-/* BOTÓN RECHAZAR */
 
 .button-deny {
     background-color: #ef4444;
@@ -172,9 +141,6 @@
     background-color: #d62828;
 }
 
-
-/* ETIQUETA DE ESTADO */
-
 .status-box {
     position: absolute;
     top: 20px;
@@ -191,9 +157,6 @@
     background: #4caf50;
 }
 
-
-/* COLORES POR ESTADO */
-
 .pending {
     border-left-color: #ffc107;
     background: #fff8e1;
@@ -208,9 +171,6 @@
     border-left-color: #f44336;
     background: #ffebee;
 }
-
-
-/* PAGINACIÓN */
 
 .pagination-controls {
     display: flex;
@@ -290,9 +250,6 @@
     background-color: #1d3557;
 }
 
-
-/* ANIMACIONES */
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -303,9 +260,6 @@
         transform: translateY(0);
     }
 }
-
-
-/* RESPONSIVE */
 
 @media (max-width: 768px) {
     .filter-bar {

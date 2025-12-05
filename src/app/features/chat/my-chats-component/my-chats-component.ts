@@ -1,10 +1,16 @@
-import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { CallService } from '../../providers/services/call-service';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  inject,
+  effect
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { WebSocketService } from '../../../services/websocket-service';
-import { effect } from '@angular/core';
 
+import { CallService } from '../../providers/services/call-service';
+import { WebSocketService } from '../../../services/websocket-service';
 
 export interface ChatListDTO {
   id: number;
@@ -13,6 +19,8 @@ export interface ChatListDTO {
   state: string;
   date: string;
   unreadCount: number;
+  lastMessage?: string;
+  lastMessageTime?: string;
 }
 
 @Component({
@@ -23,171 +31,119 @@ export interface ChatListDTO {
   styleUrls: ['./my-chats-component.css'],
 })
 export class MyChatsComponent implements OnInit, OnDestroy {
-  
+
   chats: ChatListDTO[] = [];
-  noChats: boolean = false;
+  noChats = false;
+
   private ws = inject(WebSocketService);
-
-  private refreshInterval: any;
-
   private router = inject(Router);
   private callService = inject(CallService);
   private cd = inject(ChangeDetectorRef);
 
+  private refreshInterval: any;
 
-listenWsEffect = effect(() => {
-  const noti = this.ws.newMessage();
-
-  if (noti) {
+  constructor() {
     
-    const callId = noti.call?.id || noti.callId; 
-    
-    console.log(" WS: Mensaje recibido para Call ID:", callId);
-    console.log(" Contenido del mensaje:", noti);
+    effect(() => {
+      const noti = this.ws.newMessage();
 
-    if (callId) {
-      
-      const chatIndex = this.chats.findIndex(c => c.id === callId);
-      
-      if (chatIndex !== -1) {
-        // Sumamos 1 al contador existente
-        this.chats[chatIndex].unreadCount = (this.chats[chatIndex].unreadCount || 0) + 1;
-        // Actualizamos fecha para que suba
-        this.chats[chatIndex].date = new Date().toISOString();
+      if (!noti) return;
+
+      const callId = noti.call?.id || noti.callId;
+      if (!callId) return;
+
+      const index = this.chats.findIndex(c => c.id === callId);
+
+      if (index !== -1) {
         
-        // Forzamos a Angular a detectar el cambio visual
+        this.chats[index].unreadCount = (this.chats[index].unreadCount || 0) + 1;
+        this.chats[index].lastMessageTime = new Date().toISOString();
+        this.sortChats();
         this.cd.detectChanges();
       } else {
-        // Si no lo encuentra (chat nuevo), recargamos la lista
+        
         this.loadChats();
       }
-    }
+    });
   }
-});
- ngOnInit() {
-  // 1. Obtener mi usuario para saber mi ID
-  const userJson = localStorage.getItem('user');
-  
-  if (userJson) {
-    const user = JSON.parse(userJson);
-    
-    // 2. Conectarse al canal de notificaciones
+
+  ngOnInit(): void {
+    const raw = localStorage.getItem('user');
+    if (!raw) {
+      this.noChats = true;
+      return;
+    }
+
+    const user = JSON.parse(raw);
+
+ 
     this.ws.connectToGlobalNotifications(user.id);
-  } else {
-    this.noChats = true;
-    return; // Si no hay usuario, no cargamos nada
+
+    
+    this.loadChats();
   }
 
-  // 3. Cargar la lista de chats inicial (REST)
-  this.loadChats();
-
-  // El resto de tu código...
-  this.callService.getMyChats().subscribe({
-     // ...
-  });
-}
-
-
-  ngOnDestroy() {
-    if (this.refreshInterval) {
-      clearInterval(this.refreshInterval);
-    }
+  ngOnDestroy(): void {
+    clearInterval(this.refreshInterval);
   }
 
-loadChats() {
-  const userJson = localStorage.getItem('user');
-
-  if (!userJson) {
-    this.noChats = true;
-    return;
+ 
+  loadChats() {
+    this.callService.getMyChats().subscribe({
+      next: (res) => {
+        const grouped = this.groupChats(res);
+        this.chats = grouped;
+        this.sortChats();
+        this.noChats = this.chats.length === 0;
+      },
+      error: (err) => console.error(err)
+    });
   }
-
-  this.callService.getMyChats().subscribe({
-    next: (chats) => {
-      console.log("CHATS RECIBIDOS:", chats);
-
-      const grouped = this.groupChats(chats);
-      console.log("CHATS AGRUPADOS:", grouped);
-
-      this.chats = grouped;
-    },
-    error: (err) => {
-      console.error(" Error cargando chats:", err);
-    }
-  });
-}
-
-private groupChats(chats: any[]) {
-  const map = new Map();
-
-  chats.forEach(chat => {
-    const key = chat.otherUserName;
-
-    // Si el chat ya existe, elegimos el más reciente
-    if (map.has(key)) {
-      const existing = map.get(key);
-      if (new Date(chat.date) > new Date(existing.date)) {
-        map.set(key, chat);
-      }
-    } else {
-      map.set(key, chat);
-    }
-  });
-
-  return Array.from(map.values());
-}
-
-
-  removeDuplicates(list: ChatListDTO[]): ChatListDTO[] {
+  private groupChats(chats: ChatListDTO[]): ChatListDTO[] {
     const map = new Map<number, ChatListDTO>();
 
-    list.forEach(item => {
-      const existing = map.get(item.otherUserId);
-
-      // Aseguramos que unreadCount sea un número válido
-      const currentUnread = Number(item.unreadCount) || 0;
+    chats.forEach(chat => {
+      const existing = map.get(chat.otherUserId);
 
       if (!existing) {
-        // Clonamos y aseguramos el número
-        map.set(item.otherUserId, { ...item, unreadCount: currentUnread });
-      } else {
-        // FUSIÓN:
-        const existingUnread = Number(existing.unreadCount) || 0;
-        const totalUnread = existingUnread + currentUnread;
-
-        const itemDate = new Date(item.date).getTime();
-        const existingDate = new Date(existing.date).getTime();
-
-        let winner: ChatListDTO;
-
-        // Gana el más reciente
-        if (itemDate > existingDate) {
-          winner = { ...item }; 
-        } else {
-          winner = existing; 
-        }
-
-        // Le asignamos la SUMA TOTAL
-        winner.unreadCount = totalUnread;
-
-        map.set(item.otherUserId, winner);
+        map.set(chat.otherUserId, { ...chat });
+        return;
       }
+
+      const timeNew = new Date(chat.lastMessageTime || chat.date).getTime();
+      const timeOld = new Date(existing.lastMessageTime || existing.date).getTime();
+
+      const winner = timeNew > timeOld ? chat : existing;
+
+      winner.unreadCount = (existing.unreadCount || 0) + (chat.unreadCount || 0);
+
+      map.set(chat.otherUserId, winner);
     });
 
     return Array.from(map.values());
   }
 
+
+  private sortChats() {
+    this.chats.sort((a, b) => {
+      const t1 = new Date(a.lastMessageTime || a.date).getTime();
+      const t2 = new Date(b.lastMessageTime || b.date).getTime();
+      return t2 - t1;
+    });
+  }
+
+  
   openChat(callId: number) {
     const raw = localStorage.getItem('user');
     if (!raw) return;
-    
+
     const user = JSON.parse(raw);
 
-    if (user.role === 'CLIENT') {
-      this.router.navigate([`/client/chat/${callId}`]);
-    } else {
-      this.router.navigate([`/providers/chat/${callId}`]);
-    }
+    const route =
+      user.role === 'CLIENT'
+        ? `/client/chat/${callId}`
+        : `/providers/chat/${callId}`;
+
+    this.router.navigate([route]);
   }
-   
 }

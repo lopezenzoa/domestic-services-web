@@ -43,12 +43,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.loadOtherUserName();
     this.loadMessages();
 
-    // Conecto WebSocket
+    
     this.ws.connect(this.callId);
 
-    // Me suscribo al WS
     this.wsSubscription = this.ws.subscribeToChat((msg: any) => {
-      console.log(" WS mensaje recibido en componente:", msg);
+     
 
       if (!msg) return;
 
@@ -56,7 +55,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
        
         if (msg.type === 'MESSAGES_SEEN' || msg.action === 'READ' || msg.leido === true) {
-           console.log(" Alguien leyó los mensajes. Actualizando UI...");
+  
            
            this.messages.update(prev => prev.map(m => {
             
@@ -70,12 +69,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
            return;
         }
 
-        // 2. LÓGICA DE MENSAJE NUEVO (Normalización)
         if (!msg.content && msg.texto) msg.content = msg.texto;
         if (!msg.texto && msg.content) msg.texto = msg.content; 
         if (!msg.fechaEnvio && msg.timestamp) msg.fechaEnvio = msg.timestamp;
 
-        // 3. ACTUALIZAR LISTA 
+        
         this.messages.update(prev => {
           const yaExiste = prev.some(m => String(m.id) === String(msg.id));
           
@@ -129,6 +127,8 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
   send() {
     const content = this.newMessage().trim();
     if (!content) return;
+
+    
     this.messageService.sendMessage({
       callId: this.callId,
       authorId: this.user.id,
@@ -157,14 +157,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     }, 50);
   }
   showDateSeparator(msg: any, index: number): boolean {
-  if (index === 0) return true; // Siempre mostrar fecha en el primer mensaje
+  if (index === 0) return true; 
 
   const prevMsg = this.messages()[index - 1];
   
   const current = new Date(msg.timestamp || msg.fechaEnvio);
   const prev = new Date(prevMsg.timestamp || prevMsg.fechaEnvio);
 
-  // Comparamos día, mes y año
   return current.getDate() !== prev.getDate() ||
          current.getMonth() !== prev.getMonth() ||
          current.getFullYear() !== prev.getFullYear();

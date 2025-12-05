@@ -1,28 +1,24 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth.service';
 
 export const roleGuard: CanActivateFn = (route, state) => {
-  const auth = inject(Auth);
+  const auth = inject(AuthService);
   const router = inject(Router);
 
-  const expectedRole = route.data['role'];
-  const user = auth.getUser();
+  
+  const expectedRole = route.data['role'] as string | string[];
 
-  if (!user) {
-    router.navigate(['/auth/login']);
-    return false;
+  // Si no está logueado
+  if (!auth.isLoggedIn()) {
+    return router.createUrlTree(['/auth/login']);
   }
 
-  // TU ROL REAL VIENE COMO "CLIENT", NO COMO "USER"
-  const role = user.role;
+ 
+  if (!auth.hasRole(expectedRole)) {
+   return router.createUrlTree(['/auth/login']);
 
-  if (role === expectedRole) {
-    return true;
   }
 
-  // ❗ Importante: si el rol no coincide, que NO vuelva al login.
-  // Mandalo a una página 403 o a un lugar neutral.
-  router.navigate(['/']);
-  return false;
+  return true;
 };

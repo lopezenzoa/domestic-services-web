@@ -12,7 +12,7 @@ export class CallService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  /** Método reutilizable para agregar el token a los headers */
+ 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
@@ -21,7 +21,7 @@ export class CallService {
     });
   }
 
-  /**  Usa el endpoint /me con autenticación */
+  
   getMyCalls(): Observable<any[]> {
     return this.http.get<any[]>(`${this.url}/me`, { headers: this.getHeaders() });
   }
@@ -103,7 +103,6 @@ getMyChats() {
   return this.http.get<any>(`${this.url}/client/call/${callId}`);
 }
 
-  /** Obtiene TODOS los llamados del usuario logueado (cliente o proveedor) */
   getAllMyChats(): Observable<any[]> {
     return this.http.get<any[]>(`${this.url}/me`, { headers: this.getHeaders() });
   }

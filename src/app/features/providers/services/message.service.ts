@@ -13,7 +13,7 @@ export class MessageService {
   getMessages(callId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/call/${callId}`);
   }
-  //almacena mensajes
+ 
   messages = signal<Message[]>([]);
 
   
@@ -28,7 +28,7 @@ export class MessageService {
 
     return this.http.post(
       `${this.baseUrl}/seen/${callId}/${userId}`,
-      {}, // body vacío
+      {}, 
       { headers }
     );
   }
@@ -42,7 +42,7 @@ sendMessage(msg: any) {
     'Content-Type': 'application/json'
   };
 
-  // Solo agrego Authorization si hay token
+ 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
