@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, signal, NgZone, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MessageService } from '../../providers/services/message.service';
-import { CallService } from '../../providers/services/call-service';
+import { MessageService } from '../../../shared/services/message.service';
+import { CallService } from '../../../shared/services/call-service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WebSocketService } from '../../../services/websocket-service';
+import { WebSocketService } from '../../../shared/services/websocket-service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -43,12 +43,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     this.loadOtherUserName();
     this.loadMessages();
 
-    // Conecto WebSocket
+    
     this.ws.connect(this.callId);
 
-    // Me suscribo al WS
     this.wsSubscription = this.ws.subscribeToChat((msg: any) => {
-      console.log(" WS mensaje recibido en componente:", msg);
+     
 
       if (!msg) return;
 
@@ -56,7 +55,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
 
        
         if (msg.type === 'MESSAGES_SEEN' || msg.action === 'READ' || msg.leido === true) {
-           console.log(" Alguien leyó los mensajes. Actualizando UI...");
+  
            
            this.messages.update(prev => prev.map(m => {
             
@@ -70,12 +69,11 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
            return;
         }
 
-        // 2. LÓGICA DE MENSAJE NUEVO (Normalización)
         if (!msg.content && msg.texto) msg.content = msg.texto;
         if (!msg.texto && msg.content) msg.texto = msg.content; 
         if (!msg.fechaEnvio && msg.timestamp) msg.fechaEnvio = msg.timestamp;
 
-        // 3. ACTUALIZAR LISTA 
+        
         this.messages.update(prev => {
           const yaExiste = prev.some(m => String(m.id) === String(msg.id));
           
@@ -126,22 +124,22 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  send() {
-    const content = this.newMessage().trim();
-    if (!content) return;
-    this.messageService.sendMessage({
-      callId: this.callId,
-      authorId: this.user.id,
-      authorRole: this.role,
-      content
-    }).subscribe({
-      next: () => {
-        this.newMessage.set('');
-        this.scrollToBottom();
-      },
-      error: err => console.error(err)
-    });
-  }
+ send() {
+  const content = this.newMessage();
+  if (!content) return;
+
+  const normalizedRole = this.role.toUpperCase() as 'CLIENT' | 'PROVIDER';
+
+  this.messageService.sendMessage({
+    callId: this.callId,
+    authorId: this.user.id,
+    authorRole: normalizedRole,
+    content
+  }).subscribe(() => {
+    this.newMessage.set('');
+    this.scrollToBottom();
+  });
+}
 
   handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -157,14 +155,13 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
     }, 50);
   }
   showDateSeparator(msg: any, index: number): boolean {
-  if (index === 0) return true; // Siempre mostrar fecha en el primer mensaje
+  if (index === 0) return true; 
 
   const prevMsg = this.messages()[index - 1];
   
   const current = new Date(msg.timestamp || msg.fechaEnvio);
   const prev = new Date(prevMsg.timestamp || prevMsg.fechaEnvio);
 
-  // Comparamos día, mes y año
   return current.getDate() !== prev.getDate() ||
          current.getMonth() !== prev.getMonth() ||
          current.getFullYear() !== prev.getFullYear();

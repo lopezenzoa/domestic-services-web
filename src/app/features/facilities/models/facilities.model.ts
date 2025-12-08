@@ -1,4 +1,4 @@
-export interface Facilities{
+export interface Facility{
     id: number;
     name:string;
     description:string;

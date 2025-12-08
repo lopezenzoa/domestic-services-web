@@ -1,63 +1,43 @@
 <div class="providers-list-wrapper">
     <header class="list-header">
-        <!-- Título dinámico basado en el filtro de servicio -->
+
         <h2>
-            @if (facilityName) {
-                Profesionales de {{ facilityName }}
-            } @else {
-                Todos nuestros Profesionales
-            }
+            @if (facilityName) { Profesionales de {{ facilityName }} } @else { Todos nuestros Profesionales }
         </h2>
         <p class="subtitle">Encontramos {{ allProviders().length }} resultados totales.</p>
     </header>
 
-    <!-- BARRA DE BÚSQUEDA -->
     <div class="search-controls">
-        <input 
-          type="text"
-          placeholder="Buscar por nombre o descripción..."
-          [(ngModel)]="searchName"
-          (ngModelChange)="currentPage.set(1); applyFiltersAndPaginate()" 
-          class="search-input"
-        />
+        <input type="text" placeholder="Buscar por nombre o descripción..." [(ngModel)]="searchName" (ngModelChange)="currentPage.set(1); applyFiltersAndPaginate()" class="search-input" />
     </div>
 
-    <!-- PAGINACIÓN SUPERIOR (Duplicada para mejor UX) -->
-    @if (totalPages() > 1) {
-        <div class="pagination-controls pagination-top">
-            <button (click)="prevPage()" [disabled]="currentPage() === 1">Anterior</button>
-            <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
-            <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">Siguiente</button>
-        </div>
-    }
-    
-    <!-- CONTENIDO PRINCIPAL -->
-    @if (isLoading()) {
-        <div class="loading-state">Cargando profesionales...</div>
-    } @else if (filteredAndPaginatedProviders().length === 0) {
-        <div class="no-results">
-            <h3>No se encontraron profesionales.</h3>
-            <p>Intenta ajustar tu búsqueda o prueba con otro servicio.</p>
-        </div>
-    } @else {
-        <!-- LISTADO DE TARJETAS -->
-        <!-- La grilla se mostrará solo 10 elementos (pageSize) -->
-        <div class="providers-grid">
-            @for (provider of filteredAndPaginatedProviders(); track provider.id) {
-                <!-- app-provider-card es tu componente individual -->
-                <app-provider-card 
-                  [provider]="provider"
-                ></app-provider-card>
-            }
-        </div>
-    }
 
-    <!-- PAGINACIÓN INFERIOR -->
     @if (totalPages() > 1) {
-        <div class="pagination-controls pagination-bottom">
-            <button (click)="prevPage()" [disabled]="currentPage() === 1">Anterior</button>
-            <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
-            <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">Siguiente</button>
-        </div>
+    <div class="pagination-controls pagination-top">
+        <button (click)="prevPage()" [disabled]="currentPage() === 1">Anterior</button>
+        <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
+        <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">Siguiente</button>
+    </div>
+    } @if (isLoading()) {
+    <div class="loading-state">Cargando profesionales...</div>
+    } @else if (filteredAndPaginatedProviders().length === 0) {
+    <div class="no-results">
+        <h3>No se encontraron profesionales.</h3>
+        <p>Intenta ajustar tu búsqueda o prueba con otro servicio.</p>
+    </div>
+    } @else {
+
+    <div class="providers-grid">
+        @for (provider of filteredAndPaginatedProviders(); track provider.id) {
+
+        <app-provider-card [provider]="provider"></app-provider-card>
+        }
+    </div>
+    } @if (totalPages() > 1) {
+    <div class="pagination-controls pagination-bottom">
+        <button (click)="prevPage()" [disabled]="currentPage() === 1">Anterior</button>
+        <span> Página {{ currentPage() }} de {{ totalPages() }} </span>
+        <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">Siguiente</button>
+    </div>
     }
 </div>

@@ -15,7 +15,7 @@ export class EditarLicencia {
   private providerService = inject(ProvidersService)
   private snackBar = inject(MatSnackBar)
 
-  providerId = 1 //reemplaza despues con id real del prestador logueado
+  providerId = 1 
   licenseNumber=''
 
   onSubmit(){

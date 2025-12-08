@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Login } from './features/auth/pages/login/login';
 import { Register } from './features/auth/pages/register/register';
 import { EditarLicencia } from './features/auth/pages/editar-licencia/editar-licencia/editar-licencia';
-import { CallList } from './features/providers/components/call-list/call-list';
+import { CallList } from './features/providers/pages/call-list/call-list';
 import { RequestCallForm } from './features/clients/components/request-call-form/request-call-form';
 import { CreateFacilities } from './features/facilities/pages/create-facilities/create-facilities';
 import { FacilitiesList } from './features/facilities/pages/facilities-list/facilities-list';

@@ -21,36 +21,52 @@ export class CreateFacilities {
   error = signal('');
 
   route: ActivatedRoute = inject(ActivatedRoute);
+form: FormGroup = this.fb.group({
+  name: [
+    '',
+    [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/) // SOLO letras y espacios
+    ]
+  ],
+  description: [
+    '',
+    [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.pattern(/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s.,-]+$/) // descripción permite números
+    ]
+  ]
+});
 
-  form: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    description: ['', Validators.required],
-  });
+
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('facilityId');
-
     if (id) {
-      // Modo edición
       this.loadFacility(Number(id));
     }
-
   }
 
   loadFacility(id: number): void {
+    this.loading.set(true);
+
     this.facilitiesService.getById(id).subscribe({
       next: (data) => {
-        this.form.patchValue(data); // autocompleta los campos del formulario
+        this.form.patchValue(data);
+        this.loading.set(false);
       },
-      error: (err) => {
-        console.error('Error cargando servicio:', err);
+      error: () => {
+        this.loading.set(false);
+        this.error.set('No se pudo cargar el servicio');
       }
     });
   }
 
   submit() {
     if (this.form.invalid) {
-      this.error.set('Completá nombre y descripción.');
+      this.error.set('Completá los datos correctamente. Revisá nombre y descripción.');
       return;
     }
 
@@ -60,46 +76,42 @@ export class CreateFacilities {
 
     const id = this.route.snapshot.paramMap.get('facilityId');
 
+    // --------------------
+    // EDITAR
+    // --------------------
     if (id) {
-      const data = {
-        id: Number(id),
-        ...this.form.value
-      }
+      const data = { id: Number(id), ...this.form.value };
 
-      // Mandar datos para actualizar
       this.facilitiesService.updateFacility(data).subscribe({
-      next: () => {
-        this.loading.set(false);
-        this.success.set('Servicio editado ');
-
-        setTimeout(() => {
-          this.router.navigate(['/facilities/']);
-        }, 1200);
-      },
-      error: (err) => {
-        console.log(err)
-        this.loading.set(false);
-        this.error.set('No se pudo editar el servicio ❌');
-      }
-    });
-    } else {
-      // Mandar datos para crear
-      this.facilitiesService.addFacility(this.form.value).subscribe({
         next: () => {
           this.loading.set(false);
-          this.success.set('Servicio creado ');
+          this.success.set('Servicio editado correctamente.');
 
-          setTimeout(() => {
-            this.router.navigate(['/facilities/']);
-          }, 1200);
+          setTimeout(() => this.router.navigate(['/facilities/']), 1200);
         },
         error: () => {
           this.loading.set(false);
-          this.error.set('No se pudo crear el servicio ❌');
+          this.error.set('No se pudo editar el servicio.');
         }
       });
+
+      return;
     }
 
+    // --------------------
+    // CREAR
+    // --------------------
+    this.facilitiesService.addFacility(this.form.value).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this.success.set('Servicio creado correctamente.');
 
+        setTimeout(() => this.router.navigate(['/facilities/']), 1200);
+      },
+      error: () => {
+        this.loading.set(false);
+        this.error.set('No se pudo crear el servicio.');
+      }
+    });
   }
 }

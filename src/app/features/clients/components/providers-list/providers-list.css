@@ -10,7 +10,7 @@
 }
 
 .list-header h2 {
-    color: #457b9d;
+    color: #1e3a5f;
     font-size: 2rem;
     margin-bottom: 5px;
 }
@@ -19,7 +19,6 @@
     color: #6c757d;
 }
 
-/* --- Barra de Búsqueda --- */
 .search-controls {
     margin-bottom: 30px;
     text-align: center;
@@ -41,32 +40,25 @@
     outline: none;
 }
 
-/* --- Grid de Tarjetas --- */
 .providers-grid {
     display: grid;
     gap: 25px;
-    /* Asegura un buen layout responsivo */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     margin-top: 30px;
 }
 
-/* --- Paginación --- */
 .pagination-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    padding: 15px 0;
-}
-
-.pagination-top {
-    margin-bottom: 30px; /* Separación de la primera card */
-    border-bottom: 1px solid #eee;
-}
-
-.pagination-bottom {
-    margin-top: 30px; /* Separación de la última card */
-    border-top: 1px solid #eee;
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .pagination-controls button {
@@ -77,20 +69,26 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
-    transition: background-color 0.2s;
+    transition: all 0.25s ease;
 }
 
-.pagination-controls button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.pagination-controls button:hover:not([disabled]) {
+    background-color: #1d3557;
+}
+
+.pagination-controls button[disabled] {
+    background-color: #e0e0e0;
+    color: #a0a0a0;
 }
 
 .pagination-controls span {
     font-weight: 700;
     color: #333;
+    font-size: 1.1rem;
 }
 
-.loading-state, .no-results {
+.loading-state,
+.no-results {
     text-align: center;
     padding: 50px 20px;
     color: #6c757d;

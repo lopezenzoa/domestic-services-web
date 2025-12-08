@@ -4,5 +4,6 @@ export interface Message {
   authorId: number;
   authorRole: 'CLIENT' | 'PROVIDER';
   content: string;
-  timestamp: string;
+  timestamp?: string;
+
 }

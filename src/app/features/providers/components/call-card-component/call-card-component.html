@@ -1,0 +1,49 @@
+<div class="card" [ngClass]="'state-' + call.state.toLowerCase()">
+
+
+    <div class="ribbon" [ngClass]="{
+        'yellow': call.state === 'REQUESTING',
+        'green': call.state === 'PENDING' || call.state === 'FINISHED',
+        'red': call.state === 'DECLINED'
+      }">
+        {{ translateState(call.state) }}
+    </div>
+
+    <div class="card-content">
+        <h1>Visita #{{ call.id }}</h1>
+        <p><strong>Prestador:</strong> {{ call.provider?.firstName }} {{ call.provider?.lastName }}</p>
+        <p><strong>Cliente:</strong> {{ call.client?.firstName }} {{ call.client?.lastName }}</p>
+        <p><strong>Servicio:</strong> {{ call.provider?.facility?.name }}</p>
+        <p><strong>Descripción:</strong> {{ call.description }}</p>
+        <p><strong>Dirección:</strong> {{ call.address }}</p>
+        <p><strong>Fecha:</strong> {{ call.date | date : 'dd/MM/yyyy HH:mm' }}</p>
+
+
+    </div>
+
+
+    <div class="card-buttons">
+
+
+        <button class="btn-action chat" *ngIf="call.state === 'REQUESTING' || call.state === 'PENDING'" (click)="onChat()">
+            Chat
+        </button>
+
+
+        <ng-container *ngIf="call.state === 'REQUESTING'">
+            <button class="btn-action deny" (click)="onDeny()">Rechazar</button>
+
+            <button class="btn-action accept" *ngIf="!isPast(call)" (click)="onAccept()">
+                Aceptar
+            </button>
+
+            <span *ngIf="isPast(call)" class="expired-msg">No disponible</span>
+        </ng-container>
+
+        <ng-container *ngIf="call.state === 'PENDING'">
+            <button class="btn-action edit" (click)="onEdit()">Modificar</button>
+            <button class="btn-action finish" (click)="onFinish()">Finalizar</button>
+        </ng-container>
+
+    </div>
+</div>

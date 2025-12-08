@@ -10,22 +10,28 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {
+export class Navbar implements OnInit{
   usersService: UsersService = inject(UsersService);
   userRole: WritableSignal<string | null> = signal(null);
   router = inject(Router);
   searchTerm: string = '';
-  constructor() {
-    const saved = localStorage.getItem('user');
 
-    this.userRole.set(saved ? JSON.parse(saved).role : null);
+
+  ngOnInit(): void {
+    this.loadUserRole();
   }
+
+  loadUserRole() {
+    const savedUser = localStorage.getItem('user');
+    this.userRole.set(savedUser ? JSON.parse(savedUser).role : null);
+  }
+  
   searchServices() {
     const term = this.searchTerm.trim();
     if (term) {
-      // Redirigir a la página de servicios (FacilitiesList) y pasar el término como query parameter
+      
       this.router.navigate(['/facilities'], { queryParams: { search: term } });
-      // Opcional: Limpiar el campo después de la búsqueda
+    
       this.searchTerm = '';
     }
   }

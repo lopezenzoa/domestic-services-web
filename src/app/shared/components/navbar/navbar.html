@@ -5,35 +5,22 @@
 
     <nav class="navbar-links">
 
-        <!-- SIN LOGUEAR -->
+
         @if (userRole() === null) {
         <a routerLink="/auth/login">Iniciar Sesión</a>
-        <a routerLink="/auth/register">Registrarme</a> }
-
-        <!-- CLIENT -->
-        @if (userRole() === 'CLIENT') {
+        <a routerLink="/auth/register">Registrarme</a> } @if (userRole() === 'CLIENT') {
         <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
         <a routerLink="/providers" routerLinkActive="active">Contratar</a>
         <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a>
         <a routerLink="/my-chats" routerLinkActive="active">Chats</a>
-        <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a> }
-
-        <!-- PROVIDER -->
-        @if (userRole() === 'PROVIDER') {
-        <a routerLink="/providers/shifts/add" routerLinkActive="active">Agregar Turno</a>
+        <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a> } @if (userRole() === 'PROVIDER') {
         <a routerLink="/providers/shifts" routerLinkActive="active">Mis Turnos</a>
         <a routerLink="/providers/calls" routerLinkActive="active">Mis Contrataciones</a>
         <a routerLink="/my-chats" routerLinkActive="active">Chats</a>
-        <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a> }
-
-        <!-- ADMIN -->
-        @if (userRole() === 'ADMIN') {
+        <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a> } @if (userRole() === 'ADMIN') {
         <a routerLink="/facilities" routerLinkActive="active">Servicios</a>
         <a routerLink="/facilities/create" routerLinkActive="active">Crear Servicio</a>
-        <a routerLink="/reviews" routerLinkActive="active">Reseñas</a> }
-
-        <!-- LOGOUT -->
-        @if (userRole() !== null) {
+        <a routerLink="/reviews" routerLinkActive="active">Reseñas</a> } @if (userRole() !== null) {
         <button class="logout-btn" (click)="logout()">Salir</button> }
 
     </nav>

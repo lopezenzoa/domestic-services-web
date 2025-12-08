@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../../users/services/users-service';
 import { NgIf } from '@angular/common';
@@ -9,7 +9,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink,NgIf, ReactiveFormsModule],
+  imports: [RouterLink, NgIf, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -20,12 +20,10 @@ export class Login {
   animations: any;
   errorMessage: string = '';
 
-  /* Servicio de autenticación para login */
-  authService: Auth = inject(Auth);
+  authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   users: UsersService = inject(UsersService);
 
-  /* Manejo del formulario reactivo (Login) */
   fb: FormBuilder = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     username: ['', [Validators.required]],
@@ -42,43 +40,48 @@ export class Login {
     this.animations?.pause();
   }
 
-  login() {
-    if (this.form.valid) {
-      const loginData = this.form.value;
-
-      this.authService.login(loginData).subscribe({
-        next: (response) => {
-          const token = response.headers.get('Authorization');
-
-          if (token) {
-            // 1) Guardar token
-            localStorage.setItem('token', token);
-
-            // 2) Pedir perfil del usuario autenticado
-            this.users.getUserProfile().subscribe({
-              next: (user) => {
-                localStorage.setItem('user', JSON.stringify(user)); // ⬅️ GUARDAR USER
-                console.log('Usuario logueado:', user);
-
-                if (user.role === 'CLIENT') {
-                  this.router.navigate(['/facilities']);
-                } else if (user.role === 'PROVIDER') {
-                  this.router.navigate(['/providers/calls']);
-                } else {
-                  this.router.navigate(['/facilities']);
-                }
-              },
-              error: (err) => {
-                console.error('Error al obtener el perfil de usuario:', err);
-              },
-            });
-          }
-        },
-        error: (err) => {
-          console.error('Error en el login:', err);
-          this.errorMessage = 'Usuario o contraseña incorrectos';
-        },
-      });
-    }
+ login() {
+  // Si el formulario es inválido, mostramos mensaje
+  if (this.form.invalid) {
+    this.errorMessage = 'Todos los campos son obligatorios';
+    this.form.markAllAsTouched(); // fuerza mostrar errores
+    return;
   }
+
+  this.errorMessage = ''; // limpiamos cualquier error previo
+
+  const loginData = this.form.value;
+
+  this.authService.login(loginData).subscribe({
+    next: (response) => {
+      const token = response?.headers?.get('Authorization');
+      if (!token) {
+        this.errorMessage = 'No se pudo verificar la sesión. Inténtalo nuevamente.';
+        return;
+      }
+
+      localStorage.setItem('token', token);
+
+      this.users.getUserProfile().subscribe({
+        next: (user) => {
+          localStorage.setItem('user', JSON.stringify(user));
+
+          if (user.role === 'CLIENT') this.router.navigate(['/facilities']);
+          else if (user.role === 'PROVIDER') this.router.navigate(['/providers/calls']);
+          else if (user.role === 'ADMIN') this.router.navigate(['/facilities']);
+          else this.router.navigate(['/auth/login']);
+        },
+        error: () => {
+          this.errorMessage = 'Error obteniendo perfil de usuario';
+        }
+      });
+    },
+
+    error: (err) => {
+      this.errorMessage = 'Usuario o contraseña incorrectos';
+    }
+  });
+}
+
+
 }

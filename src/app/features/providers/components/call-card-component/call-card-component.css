@@ -1,0 +1,139 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+.card {
+    width: 90%;
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-left: 8px solid transparent;
+    transition: 0.25s ease;
+    position: relative;
+    animation: fadeInUp 0.6s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-content h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1e3a5f;
+}
+
+.card-content p {
+    color: #444;
+    margin: 4px 0;
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.btn-action {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.25s ease;
+    text-transform: uppercase;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+}
+
+.chat {
+    background: #1e3a5f;
+}
+
+.edit {
+    background: #457b9d;
+}
+
+.accept {
+    background: #2e7d32;
+}
+
+.deny {
+    background: #d32f2f;
+}
+
+.finish {
+    background: #059669;
+}
+
+.expired-msg {
+    color: #b71c1c;
+    font-weight: bold;
+    align-self: center;
+}
+
+.state-requesting {
+    border-left-color: #ffc107 !important;
+    background: #fff8e1;
+}
+
+.state-pending {
+    border-left-color: #4caf50 !important;
+    background: #e8f5e9;
+}
+
+.state-declined {
+    border-left-color: #f44336 !important;
+    background: #ffebee;
+}
+
+.state-finished {
+    border-left-color: #00b300 !important;
+    background: #e3ffe3;
+}
+
+.ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 6px 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+    border-bottom-left-radius: 10px;
+    text-transform: uppercase;
+}
+
+.ribbon.yellow {
+    background-color: #ffc107;
+}
+
+.ribbon.green {
+    background-color: #4caf50;
+}
+
+.ribbon.red {
+    background-color: #f44336;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

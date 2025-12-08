@@ -27,17 +27,10 @@
     gap: 10px;
 }
 
-
-/* --- SEPARADOR DE FECHAS --- */
-
-
-/* Esto centra la fecha y le da el estilo de "pastilla" gris */
-
 .date-separator {
     display: flex;
     justify-content: center;
     margin: 15px 0;
-    /* Espacio arriba y abajo */
     position: sticky;
     top: 5px;
     z-index: 5;
@@ -85,9 +78,6 @@
     margin-left: 5px;
 }
 
-
-/* Alineación de hora y tildes */
-
 .msg-meta {
     display: flex;
     justify-content: flex-end;
@@ -109,31 +99,19 @@
     color: #9ca3af;
 }
 
-
-/* --- TILDES --- */
-
 .read-status {
     display: flex;
     align-items: center;
     line-height: 1;
 }
 
-
-/* Quitamos el font-size de aquí porque lo pusimos en el HTML para forzarlo */
-
 .check {
     font-weight: bold;
 }
 
-
-/* Superposición del segundo tilde */
-
 .check.double {
     margin-left: -8px;
 }
-
-
-/* INPUT */
 
 .input-box {
     display: flex;
