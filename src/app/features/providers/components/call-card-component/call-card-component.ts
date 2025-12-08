@@ -54,5 +54,16 @@ getStateClass(state: string) {
     'state-finished': state === 'FINISHED',
   };
 }
+translateState(state: string): string {
+  const map: any = {
+    REQUESTING: 'Solicitado',
+    PENDING: 'Aceptado',
+    FINISHED: 'Finalizado',
+    DECLINED: 'Rechazado'
+  };
+
+  return map[state] || state;
+}
+
 
 }

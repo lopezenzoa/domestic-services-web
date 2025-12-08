@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http'; // 1. Importar HttpHeaders
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Provider } from '../../../shared/models/Provider';
@@ -12,27 +12,26 @@ export class ProvidersService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/api/providers';
 
-  // 2. Agregamos el método auxiliar para el Token (igual que en CallService)
+  
   private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token'); // O donde guardes tu token
+    const token = localStorage.getItem('token'); 
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
   }
 
-  // 3. Agregamos { headers: this.getHeaders() } a TODAS las peticiones
   
   updateLicense(providerId: number, licenseNumber: string): Observable<any> {
     return this.http.put(
       `${this.baseUrl}/${providerId}/license`, 
       { licenseNumber },
-      { headers: this.getHeaders() } // <--- Agregado
+      { headers: this.getHeaders() } 
     );
   }
 
   getAllProviders(): Observable<Provider[]> {
-    // Si esta ruta es pública, no necesita headers. Si es privada, agrégalos.
+    
     return this.http.get<Provider[]>(`${this.baseUrl}/`, { headers: this.getHeaders() });
   }
 
@@ -56,14 +55,14 @@ export class ProvidersService {
     return this.http.post(
       `${this.baseUrl}/shifts/${providerId}/create`, 
       shiftData,
-      { headers: this.getHeaders() } // <--- Agregado
+      { headers: this.getHeaders() } 
     );
   }
 
   deleteShift(shiftId: number, providerId: number): Observable<any> {
     return this.http.delete(
       `${this.baseUrl}/shifts/${providerId}/delete/${shiftId}`,
-      { headers: this.getHeaders() } // <--- Agregado
+      { headers: this.getHeaders() } 
     );
   }
 
@@ -71,7 +70,7 @@ export class ProvidersService {
     return this.http.put(
       `${this.baseUrl}/shifts/${providerId}/update`, 
       shiftData,
-      { headers: this.getHeaders() } // <--- Agregado
+      { headers: this.getHeaders() }
     );
   }
 }

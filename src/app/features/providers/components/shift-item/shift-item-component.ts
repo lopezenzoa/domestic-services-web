@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Shift } from '../../../../shared/models/Shift';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-shift-item-component',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './shift-item-component.html',
   styleUrl: './shift-item-component.css',
 })

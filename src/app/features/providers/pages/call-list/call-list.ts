@@ -17,20 +17,17 @@ import { CallCardComponent } from '../../components/call-card-component/call-car
 })
 export class CallList implements OnInit {
 
-  // Signals
   filteredCalls = signal<Call[]>([]); 
-  // Nota: Ya no necesitamos 'calls' separado, usamos filteredCalls para todo.
+ 
   
   currentPage = signal(0);
   totalPages = signal(1);
   totalElements = signal(0);
   isLoading = signal(true);
 
-  // Servicios
   callService = inject(CallService);
   router = inject(Router);
 
-  // Filtros
   selectedState: string = '';
   startDate: string = '';
   endDate: string = '';
@@ -46,27 +43,26 @@ export class CallList implements OnInit {
       }
     }
 
-    // Estado inicial por defecto
+ 
     this.selectedState = 'REQUESTING';
     
-    // Llamada inicial (sin duplicar llamadas)
+  
     this.filterCalls();
   }
 
-  // Este método se usa tanto al filtrar como al cambiar página
   loadData(page: number) {
     this.isLoading.set(true);
 
     const filterObj = {
       providerId: this.providerId,
-      state: this.selectedState || undefined, // Si está vacío manda undefined
+      state: this.selectedState || undefined, 
       start: this.startDate || undefined,
       end: this.endDate || undefined,
       page: page,
       size: this.pageSize,
     };
 
-    console.log('Enviando filtro:', filterObj); // Para depurar
+    
 
     this.callService.getCallsHistory(filterObj).subscribe({
       next: (data) => {
@@ -83,12 +79,12 @@ export class CallList implements OnInit {
     });
   }
 
-  // Al hacer click en "Filtrar", volvemos a página 0
+ 
   filterCalls() {
     this.loadData(0);
   }
 
-  // Al cambiar de página desde el paginador
+  
   loadPage(page: number) {
     this.loadData(page);
   }

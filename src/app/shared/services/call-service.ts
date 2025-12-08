@@ -14,7 +14,7 @@ export interface PaginatedCallsResponse {
   providedIn: 'root',
 })
 export class CallService {
-  private url = 'http://localhost:8080/api/calls'; // Asegúrate que este puerto es correcto
+  private url = 'http://localhost:8080/api/calls'; 
   private http = inject(HttpClient);
 
   private getHeaders(): HttpHeaders {
@@ -25,7 +25,6 @@ export class CallService {
     });
   }
 
-  // --- MÉTODOS EXISTENTES (Resumidos) ---
   getMyCalls(): Observable<Call[]> {
     return this.http.get<Call[]>(`${this.url}/me`, { headers: this.getHeaders() });
   }
@@ -43,7 +42,6 @@ export class CallService {
     });
   }
 
-  // --- MÉTODOS DE ACCIÓN ---
   requestCall(body: CallRequest) {
     return this.http.post(`${this.url}/request`, body, { headers: this.getHeaders() });
   }
@@ -95,29 +93,24 @@ export class CallService {
       { headers: this.getHeaders() }
     );
   }
-
-
 getCallsHistory(filters: any) {
-
-  const providerId = filters.providerId;
 
   let params = new HttpParams()
     .set('page', filters.page)
     .set('size', filters.size);
 
+  if (filters.providerId) params = params.set('providerId', filters.providerId);
   if (filters.state) params = params.set('state', filters.state);
   if (filters.start) params = params.set('start', filters.start);
   if (filters.end) params = params.set('end', filters.end);
 
- return this.http.get<PaginatedCallsResponse>(
-  `${this.url}/historyPaginated`,
-  {
-    params,
-    headers: this.getHeaders()
-  }
-);
-
+  return this.http.get<PaginatedCallsResponse>(
+    `${this.url}/history`,
+    { params, headers: this.getHeaders() }
+  );
 }
+
+
 
 
 

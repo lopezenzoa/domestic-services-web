@@ -1,5 +1,6 @@
 <li class="shift-item">
-    <span class="datetime">{{ shift.dateTime }}</span>
+    <span>{{ shift.dateTime | date:'dd/MM/yyyy HH:mm' }}</span>
+
 
     <span [class.available]="shift.available" [class.unavailable]="!shift.available">
     {{ shift.available ? 'Disponible' : 'No disponible' }}
