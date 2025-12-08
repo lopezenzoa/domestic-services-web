@@ -18,13 +18,13 @@ interface Turno {
 }
 
 @Component({
-  selector: 'app-mis-turnos',
+  selector: 'app-my-appointments',
   standalone: true,
   imports: [CommonModule, NgFor, NgIf, FormsModule],
-  templateUrl: './mis-turnos.html',
-  styleUrl: './mis-turnos.css',
+  templateUrl: './my-appointments.html',
+  styleUrl: './my-appointments.css',
 })
-export class MisTurnos implements OnInit {
+export class MyAppointments implements OnInit {
   private callService = inject(CallService);
   private router = inject(Router);
 

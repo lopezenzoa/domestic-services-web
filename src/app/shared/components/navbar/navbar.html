@@ -11,7 +11,7 @@
         <a routerLink="/auth/register">Registrarme</a> } @if (userRole() === 'CLIENT') {
         <a routerLink="/facilities" routerLinkActive="active">Buscar Servicios</a>
         <a routerLink="/providers" routerLinkActive="active">Contratar</a>
-        <a routerLink="/mis-turnos" routerLinkActive="active">Mis Turnos</a>
+        <a routerLink="/my-appointments" routerLinkActive="active">Mis Turnos</a>
         <a routerLink="/my-chats" routerLinkActive="active">Chats</a>
         <a routerLink="/reviews" routerLinkActive="active">Mis Reseñas</a> } @if (userRole() === 'PROVIDER') {
         <a routerLink="/providers/shifts" routerLinkActive="active">Mis Turnos</a>
