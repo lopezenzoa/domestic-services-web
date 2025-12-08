@@ -9,8 +9,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { CallService } from '../../providers/services/call-service';
-import { WebSocketService } from '../../../services/websocket-service';
+import { CallService } from '../../../shared/services/call-service';
+import { WebSocketService } from '../../../shared/services/websocket-service';
 
 export interface ChatListDTO {
   id: number;

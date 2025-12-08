@@ -122,3 +122,14 @@ input:focus {
 .error {
     color: #dc2626;
 }
+
+input.invalid {
+    border-color: #dc2626;
+    background: #ffeaea;
+}
+
+.validation p {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}

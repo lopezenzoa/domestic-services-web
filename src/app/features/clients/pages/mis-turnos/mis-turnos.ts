@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { NgFor, NgIf, CommonModule } from '@angular/common';
-import { CallService } from '../../../providers/services/call-service';
+import { CallService } from '../../../../shared/services/call-service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 interface Turno {

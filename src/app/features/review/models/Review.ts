@@ -1,4 +1,4 @@
-import { Provider } from "../../providers/models/Provider";
+import { Provider } from "../../../shared/models/Provider";
 
 export interface Review {
     id ?: number;

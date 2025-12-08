@@ -1,0 +1,44 @@
+<div class="agenda-wrapper">
+    <header class="agenda-header">
+        <div class="filter">
+            <div class="filter-bar">
+                <select [(ngModel)]="selectedState">
+                    <option value="">Todos los estados</option>
+                    <option value="REQUESTING">Solicitado</option>
+                    <option value="PENDING">Aceptado</option>
+                    <option value="FINISHED">Finalizado</option>
+                    <option value="DECLINED">Rechazado</option>
+                </select>
+
+                <input type="date" [(ngModel)]="startDate" />
+                <input type="date" [(ngModel)]="endDate" />
+
+                <button class="btn-filter" (click)="filterCalls()">Filtrar</button>
+            </div>
+        </div>
+
+        <h2>Agenda de visitas</h2>
+        <p>Total de visitas: {{ totalElements() }}</p>
+    </header>
+
+    <app-pagination-component *ngIf="totalPages() > 1" [currentPage]="currentPage()" [totalPages]="totalPages()" (pageChange)="loadPage($event)">
+    </app-pagination-component>
+
+    <div *ngIf="isLoading()" class="loading-state">Cargando agenda...</div>
+
+    <div *ngIf="!isLoading() && (filteredCalls()?.length ?? 0) === 0" class="no-results-state">
+        <p>No se encontraron visitas programadas.</p>
+    </div>
+
+    <div class="agenda-container">
+        @for (call of filteredCalls(); track call.id) {
+        <app-call-card-component [call]="call" (accept)="acceptCall($event, providerId)" (deny)="denyCall($event, providerId)" (finish)="finishCall($event)" (chat)="openChat($event)">
+        </app-call-card-component>
+
+
+        }
+    </div>
+
+    <app-pagination-component *ngIf="totalPages() > 1" [currentPage]="currentPage()" [totalPages]="totalPages()" (pageChange)="loadPage($event)">
+    </app-pagination-component>
+</div>

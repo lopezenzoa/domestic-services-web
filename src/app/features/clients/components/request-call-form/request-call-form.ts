@@ -2,10 +2,11 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ClientsService } from '../../services/clients-service';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CallService } from '../../../providers/services/call-service';
+import { CallService } from '../../../../shared/services/call-service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { CallRequest } from '../../../../shared/models/CallRequest';
 
 @Component({
   selector: 'app-request-call-form',
@@ -68,7 +69,9 @@ export class RequestCallForm {
         providerName: provider.firstName + ' ' + provider.lastName,
       });
       this.providerId.set(provider.id);
-      this.facility.set(provider.facility.name);
+      if (provider.facility?.name) {
+        this.facility.set(provider.facility.name);
+      }
     });
   }
 
@@ -96,12 +99,25 @@ export class RequestCallForm {
       return;
     }
 
-    const requestData = {
-      date: this.form.get('date')?.value,
-      client: { id: this.clientId() },
-      provider: { id: this.providerId() },
-      description: this.form.get('description')?.value,
-      address: this.form.get('address')?.value,
+    const clientId = this.clientId();
+    const providerId = this.providerId();
+
+    if (!clientId || !providerId) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Datos de cliente o proveedor no disponibles.',
+        icon: 'error',
+        confirmButtonColor: '#ef4444',
+      });
+      return;
+    }
+
+    const requestData:CallRequest = {
+       date: this.form.get('date')?.value,
+    client: { id: clientId },
+    provider: { id: providerId },
+    description: this.form.get('description')?.value,
+    address: this.form.get('address')?.value
     };
 
     this.callsService.requestCall(requestData).subscribe({

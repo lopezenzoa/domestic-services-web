@@ -21,9 +21,15 @@
             <form [formGroup]="form" (ngSubmit)="login()">
                 <label>Usuario</label>
                 <input type="text" placeholder="Introduce tu nombre de usuario" formControlName="username" />
+                <div *ngIf="form.controls['username'].touched && form.controls['username'].invalid" class="error-text">
+                    El usuario es obligatorio
+                </div>
 
                 <label>Contraseña</label>
                 <input type="password" placeholder="Ingresa tu contraseña" formControlName="password" />
+                <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid" class="error-text">
+                    La contraseña es obligatoria
+                </div>
 
                 <button type="submit" class="login-btn" [disabled]="form.invalid">
           Iniciar Sesión

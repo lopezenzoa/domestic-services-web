@@ -15,26 +15,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ReviewForm {
   providerId!: number;
 
-  // SERVICES & INJECTIONS
   fb = inject(FormBuilder);
   service = inject(ReviewService);
   serviceClient = inject(ClientsService);
   providerService = inject(ProvidersService);
 
-  // ROUTING
   route = inject(ActivatedRoute);
   router = inject(Router);
 
-  // DATA
   client = signal<any | null>(null);
   provider = signal<any | null>(null);
 
   today = new Date().toISOString().split('T')[0];
 
-  // MODAL
   showSuccessModal = false;
 
-  // FORM
   form = this.fb.nonNullable.group({
     description: ['', [Validators.required, Validators.minLength(5)]],
     creationDate: [this.today, Validators.required],
@@ -42,66 +37,69 @@ export class ReviewForm {
     provider: ['', Validators.required],
   });
 
-  constructor() {
-  
+  ngOnInit() {
+    this.loadClient();
+    this.loadQueryParams();
+  }
+
+  private loadClient() {
     this.serviceClient.getClientProfile().subscribe((c) => {
       this.client.set(c);
+
       this.form.patchValue({
-        client: this.client()!.firstName + ' ' + this.client()!.lastName,
+        client: `${c.firstName} ${c.lastName}`,
       });
     });
+  }
 
-    
+  private loadQueryParams() {
     this.route.queryParams.subscribe((params) => {
-      const providerId = params['providerId'];
+      this.providerId = Number(params['providerId']);
       const providerName = params['providerName'];
       const date = params['date'];
 
-      if (providerId) {
-        this.providerId = providerId;
+      if (providerName) {
         this.form.patchValue({ provider: providerName });
       }
 
       if (date) {
-        const formatted = date.split('T')[0];
-        this.form.patchValue({ creationDate: formatted });
+        this.form.patchValue({
+          creationDate: date.split('T')[0],
+        });
+      }
+
+      if (this.providerId) {
+        this.fetchProvider();
       }
     });
-
-  
-    if (this.providerId) {
-      this.providerService.getProviderById(Number(this.providerId)).subscribe((p) => {
-        this.provider.set(p);
-
-        this.form.patchValue({
-          provider: p.firstName + ' ' + p.lastName,
-        });
-      });
-    }
   }
 
-  
+  private fetchProvider() {
+    this.providerService.getProviderById(this.providerId).subscribe((p) => {
+      this.provider.set(p);
+      this.form.patchValue({
+        provider: `${p.firstName} ${p.lastName}`,
+      });
+    });
+  }
+
   submitForm() {
-    if (this.form.valid) {
+     if (!this.form.valid) {
+      this.form.markAllAsTouched();
+      return;
+    }
       const review = {
         id: undefined,
         description: this.form.get('description')?.value!,
         creationDate: this.form.get('creationDate')?.value!,
         client: this.client(),
-        provider: { id: Number(this.providerId) }, 
+        provider: { id: Number(this.providerId) },
       };
 
       this.service.createReview(review).subscribe({
-        next: () => {
-          this.showSuccessModal = true;
-        },
-        error: () => {
-          alert('Hubo un error al guardar la reseña.');
-        },
-      });
-    } else {
-      this.form.markAllAsTouched();
-    }
+      next: () => (this.showSuccessModal = true),
+      error: () => alert('Hubo un error al guardar la reseña.'),
+    });
   }
 
   closeSuccessModal() {

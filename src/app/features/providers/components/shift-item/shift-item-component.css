@@ -1,0 +1,46 @@
+.shift-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 0.7rem;
+    transition: background 0.3s ease;
+}
+
+.shift-item:hover {
+    background: #f3f4f6;
+}
+
+.datetime {
+    color: #111827;
+    font-weight: 500;
+}
+
+.available {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.unavailable {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.edit-button {
+    background-color: #f59e0b;
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.delete-button {
+    background-color: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+}

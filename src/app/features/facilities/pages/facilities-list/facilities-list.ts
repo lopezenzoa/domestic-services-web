@@ -1,7 +1,7 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { FacilitiesService } from '../../services/facilities-service';
 import { Facility } from '../../models/facilities.model';
-import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { UsersService } from '../../../users/services/users-service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,69 +14,76 @@ import Swal from 'sweetalert2';
   styleUrls: ['./facilities-list.css'],
 })
 export class FacilitiesList implements OnInit {
+
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  service: FacilitiesService = inject(FacilitiesService);
-  
-  allFacilities: WritableSignal<Facility[]> = signal([]);
-  filteredFacilities: WritableSignal<Facility[]> = signal([]);
-  
-  usersService: UsersService = inject(UsersService);
-  userRole: 'ADMIN' | 'CLIENT' | 'PROVIDER' | null = null;
-  searchTerm: string = ''; 
+  private service = inject(FacilitiesService);
+  private usersService = inject(UsersService);
 
-  constructor() {}
-  
+  // Signals
+  facilities = signal<Facility[]>([]);
+  searchTerm = signal('');
+  userRole = signal<'ADMIN' | 'CLIENT' | 'PROVIDER' | null>(null);
+
+  // Filtrado automático
+  filteredFacilities = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+
+    return this.facilities().filter(f =>
+      f.name.toLowerCase().includes(term) ||
+      (f.description?.toLowerCase().includes(term))
+    );
+  });
+
   ngOnInit() {
-    this.usersService.getUserProfile().subscribe((user) => {
-      this.userRole = user.role;
+    // Rol del usuario
+    this.usersService.getUserProfile().subscribe(user => {
+      this.userRole.set(user.role);
     });
 
-
-    this.searchTerm = this.activatedRoute.snapshot.queryParamMap.get('search') || '';
+    // Parámetro de búsqueda inicial
+    const initialSearch = this.activatedRoute.snapshot.queryParamMap.get('search') || '';
+    this.searchTerm.set(initialSearch);
 
     this.loadFacilities();
-    this.subscribeToRouteChanges();
-  }
 
-
-  loadFacilities() {
-
-    this.service.getAll(this.searchTerm).subscribe((res: Facility[]) => {
-      this.allFacilities.set(res);
-   
-      this.filteredFacilities.set(res);
-    });
-  }
-
-  subscribeToRouteChanges() {
+    // Escuchar cambios en query params
     this.activatedRoute.queryParams.subscribe(params => {
-      const newTerm = params['search'] || ''; 
-      
-  
-      if (newTerm !== this.searchTerm) {
-          this.searchTerm = newTerm;
-         
-          this.loadFacilities(); 
+      const newTerm = params['search'] || '';
+      if (newTerm !== this.searchTerm()) {
+        this.searchTerm.set(newTerm);
       }
     });
   }
 
+  loadFacilities() {
+    this.service.getAll(this.searchTerm()).subscribe({
+      next: res => this.facilities.set(res),
+      error: (err) => {
+        console.error('Error al cargar servicios:', err);
+        Swal.fire('Error', 'No se pudieron cargar los servicios.', 'error');
+      }
+    });
+  }
 
   fetchFacilities() {
-   
-      this.loadFacilities(); 
+    // Actualiza query params (queda lindo para compartir URL)
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { search: this.searchTerm() },
+      queryParamsHandling: 'merge'
+    });
   }
-  
- 
+
   verPrestadores(facilityName: string) {
-    if (this.userRole === 'CLIENT') {
+    if (this.userRole() === 'CLIENT') {
       this.router.navigate(['/providers'], {
         queryParams: { facility: facilityName.toLowerCase() },
       });
     }
   }
 
+  // 👇 Tu deleteFacility integrado tal cual, solo cambiando this.service
   deleteFacility(id: number): void {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -92,8 +99,7 @@ export class FacilitiesList implements OnInit {
         this.service.deleteFacility(id).subscribe({
           next: () => {
             Swal.fire('Eliminado!', 'El servicio ha sido eliminado.', 'success');
-          
-            this.loadFacilities(); 
+            this.loadFacilities();
           },
           error: (err) => {
             console.error('Error al eliminar servicio:', err);
@@ -102,5 +108,9 @@ export class FacilitiesList implements OnInit {
         });
       }
     });
+  }
+
+  trackByFacility(index: number, item: Facility): number {
+    return item.id;
   }
 }

@@ -1,26 +1,66 @@
 <div class="container">
     <div class="card">
 
-        <h1 class="title">{{ route.snapshot.paramMap.get('facilityId') ? 'Editar Servicio' : 'Agregar Nuevo Servicio' }}</h1>
+        <h1 class="title">
+            {{ route.snapshot.paramMap.get('facilityId') ? 'Editar Servicio' : 'Agregar Nuevo Servicio' }}
+        </h1>
 
-        <p class="subtitle">Ingresa los detalles del nuevo servicio disponible</p>
+        <p class="subtitle">Ingresa los detalles del servicio</p>
 
         <form [formGroup]="form" (ngSubmit)="submit()" class="form">
 
             <div class="form-group">
                 <label for="name">Nombre del Servicio</label>
-                <input id="name" formControlName="name" type="text" placeholder="Ej: Plomería">
+
+                <input id="name" type="text" formControlName="name" placeholder="Ej: Plomería" [class.invalid]="form.get('name')?.invalid && form.get('name')?.touched" />
+
+                <div class="validation" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+
+                    <p *ngIf="form.get('name')?.errors?.['required']">
+                        El nombre es obligatorio.
+                    </p>
+
+                    <p *ngIf="form.get('name')?.errors?.['minlength']">
+                        Debe tener al menos 3 caracteres.
+                    </p>
+
+                    <p *ngIf="form.get('name')?.errors?.['pattern']">
+                        Solo se permiten letras y espacios (sin símbolos).
+                    </p>
+
+                </div>
             </div>
+
 
             <div class="form-group">
                 <label for="description">Descripción</label>
-                <input id="description" formControlName="description" type="text" placeholder="Ej: Arreglo de caños, electricidad...">
+
+                <input id="description" type="text" formControlName="description" placeholder="Ej: Arreglo de caños, electricidad..." [class.invalid]="form.get('description')?.invalid && form.get('description')?.touched" />
+
+                <div class="validation" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+
+                    <p *ngIf="form.get('description')?.errors?.['required']">
+                        La descripción es obligatoria.
+                    </p>
+
+                    <p *ngIf="form.get('description')?.errors?.['minlength']">
+                        Debe tener al menos 5 caracteres.
+                    </p>
+
+                    <p *ngIf="form.get('description')?.errors?.['pattern']">
+                        No se permiten símbolos raros ni emojis.
+                    </p>
+
+                </div>
             </div>
 
+
+
             <div class="buttons">
-                <button type="submit" class="btn-primary" [disabled]="loading()">
+                <button type="submit" class="btn-primary" [disabled]="loading() || form.invalid">
           Guardar Servicio
         </button>
+
                 <button type="button" class="btn-secondary" routerLink="/facilities">
           Cancelar
         </button>

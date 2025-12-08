@@ -1,0 +1,11 @@
+<li class="shift-item">
+    <span class="datetime">{{ shift.dateTime }}</span>
+
+    <span [class.available]="shift.available" [class.unavailable]="!shift.available">
+    {{ shift.available ? 'Disponible' : 'No disponible' }}
+  </span>
+
+    <button class="edit-button" (click)="onEdit()">Modificar</button>
+
+    <button class="delete-button" (click)="onDelete()">Eliminar</button>
+</li>

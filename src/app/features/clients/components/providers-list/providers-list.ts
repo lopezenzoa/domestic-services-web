@@ -2,7 +2,7 @@ import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { ProvidersService } from '../../../providers/services/providers.service';
 import { CommonModule } from '@angular/common';
 import { ProviderCardComponent } from '../provider-card/provider-card';
-import { Provider } from '../../../providers/models/Provider';
+import { Provider } from '../../../../shared/models/Provider';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 @Component({
@@ -56,7 +56,7 @@ export class ProvidersList {
     let data = this.allProviders();
 
     if (this.facilityName) {
-        data = data.filter(p => p.facility.name.toLowerCase() === this.facilityName?.toLowerCase());
+        data = data.filter(p => p.facility?.name?.toLowerCase() === this.facilityName?.toLowerCase());
     }
 
 

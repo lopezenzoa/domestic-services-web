@@ -1,36 +1,28 @@
 <header class="list-header">
-  <h2>Busca el Servicio que Necesitas</h2>
-  <p class="subtitle">Explora nuestra lista de profesionales disponibles en tu zona.</p>
+    <h2>Busca el Servicio que Necesitas</h2>
+    <p class="subtitle">Explora nuestra lista de profesionales disponibles en tu zona.</p>
 </header>
 <div class="search-container">
-  <input
-    type="text"
-    placeholder="Buscar servicio (ej: Electricista)"
-    [(ngModel)]="searchTerm"
-    (keyup.enter)="fetchFacilities()"
-    class="search-input"
-  />
-  <button type="button" class="search-button" (click)="fetchFacilities()">Buscar</button>
+    <input type="text" placeholder="Buscar servicio (ej: Electricista)" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" (keyup.enter)="fetchFacilities()" class="search-input" />
+    <button type="button" class="search-button" (click)="fetchFacilities()">Buscar</button>
 </div>
 <section>
-  @for (facility of filteredFacilities(); track $index) {
-  <div class="facility-card" (click)="verPrestadores(facility.name)">
-    <p>{{ facility.name }}</p>
-    <span>{{ facility.description }}</span>
-
-    @if (userRole === 'ADMIN') {
-    <div class="actions" (click)="$event.stopPropagation()">
-      <button routerLink="/facilities/edit/{{ facility.id }}">Editar Servicio</button>
-      <button class="delete-btn" (click)="deleteFacility(facility.id)">Eliminar</button>
+    @for (facility of filteredFacilities(); track $index) {
+    <div class="facility-card" (click)="verPrestadores(facility.name)">
+        <p>{{ facility.name }}</p>
+        <span>{{ facility.description }}</span> @if (userRole() === 'ADMIN') {
+        <div class="actions" (click)="$event.stopPropagation()">
+            <button [routerLink]="['/facilities/edit', facility.id]">Editar</button>
+            <button class="delete-btn" (click)="deleteFacility(facility.id)">Eliminar</button>
+        </div>
+        }
     </div>
     }
-  </div>
-  }
 </section>
 
-@if (userRole === 'ADMIN') {
+@if (userRole() === 'ADMIN') {
 <section>
-  <button type="button" class="btn-primary" routerLink="/facilities/create">
+    <button type="button" class="btn-primary" routerLink="/facilities/create">
     Agregar Servicio
   </button>
 </section>

@@ -11,6 +11,7 @@ export class ReviewService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/api/reviews';
 
+ 
   private getAuthHeaders() {
     const token = localStorage.getItem('token');
     return {
@@ -21,6 +22,7 @@ export class ReviewService {
     };
   }
 
+  
   createReview(body: Review): Observable<Review> {
     return this.http.post<Review>(
       `${this.baseUrl}/create`,
@@ -29,13 +31,7 @@ export class ReviewService {
     );
   }
 
-  getMyReviews(): Observable<Review[]> {
-    return this.http.get<Review[]>(
-      `${this.baseUrl}/me`,
-      this.getAuthHeaders()
-    );
-  }
-
+ 
   deleteReview(id: number): Observable<void> {
     return this.http.delete<void>(
       `${this.baseUrl}/delete/${id}`,
@@ -43,27 +39,20 @@ export class ReviewService {
     );
   }
 
-  getAllReviews(): Observable<Review[]> {
-    return this.http.get<Review[]>(
-      `${this.baseUrl}/`,
-      this.getAuthHeaders()
-    );
-  }
-
-  getMyReviewsPaged(page: number, size: number) {
+  getMyReviewsPaged(page: number, size: number): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}/my-reviews?page=${page}&size=${size}`,
       this.getAuthHeaders()
     );
   }
 
-  getAllReviewsPaged(page: number, size: number) {
+  getAllReviewsPaged(page: number, size: number): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}/all?page=${page}&size=${size}`,
       this.getAuthHeaders()
     );
   }
-}
 
   
 
+}

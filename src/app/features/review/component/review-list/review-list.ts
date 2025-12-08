@@ -1,90 +1,110 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ReviewService } from '../../service/review-service';
 import { Review } from '../../models/Review';
 import { UsersService } from '../../../users/services/users-service';
 import { User } from '../../../users/models/User';
-import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-review-list',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './review-list.html',
   styleUrl: './review-list.css',
 })
-export class ReviewList {
-  service = inject(ReviewService);
-  serviceUser = inject(UsersService);
+export class ReviewList implements OnInit {
+
+  reviewService = inject(ReviewService);
+  userService = inject(UsersService);
+
   reviews = signal<Review[]>([]);
   user = signal<User | undefined>(undefined);
+
   currentPage = signal(0);
   totalPages = signal(1);
   pageSize = 5;
 
-  selectedReviewId: number | null = null;
-  showConfirmModal = false;
-  showSuccessModal = false;
-
-  constructor() {
-  this.serviceUser.getUserProfile().subscribe((u) => {
-    this.user.set(u);
-    this.loadReviews(0); 
-  });
-}
-
-
-  deleteReview(id: number) {
-    this.service.deleteReview(id).subscribe(() => {
-      const updatedReviews = this.reviews().filter((review) => review.id !== id);
-      this.reviews.set(updatedReviews);
-    });
+  ngOnInit(): void {
+    this.loadUser();
   }
-openConfirmModal(id: number) {
-  console.log("ABRIENDO MODAL PARA:", id);  
-  this.selectedReviewId = id;
-  this.showConfirmModal = true;
-}
 
-  confirmDelete() {
-    if (this.selectedReviewId == null) return;
-
-    this.service.deleteReview(this.selectedReviewId).subscribe(() => {
-      const updated = this.reviews().filter((r) => r.id !== this.selectedReviewId);
-      this.reviews.set(updated);
-
-      this.showConfirmModal = false;
-      this.showSuccessModal = true;
+  private loadUser() {
+    this.userService.getUserProfile().subscribe({
+      next: (u) => {
+        this.user.set(u);
+        this.loadReviews(0);
+      },
+      error: () => {
+        console.error("No se pudo cargar el usuario.");
+      }
     });
   }
 
-  closeSuccessModal() {
-    this.showSuccessModal = false;
+  loadReviews(page: number = 0) {
+    const role = this.user()?.role;
+    if (!role) return;
+
+    const handler = (res: any) => {
+      const parsed = res.content.map((review: any) => ({
+        ...review,
+        creationDate: new Date(review.creationDate).toLocaleDateString('es-AR'),
+      }));
+
+      this.reviews.set(parsed);
+      this.totalPages.set(res.totalPages);
+      this.currentPage.set(page);
+    };
+
+    const req = role === 'ADMIN'
+      ? this.reviewService.getAllReviewsPaged(page, this.pageSize)
+      : this.reviewService.getMyReviewsPaged(page, this.pageSize);
+
+    req.subscribe({
+      next: handler,
+      error: () => console.error("Error al cargar reseñas.")
+    });
   }
-loadReviews(page: number = 0) {
-  const role = this.user()?.role;
 
-  const handler = (res: any) => {
-    const parsed = res.content.map((review: any) => ({
-      ...review,
-      creationDate: new Date(review.creationDate)
-        .toLocaleDateString('es-AR', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        })
-    }));
 
-    this.reviews.set(parsed);
-    this.totalPages.set(res.totalPages);
-    this.currentPage.set(page);
-  };
-
-  if (role === 'ADMIN') {
-    this.service.getAllReviewsPaged(page, this.pageSize)
-      .subscribe(handler);
-  } else {
-    this.service.getMyReviewsPaged(page, this.pageSize)
-      .subscribe(handler);
+  confirmDeleteSweet(id: number) {
+    Swal.fire({
+      title: '¿Eliminar reseña?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteReview(id);
+      }
+    });
   }
-}
 
+  
+  private deleteReview(id: number) {
+    this.reviewService.deleteReview(id).subscribe({
+      next: () => {
+        this.reviews.set(this.reviews().filter(r => r.id !== id));
+
+        Swal.fire({
+          title: 'Eliminada',
+          text: 'La reseña fue eliminada correctamente.',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+        });
+      },
+      error: () => {
+        Swal.fire('Error', 'No se pudo eliminar la reseña.', 'error');
+      },
+    });
+  }
+
+
+  trackByIndex(index: number) {
+    return index;
+  }
 }

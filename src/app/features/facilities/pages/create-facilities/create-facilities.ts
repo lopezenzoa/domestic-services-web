@@ -21,40 +21,52 @@ export class CreateFacilities {
   error = signal('');
 
   route: ActivatedRoute = inject(ActivatedRoute);
+form: FormGroup = this.fb.group({
+  name: [
+    '',
+    [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/) // SOLO letras y espacios
+    ]
+  ],
+  description: [
+    '',
+    [
+      Validators.required,
+      Validators.minLength(5),
+      Validators.pattern(/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s.,-]+$/) // descripción permite números
+    ]
+  ]
+});
 
-  form: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    description: ['', Validators.required],
-  });
+
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('facilityId');
-
     if (id) {
-      
       this.loadFacility(Number(id));
     }
-
   }
 
   loadFacility(id: number): void {
-  this.loading.set(true);
+    this.loading.set(true);
 
-  this.facilitiesService.getById(id).subscribe({
-    next: (data) => {
-      this.form.patchValue(data);
-      this.loading.set(false);
-    },
-    error: () => {
-      this.loading.set(false);
-      this.error.set('No se pudo cargar el servicio');
-    }
-  });
-}
+    this.facilitiesService.getById(id).subscribe({
+      next: (data) => {
+        this.form.patchValue(data);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loading.set(false);
+        this.error.set('No se pudo cargar el servicio');
+      }
+    });
+  }
 
   submit() {
     if (this.form.invalid) {
-      this.error.set('Completá nombre y descripción.');
+      this.error.set('Completá los datos correctamente. Revisá nombre y descripción.');
       return;
     }
 
@@ -64,69 +76,42 @@ export class CreateFacilities {
 
     const id = this.route.snapshot.paramMap.get('facilityId');
 
+    // --------------------
+    // EDITAR
+    // --------------------
     if (id) {
-      const data = {
-        id: Number(id),
-        ...this.form.value
-      }
+      const data = { id: Number(id), ...this.form.value };
 
-   
-    this.facilitiesService.updateFacility(data).subscribe({
-  next: () => {
-    this.loading.set(false);
-    this.success.set('Servicio editado');
+      this.facilitiesService.updateFacility(data).subscribe({
+        next: () => {
+          this.loading.set(false);
+          this.success.set('Servicio editado correctamente.');
 
-  
-    setTimeout(() => {
-      this.success.set('');
-      this.error.set('');
-    }, 3000);
+          setTimeout(() => this.router.navigate(['/facilities/']), 1200);
+        },
+        error: () => {
+          this.loading.set(false);
+          this.error.set('No se pudo editar el servicio.');
+        }
+      });
 
-   
-    setTimeout(() => {
-      this.router.navigate(['/facilities/']);
-    }, 1200);
-  },
-  error: () => {
-    this.loading.set(false);
-    this.error.set('No se pudo editar el servicio');
-
-    setTimeout(() => {
-      this.error.set('');
-    }, 3000);
-  }
-});
-
-    } else {
-     
-     this.facilitiesService.addFacility(this.form.value).subscribe({
-  next: () => {
-    this.loading.set(false);
-    this.success.set('Servicio creado');
-
-    setTimeout(() => {
-      this.success.set('');
-      this.error.set('');
-    }, 3000);
-
-    setTimeout(() => {
-      this.router.navigate(['/facilities/']);
-    }, 1200);
-  },
-  error: () => {
-    this.loading.set(false);
-    this.error.set('No se pudo crear el servicio');
-
-    setTimeout(() => {
-      this.error.set('');
-    }, 3000);
-  }
-});
-
+      return;
     }
 
+    // --------------------
+    // CREAR
+    // --------------------
+    this.facilitiesService.addFacility(this.form.value).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this.success.set('Servicio creado correctamente.');
 
+        setTimeout(() => this.router.navigate(['/facilities/']), 1200);
+      },
+      error: () => {
+        this.loading.set(false);
+        this.error.set('No se pudo crear el servicio.');
+      }
+    });
   }
-  
-  
 }

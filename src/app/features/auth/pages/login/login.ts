@@ -40,17 +40,23 @@ export class Login {
     this.animations?.pause();
   }
 
-  login() {
-  if (!this.form.valid) return;
+ login() {
+  // Si el formulario es inválido, mostramos mensaje
+  if (this.form.invalid) {
+    this.errorMessage = 'Todos los campos son obligatorios';
+    this.form.markAllAsTouched(); // fuerza mostrar errores
+    return;
+  }
+
+  this.errorMessage = ''; // limpiamos cualquier error previo
 
   const loginData = this.form.value;
 
   this.authService.login(loginData).subscribe({
     next: (response) => {
-
       const token = response?.headers?.get('Authorization');
       if (!token) {
-        console.warn("El token no vino en la respuesta (puede ser preflight)");
+        this.errorMessage = 'No se pudo verificar la sesión. Inténtalo nuevamente.';
         return;
       }
 
@@ -60,21 +66,22 @@ export class Login {
         next: (user) => {
           localStorage.setItem('user', JSON.stringify(user));
 
-          if (user.role === 'CLIENT') {
-            this.router.navigate(['/facilities']);
-          } else if (user.role === 'PROVIDER') {
-            this.router.navigate(['/providers/calls']);
-          } else {
-            this.router.navigate(['/']);
-          }
+          if (user.role === 'CLIENT') this.router.navigate(['/facilities']);
+          else if (user.role === 'PROVIDER') this.router.navigate(['/providers/calls']);
+          else if (user.role === 'ADMIN') this.router.navigate(['/facilities']);
+          else this.router.navigate(['/auth/login']);
         },
-        error: (err) => console.error('Error obteniendo perfil:', err)
+        error: () => {
+          this.errorMessage = 'Error obteniendo perfil de usuario';
+        }
       });
     },
 
-    error: () => {
+    error: (err) => {
       this.errorMessage = 'Usuario o contraseña incorrectos';
     }
   });
 }
+
+
 }
