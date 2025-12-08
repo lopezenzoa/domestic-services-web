@@ -10,7 +10,7 @@ import { ProvidersList } from './features/clients/components/providers-list/prov
 import { AddShiftForm } from './features/providers/pages/add-shift-form/add-shift-form';
 import { ProviderShifts } from './features/providers/pages/provider-shifts/provider-shifts';
 import { NotFoundComponent } from './features/errors/not-found-component/not-found-component';
-import { MisTurnos } from './features/clients/pages/mis-turnos/mis-turnos';
+
 import { authGuard } from './features/auth/guards/auth-guard';
 import { roleGuard } from './features/auth/guards/role-guard-guard';
 import { ReviewForm } from './features/review/component/review-form/review-form';
@@ -18,6 +18,8 @@ import { ReviewList } from './features/review/component/review-list/review-list'
 
 import { MyChatsComponent } from './features/chat/my-chats-component/my-chats-component';
 import { ChatRoomComponent } from './features/chat/chat-room/chat-room';
+import { MyAppointments } from './features/clients/pages/mis-turnos/my-appointments';
+
 
 export const routes: Routes = [
   {
@@ -48,7 +50,7 @@ export const routes: Routes = [
 
   // TURNOS / SERVICIOS
   { path: 'calls/request/:providerId', component: RequestCallForm, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
-  { path: 'mis-turnos', component: MisTurnos, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
+  { path: 'my-appointments', component: MyAppointments, canActivate: [authGuard, roleGuard], data: { role: 'CLIENT' } },
   { path: 'facilities', component: FacilitiesList, canActivate: [authGuard] },
   { path: 'facilities/edit/:facilityId', component: CreateFacilities, canActivate: [authGuard, roleGuard], data: { role: 'ADMIN' } },
   { path: 'facilities/create', component: CreateFacilities, canActivate: [authGuard, roleGuard], data: { role: 'ADMIN' } },
